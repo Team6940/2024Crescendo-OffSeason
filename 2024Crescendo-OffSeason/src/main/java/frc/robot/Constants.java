@@ -16,4 +16,17 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+
+  public static class ArmConstants{
+    public static final int ArmLeft_ID = 0;
+    public static final int ArmRight_ID = 0;
+
+    public static final double kP=0.;
+    public static final double kI=0.;
+    public static final double kD=0.;
+    public static final double kS=0.;
+
+    public static final double ArmVelocity=0.;
+    public static final double ArmAcceleration=0.;
+  }
 }
