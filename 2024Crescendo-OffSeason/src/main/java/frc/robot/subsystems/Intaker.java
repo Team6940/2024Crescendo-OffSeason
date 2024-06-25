@@ -40,6 +40,6 @@ public class Intaker extends SubsystemBase{
 
     @Override
     public void periodic(){
-        
+        //SmartDashboard
     }
 }
