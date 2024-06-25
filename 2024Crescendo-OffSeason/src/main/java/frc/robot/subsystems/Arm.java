@@ -1,8 +1,5 @@
 package frc.robot.subsystems;
 
-import javax.swing.text.Position;
-
-import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,6 +18,8 @@ public class Arm extends SubsystemBase{
     private TalonFXConfiguration m_ArmLeftConfig = new TalonFXConfiguration();
     private TalonFXConfiguration m_ArmRightConfig = new TalonFXConfiguration();
     private MotionMagicDutyCycle m_MotionMagicDutyCycle = new MotionMagicDutyCycle(0, false, 0., 0, true, false, false);
+
+    private double _rotation;
 
     public static Arm GetInstance()
     {
@@ -54,17 +53,22 @@ public class Arm extends SubsystemBase{
         m_ArmRight.getConfigurator().apply(m_ArmRightConfig);
     }
 
-    public void SetArmPosition(double _Position){
-        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_Position));//in rotations
-        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_Position));//in rotations
+    public void SetArmDegree(double _degree){
+        _rotation=_degree/360.;
+        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
     }
 
-    public double GetArmPosition(){
-        return 0.;
+    public double GetArmDegree(){
+        return m_ArmLeft.getPosition().getValue()*360;
     }
 
-    public boolean IsAtTargetPosition(){
-        return true;
+    public double GetTargetDegree(){
+        return _rotation*360;
+    }
+
+    public boolean IsAtTargetDegree(){
+        return Math.abs(GetArmDegree()-GetTargetDegree())<ArmConstants.ArmTolerence;
     }
 
     @Override
