@@ -28,5 +28,7 @@ public final class Constants {
 
     public static final double ArmVelocity=0.;
     public static final double ArmAcceleration=0.;
+
+    public static final double ArmTolerence=0.;
   }
 }
