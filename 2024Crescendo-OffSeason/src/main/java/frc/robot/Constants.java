@@ -31,4 +31,38 @@ public final class Constants {
 
     public static final double ArmTolerence=0.;
   }
+
+  public static class IntakerConstants {
+    public static final int Intaker_ID=0;
+    public static final int Sensor_ID=0;
+
+    public static final double kP=0.;
+    public static final double kI=0.;
+    public static final double kD=0.;
+
+    public static final double NoteInOutput=0.;
+    public static final double NoteOutOutput=0.;
+    
+  }
+
+  public static class ShooterConstants {
+    public static final int ShooterLeft_ID=0;
+    public static final int ShooterRight_ID=0;
+
+    public static final double kP=0.;
+    public static final double kI=0.;
+    public static final double kD=0.;
+    public static final double kF=0.;
+    public static final double kV=0.;
+
+    public static final double ShooterDifferenceTolerence=0.;
+    public static final double ShooterSpeedTolerence=0.;
+    
+  }
+
+  public static class BlockerConstants {
+    public static final int Blocker_ID=0;
+    public static final int Sensor_ID=0;
+  }
+
 }
