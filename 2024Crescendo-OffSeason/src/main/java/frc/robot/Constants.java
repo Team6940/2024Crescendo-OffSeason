@@ -30,6 +30,11 @@ public final class Constants {
     public static final double ArmAcceleration=0.;
 
     public static final double ArmTolerence=0.;
+
+    public static final double ArmDefaultDegree=0.;
+    public static final double ArmAMPDegree=0.;
+    public static final double ArmUpSPKDegree=0.;
+    public static final double ArmDownSPKDegree=0.;
   }
 
   public static class IntakerConstants {
@@ -42,7 +47,7 @@ public final class Constants {
 
     public static final double NoteInOutput=0.;
     public static final double NoteOutOutput=0.;
-    
+    public static final double PassNoteOutput=0.;
   }
 
   public static class ShooterConstants {
@@ -57,12 +62,18 @@ public final class Constants {
 
     public static final double ShooterDifferenceTolerence=0.;
     public static final double ShooterSpeedTolerence=0.;
-    
+
+    public static final double ShooterAMPRPS=0.;
+    public static final double ShooterManualSPKRPS=0.;
   }
 
   public static class BlockerConstants {
     public static final int Blocker_ID=0;
     public static final int Sensor_ID=0;
+
+    public static final double PassNoteOutput=0.;
+    public static final double GiveNoteOutput=0.;
+    public static final double AMPOutput=0.;
   }
 
 }
