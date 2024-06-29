@@ -8,6 +8,12 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ImprovedXboxController;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Blocker;
+import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.Intaker;
+import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -20,11 +26,15 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public static ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+  public static Arm m_Arm = Arm.GetInstance();
+  public static Blocker m_Blocker = Blocker.GetInstance();
+  public static Climber m_Climber = Climber.GetInstance();
+  public static Intaker m_Intaker = Intaker.GetInstance();
+  public static Shooter m_Shooter = Shooter.GetInstance();
+  public static ImprovedXboxController m_driverController= new ImprovedXboxController(0, 0.3);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -42,13 +52,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
-
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
   }
 
   /**

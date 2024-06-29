@@ -71,6 +71,10 @@ public class Arm extends SubsystemBase{
         return Math.abs(GetArmDegree()-GetTargetDegree())<ArmConstants.ArmTolerence;
     }
 
+    public boolean IsAtDefaultDegree(){
+        return Math.abs(GetArmDegree()-ArmConstants.ArmDefaultDegree)<ArmConstants.ArmTolerence;
+    }
+
     @Override
     public void periodic(){
         //SmartDashboard
