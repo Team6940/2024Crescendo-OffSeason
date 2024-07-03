@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.Subsystems;
 import edu.wpi.first.wpilibj.XboxController;
 
 public class ImprovedXboxController extends XboxController {
