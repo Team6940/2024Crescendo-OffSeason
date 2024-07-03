@@ -76,7 +76,7 @@ public class SwerveDriveTrain extends SubsystemBase {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
+        setupPathPlanner();
     }
 
     public void drive(double translationX, double translationY, double headingX, double headingY) {
