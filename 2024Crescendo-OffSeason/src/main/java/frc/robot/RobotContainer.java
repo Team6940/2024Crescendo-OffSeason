@@ -5,15 +5,15 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Subsystems.Arm;
+import frc.robot.Subsystems.Blocker;
+import frc.robot.Subsystems.Climber;
+import frc.robot.Subsystems.ExampleSubsystem;
+import frc.robot.Subsystems.ImprovedXboxController;
+import frc.robot.Subsystems.Intaker;
+import frc.robot.Subsystems.Shooter;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
-import frc.robot.subsystems.ImprovedXboxController;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Blocker;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Intaker;
-import frc.robot.subsystems.Shooter;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;

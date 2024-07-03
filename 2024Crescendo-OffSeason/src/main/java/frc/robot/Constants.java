@@ -4,6 +4,25 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
+import edu.wpi.first.math.trajectory.TrapezoidProfile;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import frc.robot.Library.team1706.LinearInterpolationTable;
+import frc.robot.Library.team95.BetterSwerveKinematics;
+import frc.robot.Subsystems.ImprovedXboxController.Button;
+
+import java.awt.Point;
+import java.awt.geom.Point2D;
+import java.util.Map;
+
+import com.pathplanner.lib.util.PIDConstants;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
  * constants. This class should not be used for any other purpose. All constants should be declared
@@ -76,4 +95,21 @@ public final class Constants {
     public static final double AMPOutput=0.;
   }
 
+  public static class GlobalConstants{
+    public final static float INF = (float)Math.pow(10, 6);   //this was defined for the 1690 lib
+  }
+
+  public static class DriveConstants{
+    public final static double kInnerDeadband = 0.10;
+    public final static double kOuterDeadband = 0.98;           //these were defined for the 1706 lib;
+  }
+
+  public static class SwerveConstants{
+    public final static double MaxSpeed = 2.;     //TODO
+  }
+
+  public static class PathPlannerConstants{
+    public final static PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0, 0);    //TODO
+    public final static PIDConstants ROTATION_PID = new PIDConstants(0, 0, 0, 0);       //TODO
+  }
 }
