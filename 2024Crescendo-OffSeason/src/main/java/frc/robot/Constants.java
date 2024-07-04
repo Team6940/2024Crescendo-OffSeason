@@ -112,4 +112,8 @@ public final class Constants {
     public final static PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0, 0);    //TODO
     public final static PIDConstants ROTATION_PID = new PIDConstants(0, 0, 0, 0);       //TODO
   }
+
+  public static class LimelightConstants{
+    public final static String SPKR_LLname = "SPKRLimelight";
+  }
 }
