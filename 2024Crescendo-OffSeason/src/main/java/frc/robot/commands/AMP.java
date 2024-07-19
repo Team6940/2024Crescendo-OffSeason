@@ -20,7 +20,7 @@ public class AMP extends Command {
 
   @Override
   public void execute() {
-    if(RobotContainer.m_Shooter.IsAtTargetRPS()&&RobotContainer.m_Arm.IsAtTargetDegree())
+    if(RobotContainer.m_Arm.IsAtTargetDegree())
       RobotContainer.m_Blocker.SetOutPut(BlockerConstants.AMPOutput);;
   }
 

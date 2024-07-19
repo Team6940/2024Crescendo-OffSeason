@@ -7,6 +7,13 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.subsystems.ImprovedXboxController;
+import frc.robot.commands.AMP;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ManualSPKDown;
+import frc.robot.commands.ManualSPKUp;
+import frc.robot.commands.NoteIntake;
+import frc.robot.commands.PassNote;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -81,7 +88,23 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+    if(RobotContainer.m_driverController.getAButton()){//TODO AMP按钮
+      new AMP(1).schedule();
+    }
+    if(RobotContainer.m_driverController.getAButton()){//TODO ManualSPKDown按钮
+      new ManualSPKDown(1).schedule();
+    }
+    if(RobotContainer.m_driverController.getAButton()){//TODO ManualSPKUp按钮
+      new ManualSPKUp(1).schedule();
+    }
+    if(RobotContainer.m_driverController.getAButton()){//TODO NoteIntake按钮
+      new NoteIntake(1).schedule();
+    }
+    if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
+      new PassNote().schedule();
+    }
+  }
 
   @Override
   public void testInit() {
