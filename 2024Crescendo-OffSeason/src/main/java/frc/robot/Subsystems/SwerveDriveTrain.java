@@ -1,4 +1,4 @@
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,14 +34,14 @@ public class SwerveDriveTrain extends SubsystemBase {
     public static SwerveDriveTrain m_Instance;
     public static String m_SPKRLLName;
     File swerveJsonDirectory = new File(Filesystem.getDeployDirectory(), "swerve");
-    SwerveDrive m_SwerveDrive = new SwerveDrive(null, null, 0);
+    SwerveDrive m_SwerveDrive;
     int driveMode = 0; // 0 for brake, 1 for manual drive, 2 for semiauto, 3 for fullauto;
 
     public static SwerveDriveTrain GetInstance() {
         return m_Instance == null ? m_Instance = new SwerveDriveTrain() : m_Instance;
     }
 
-    SwerveDriveTrain() {
+    public SwerveDriveTrain() {
         SwerveDriveTrainConfig();
     }
 
@@ -98,10 +98,15 @@ public class SwerveDriveTrain extends SubsystemBase {
 
     public void drive(double translationX, double translationY, double headingX, double headingY) {
         // Make the robot move
+        // Rotation2d targetRotation2d;
+        if(headingX*headingX + headingY*headingY <= SwerveConstants.kHeadingControllerDeadband*SwerveConstants.kHeadingControllerDeadband)
+            headingX=headingY=0.;
+        if(translationX*translationX + translationY*translationY <= SwerveConstants.kTranslationControllerDeadband*SwerveConstants.kTranslationControllerDeadband)
+            translationX = translationY = 0.;
         m_SwerveDrive.driveFieldOriented(m_SwerveDrive.swerveController.getTargetSpeeds(translationX, translationY,
                 headingX,
                 headingY,
-                m_SwerveDrive.getYaw().getRadians(),
+                m_SwerveDrive.getOdometryHeading().getRadians(),
                 m_SwerveDrive.getMaximumVelocity()));
     }
 

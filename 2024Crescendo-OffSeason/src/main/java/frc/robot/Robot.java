@@ -5,15 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.commands.AMP;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ManualSPKDown;
 import frc.robot.commands.ManualSPKUp;
 import frc.robot.commands.NoteIntake;
 import frc.robot.commands.PassNote;
+import frc.robot.subsystems.ImprovedXboxController;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -51,6 +52,10 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putNumber("XboxLeftX", RobotContainer.m_driverController.getLeftX());
+    SmartDashboard.putNumber("XboxLeftY", RobotContainer.m_driverController.getLeftY());
+    SmartDashboard.putNumber("XboxRightX", RobotContainer.m_driverController.getRightX());
+    SmartDashboard.putNumber("XboxRightY", RobotContainer.m_driverController.getRightY());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

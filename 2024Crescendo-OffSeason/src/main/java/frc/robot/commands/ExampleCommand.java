@@ -5,7 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ExampleSubsystem;
 
 /** An example command that uses an example subsystem. */
 public class ExampleCommand extends Command {
