@@ -14,55 +14,81 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.SwerveDriveTrain;
+import frc.robot.subsystems.Chassis.DriveSubsystem;
+import frc.robot.subsystems.Chassis.Gyro;
+import frc.robot.subsystems.Vision.VisionIO;
+import frc.robot.subsystems.Vision.objectTracker;
+// import frc.robot.subsystems.SwerveDriveTrain;
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 /**
- * This class is where the bulk of the robot should be declared. Since Command-based is a
- * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
- * periodic methods (other than the scheduler calls). Instead, the structure of the robot (including
+ * This class is where the bulk of the robot should be declared. Since
+ * Command-based is a
+ * "declarative" paradigm, very little robot logic should actually be handled in
+ * the {@link Robot}
+ * periodic methods (other than the scheduler calls). Instead, the structure of
+ * the robot (including
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
+  /* Controllers */
+  public static ImprovedXboxController m_driverController = new ImprovedXboxController(0, 0.3);
+
+  /* Drive Controls */
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+  /* Subsystems */
   public static ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public static Arm m_Arm = Arm.GetInstance();
   public static Blocker m_Blocker = Blocker.GetInstance();
   public static Climber m_Climber = Climber.GetInstance();
   public static Intaker m_Intaker = Intaker.GetInstance();
   public static Shooter m_Shooter = Shooter.GetInstance();
-  public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
-  public static ImprovedXboxController m_driverController= new ImprovedXboxController(0, 0.3);
+
+  private final Gyro gyro = new Gyro();
+  private final VisionIO visionIO = new VisionIO();
+  private final DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
+  private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
+  // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
+  /**
+   * The container for the robot. Contains subsystems, OI devices, and commands.
+   */
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
     m_Swerve.setDefaultCommand(
-      m_Swerve.driveCommand(
-        () -> -m_driverController.getLeftY(),
-        () -> -m_driverController.getLeftX(),
-        () -> MathUtil.applyDeadband(-m_driverController.getRightY(), 0),
-        () -> MathUtil.applyDeadband(-m_driverController.getRightX(), 0)
-      )
-    );
+        m_Swerve.run(() -> m_Swerve.updateControllerInput(
+            m_driverController.getRawAxis(translationAxis)*0.25,
+            m_driverController.getRawAxis(strafeAxis)*0.25,
+            m_driverController.getRawAxis(rotationAxis)*0.25,
+            false)));
   }
 
   /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
+   * Use this method to define your trigger->command mappings. Triggers can be
+   * created via the
+   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with
+   * an arbitrary
    * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
+   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for
+   * {@link
+   * CommandXboxController
+   * Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
+   * PS4} controllers or
+   * {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
    * joysticks}.
    */
   private void configureBindings() {
+
   }
 
   /**

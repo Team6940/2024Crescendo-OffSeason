@@ -15,6 +15,7 @@ import frc.robot.commands.ManualSPKUp;
 import frc.robot.commands.NoteIntake;
 import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
+import frc.robot.subsystems.Chassis.CTREConfigs;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -23,9 +24,14 @@ import frc.robot.subsystems.ImprovedXboxController;
  * project.
  */
 public class Robot extends TimedRobot {
+
+  public static final CTREConfigs ctreConfigs = new CTREConfigs();
+  
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+
+
 
   /**
    * This function is run when the robot is first started up and should be used for any
