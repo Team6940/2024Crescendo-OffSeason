@@ -15,7 +15,7 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Library.team1706.LinearInterpolationTable;
 import frc.robot.Library.team95.BetterSwerveKinematics;
-import frc.robot.Subsystems.ImprovedXboxController.Button;
+import frc.robot.subsystems.ImprovedXboxController.Button;
 
 import java.awt.Point;
 import java.awt.geom.Point2D;
@@ -88,7 +88,7 @@ public final class Constants {
 
   public static class BlockerConstants {
     public static final int Blocker_ID=0;
-    public static final int Sensor_ID=0;
+    public static final int Sensor_ID=30;
 
     public static final double PassNoteOutput=0.;
     public static final double GiveNoteOutput=0.;
@@ -106,6 +106,8 @@ public final class Constants {
 
   public static class SwerveConstants{
     public final static double MaxSpeed = 2.;     //TODO
+    public final static double kHeadingControllerDeadband = 0.1;
+    public final static double kTranslationControllerDeadband = 0.1;
   }
 
   public static class PathPlannerConstants{
