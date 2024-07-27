@@ -5,6 +5,7 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Library.team1706.MathUtils;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.Arm;
@@ -55,6 +56,7 @@ public class RobotContainer {
   private final VisionIO visionIO = new VisionIO();
   private final DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
   private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
+  
   // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
@@ -67,9 +69,9 @@ public class RobotContainer {
     configureBindings();
     m_Swerve.setDefaultCommand(
         m_Swerve.run(() -> m_Swerve.updateControllerInput(
-            m_driverController.getRawAxis(translationAxis)*0.25,
-            m_driverController.getRawAxis(strafeAxis)*0.25,
-            m_driverController.getRawAxis(rotationAxis)*0.25,
+            MathUtils.signedSquare(m_driverController.getLeftY()),
+            MathUtils.signedSquare(m_driverController.getLeftX()),
+            MathUtils.signedSquare(m_driverController.getRightX()),
             false)));
   }
 

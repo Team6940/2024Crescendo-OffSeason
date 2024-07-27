@@ -64,7 +64,7 @@ public class DriveSubsystem extends SubsystemBase {
     public Translation2d currentDesireSpeed=new Translation2d(0,0);
     public double currentDesireAngularSpeed=0;
 
-    private static final double PERIOD = 0.01;  // 100Hz (10ms period)
+    private static final double PERIOD = 0.02;  // 100Hz (10ms period)
     private Notifier odometryNotifier;
 
     private final TeleopDriveController teleopDriveController;

@@ -126,7 +126,7 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    public final static double kInnerDeadband = 0.10;
+    public final static double kInnerDeadband = 0.02;
     public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
   }
 

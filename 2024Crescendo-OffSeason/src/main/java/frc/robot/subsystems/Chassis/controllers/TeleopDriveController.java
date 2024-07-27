@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
 import frc.robot.subsystems.Chassis.PoseEstimator;
 
@@ -37,7 +38,7 @@ public class TeleopDriveController {
         controllerY = y;
         controllerOmega = omega;
         this.fieldRelative = fieldRelative;
-        inputDesireVelocity=new Translation2d(controllerX, controllerY).times(Constants.Swerve.maxSpeed);
+        inputDesireVelocity= applyDeadBand(controllerX, controllerY).times(Constants.Swerve.maxSpeed);
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if(alliance.get() == DriverStation.Alliance.Red){
@@ -46,6 +47,13 @@ public class TeleopDriveController {
         }
         
         inputRotation=controllerOmega* Math.max(Constants.Swerve.stationaryAngularVelocity,0);
+    }
+    public Translation2d applyDeadBand(double rawX,double rawY)
+    {
+        
+        Translation2d rawTranslation2d=new Translation2d(rawX, rawY);
+        Translation2d translation2d=rawTranslation2d.getNorm()>DriveConstants.kInnerDeadband?rawTranslation2d:new Translation2d();
+        return translation2d;
     }
 
     public ChassisSpeeds getDesireSpeeds(){
