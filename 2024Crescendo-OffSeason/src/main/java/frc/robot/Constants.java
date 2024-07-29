@@ -228,7 +228,7 @@ public final class Constants {
       public static final int canCoderID = 3;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.28125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.6328125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -240,7 +240,7 @@ public final class Constants {
       public static final int canCoderID = 6;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(142.3828125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(143.173828125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -252,7 +252,7 @@ public final class Constants {
       public static final int canCoderID = 12;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(63.45703125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(67.236328125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -264,7 +264,7 @@ public final class Constants {
       public static final int canCoderID = 9;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-88.60);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-89.033203125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
