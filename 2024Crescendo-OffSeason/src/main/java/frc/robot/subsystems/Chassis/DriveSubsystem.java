@@ -99,13 +99,13 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void updateControllerInput(
-      double controllerX, double controllerY, double controllerOmega, boolean robotRelative) {
+      double controllerX, double controllerY, double controllerOmega, boolean fieldRelative) {
         if (DriverStation.isTeleopEnabled()) {
         if (currentDriveMode != DriveMode.AUTO_ALIGN) {
             currentDriveMode = DriveMode.TELEOP;
         }
         teleopDriveController.updateControllerInput(
-            controllerX, controllerY, controllerOmega, robotRelative);
+            controllerX, controllerY, controllerOmega, fieldRelative);
         }
     }
 
