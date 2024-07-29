@@ -54,7 +54,7 @@ public class RobotContainer {
 
   private final Gyro gyro = new Gyro();
   private final VisionIO visionIO = new VisionIO();
-  private final DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
+  public final DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
   private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
   
   // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
@@ -72,7 +72,7 @@ public class RobotContainer {
             MathUtils.signedSquare(m_driverController.getLeftY()),
             MathUtils.signedSquare(m_driverController.getLeftX()),
             MathUtils.signedSquare(m_driverController.getRightX()),
-            false)));
+            true)));
   }
 
   /**
