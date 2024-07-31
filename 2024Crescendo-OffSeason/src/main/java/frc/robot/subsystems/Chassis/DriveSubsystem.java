@@ -13,10 +13,12 @@ import org.opencv.core.Mat;
 
 import frc.robot.subsystems.Chassis.SwerveModule;
 import frc.robot.subsystems.Chassis.PoseEstimator.TimestampedVisionUpdate;
+import frc.robot.subsystems.Chassis.controllers.AutoRotateAlignController;
 import frc.robot.subsystems.Chassis.controllers.TeleopDriveController;
 import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.LimelightConstants;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -68,6 +70,7 @@ public class DriveSubsystem extends SubsystemBase {
     private Notifier odometryNotifier;
 
     private final TeleopDriveController teleopDriveController;
+    private final AutoRotateAlignController autoRotateAlignController;
 
     private ChassisSpeeds desireSpeeds;
 
@@ -95,6 +98,7 @@ public class DriveSubsystem extends SubsystemBase {
         odometryNotifier = new Notifier(this::updateOdometry);
         startOdometry();
         teleopDriveController = new TeleopDriveController(m_poseEstimator);
+        autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
         SmartDashboard.putData("Field",m_field);
     }
 
@@ -275,12 +279,11 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSpeeds teleopSpeeds = teleopDriveController.getDesireSpeeds();
         switch (currentDriveMode) {
             case TELEOP -> {
+                teleopSpeeds = teleopDriveController.getDesireSpeeds();
                 // Plain teleop drive
-                desireSpeeds = teleopSpeeds;
             }
             case AUTO_ALIGN -> {
-                // Run auto align with drive input
-                // desiredSpeeds = autoAlignController.update();
+                teleopSpeeds = autoRotateAlignController.getDesireSpeeds();
             }
             default ->{
             }
