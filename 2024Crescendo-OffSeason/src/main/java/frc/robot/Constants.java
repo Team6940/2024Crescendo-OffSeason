@@ -9,6 +9,8 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
@@ -289,9 +291,10 @@ public final class Constants {
     public static final double confiTolerance = 0.3;
   }
 
-  public static final class PoseEstimator {
+  public static final class PoseEstimatorConstants {
     public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
     public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
+    public static final InterpolatingDoubleTreeMap tAtoDev=new InterpolatingDoubleTreeMap();
   }
 
   public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned

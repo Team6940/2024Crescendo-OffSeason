@@ -4,10 +4,12 @@
 
 package frc.robot;
 
+import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Library.team1706.MathUtils;
 import frc.robot.commands.Autos;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.ManualDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Blocker;
 import frc.robot.subsystems.Climber;
@@ -16,9 +18,11 @@ import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
-import frc.robot.subsystems.Chassis.Gyro;
 import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.subsystems.Vision.objectTracker;
+
+import com.ctre.phoenix6.hardware.Pigeon2;
+
 // import frc.robot.subsystems.SwerveDriveTrain;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.XboxController;
@@ -51,10 +55,11 @@ public class RobotContainer {
   public static Climber m_Climber = Climber.GetInstance();
   public static Intaker m_Intaker = Intaker.GetInstance();
   public static Shooter m_Shooter = Shooter.GetInstance();
-
-  private static Gyro gyro = new Gyro();
+  public static String m_PickLimelight=LimelightConstants.AUTP_LLname;
+  public static String m_SPKRLimelight=LimelightConstants.SPKR_LLname;
+  //         gyro.getConfigurator().apply(new Pigeon2Configuration());
   private static VisionIO visionIO = new VisionIO();
-  public static DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
+  public static DriveSubsystem m_Swerve = new DriveSubsystem( visionIO);
   private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
   
   // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
@@ -67,6 +72,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
+    m_Swerve.setDefaultCommand(new ManualDrive(true));
   }
 
   /**
