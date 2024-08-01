@@ -15,7 +15,7 @@ public class Gyro extends SubsystemBase {
   /** Creates a new Gyro. */
   public static Pigeon2 gyro;
   public Gyro() {
-        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro = new Pigeon2(Constants.SwerveConstants.pigeonID);
         gyro.getConfigurator().apply(new Pigeon2Configuration());
   }
   public Rotation2d getGyroYaw() {

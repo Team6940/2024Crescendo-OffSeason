@@ -48,7 +48,7 @@ public class AutoRotateAlignController {
         controllerY = y;
         controllerOmega = omega;
         this.fieldRelative = true;
-        inputDesireVelocity= applyDeadBand(controllerX, controllerY).times(Constants.Swerve.maxSpeed);
+        inputDesireVelocity= applyDeadBand(controllerX, controllerY).times(Constants.SwerveConstants.maxSpeed);
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if(alliance.get() == DriverStation.Alliance.Red){
@@ -56,7 +56,7 @@ public class AutoRotateAlignController {
             }
         }
         
-        inputRotation=controllerOmega* Math.max(Constants.Swerve.stationaryAngularVelocity,0);
+        inputRotation=controllerOmega* Math.max(Constants.SwerveConstants.stationaryAngularVelocity,0);
     }
     public Translation2d applyDeadBand(double rawX,double rawY)
     {
@@ -71,7 +71,7 @@ public class AutoRotateAlignController {
         double rotation=m_RotationPidController.calculate(tx);
         desireVelocity=ChassisOptimize.optimizeDesireChassisVelocity(desireVelocity,currentDesireSpeed);
         currentDesireSpeed=desireVelocity;
-        rotation=ChassisOptimize.optimizeDesireChassisAngularSpeed(rotation,currentDesireAngularSpeed);
+        rotation=ChassisOptimize.optimizeDesireChassisRotation(rotation,currentDesireAngularSpeed);
         currentDesireAngularSpeed=rotation;
 
         return fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(

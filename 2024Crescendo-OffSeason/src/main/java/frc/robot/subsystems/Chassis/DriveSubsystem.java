@@ -19,6 +19,7 @@ import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.Constants;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.LimelightConstants;
+import frc.robot.Library.team8814.util.ChassisOptimize;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
@@ -63,8 +64,8 @@ public class DriveSubsystem extends SubsystemBase {
     public boolean speakerTagDetected=false;
     private Field2d m_field = new Field2d();
 
-    public Translation2d currentDesireSpeed=new Translation2d(0,0);
-    public double currentDesireAngularSpeed=0;
+    public Translation2d m_currentDesireVelocity=new Translation2d(0,0);
+    public double m_currentDesireRotation=0;
 
     private static final double PERIOD = 0.02;  // 100Hz (10ms period)
     private Notifier odometryNotifier;
@@ -86,10 +87,10 @@ public class DriveSubsystem extends SubsystemBase {
         this.m_gyro=gyro;
         this.m_gyro.zeroHeading();
         mSwerveMods = new SwerveModule[] {
-            new SwerveModule(0, Constants.Swerve.Mod0.constants),
-            new SwerveModule(1, Constants.Swerve.Mod1.constants),
-            new SwerveModule(2, Constants.Swerve.Mod2.constants),
-            new SwerveModule(3, Constants.Swerve.Mod3.constants)
+            new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
+            new SwerveModule(1, Constants.SwerveConstants.Mod1.constants),
+            new SwerveModule(2, Constants.SwerveConstants.Mod2.constants),
+            new SwerveModule(3, Constants.SwerveConstants.Mod3.constants)
         };
         
 
@@ -102,17 +103,23 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putData("Field",m_field);
     }
 
-    public void updateControllerInput(
-      double controllerX, double controllerY, double controllerOmega, boolean fieldRelative) {
-        if (DriverStation.isTeleopEnabled()) {
-        if (currentDriveMode != DriveMode.AUTO_ALIGN) {
-            currentDriveMode = DriveMode.TELEOP;
+    public void drive(
+      Translation2d _velocity, double _omega, boolean _fieldRelative) {
+        Translation2d _desireVelocity=_velocity;
+        double _desireRotation=_omega;
+        _desireVelocity=ChassisOptimize.optimizeDesireChassisVelocity(_desireVelocity,m_currentDesireVelocity);
+        _desireRotation=ChassisOptimize.optimizeDesireChassisRotation(_desireRotation,m_currentDesireRotation);
+        m_currentDesireRotation=_desireRotation;
+        m_currentDesireVelocity=_desireVelocity;
+        ChassisSpeeds _desireChassisSpeeds=new ChassisSpeeds(m_currentDesireVelocity.getX(),m_currentDesireVelocity.getY(),m_currentDesireRotation);
+        if(_fieldRelative)
+        {
+            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_poseEstimator.sEstimator.getEstimatedPosition().getRotation());
         }
-        teleopDriveController.updateControllerInput(
-            controllerX, controllerY, controllerOmega, fieldRelative);
-        }
+       setChassisSpeeds(_desireChassisSpeeds);
     }
-
+    
+        
     public Translation2d getDriverDesireSpeeds(){
         return teleopDriveController.inputDesireVelocity;
     }
@@ -138,7 +145,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
-        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.Swerve.maxSpeed);
+        SwerveDriveKinematics.desaturateWheelSpeeds(desiredStates, Constants.SwerveConstants.maxSpeed);
         
         for(SwerveModule mod : mSwerveMods){
             mod.setDesiredState(desiredStates[mod.moduleNumber], false);
@@ -207,7 +214,7 @@ public class DriveSubsystem extends SubsystemBase {
 
 
     public ChassisSpeeds getFieldRelativeSpeeds(){
-        return ChassisSpeeds.fromRobotRelativeSpeeds(Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates()),getHeading());
+        return ChassisSpeeds.fromRobotRelativeSpeeds(Constants.SwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates()),getHeading());
     }
 
     public double getChassisSpeed(){
@@ -218,12 +225,12 @@ public class DriveSubsystem extends SubsystemBase {
     
     //return the chassis speed for the followpathholonomic method
     public ChassisSpeeds getRobotRelativeSpeeds(){
-        return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+        return Constants.SwerveConstants.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
     //ChassisSpeeds supplier for the followpathholonomic method
     public void setChassisSpeeds (ChassisSpeeds speeds) {
-        SwerveModuleState[] moduleStates = Constants.Swerve.swerveKinematics.toSwerveModuleStates(speeds); //Generate the swerve module states
-        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.Swerve.maxSpeed);
+        SwerveModuleState[] moduleStates = Constants.SwerveConstants.swerveKinematics.toSwerveModuleStates(speeds); //Generate the swerve module states
+        SwerveDriveKinematics.desaturateWheelSpeeds(moduleStates, Constants.SwerveConstants.maxSpeed);
         setModuleStates(moduleStates);
     }
     //auto***************************************************************************************************
@@ -245,8 +252,8 @@ public class DriveSubsystem extends SubsystemBase {
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                             new PIDConstants(Constants.AutoConstants.kPTranslationController, 0.0, 0.0), // Translation PID constants
                             new PIDConstants(Constants.AutoConstants.kPRotationController, 0.0, 0.0), // Rotation PID constants
-                            Constants.Swerve.maxModuleSpeed, // Max module speed, in m/s
-                            Math.sqrt(2)*Constants.Swerve.wheelBase/2, // Drive base radius in meters. Distance from robot center to furthest module.
+                            Constants.SwerveConstants.maxModuleSpeed, // Max module speed, in m/s
+                            Math.sqrt(2)*Constants.SwerveConstants.wheelBase/2, // Drive base radius in meters. Distance from robot center to furthest module.
                             new ReplanningConfig() // Default path replanning config. See the API for the options here
                     ),
                     () -> {

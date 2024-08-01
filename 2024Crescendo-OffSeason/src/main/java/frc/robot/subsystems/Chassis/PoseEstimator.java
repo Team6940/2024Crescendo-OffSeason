@@ -31,7 +31,7 @@ public class PoseEstimator {
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
         sEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics, 
+            Constants.SwerveConstants.swerveKinematics, 
             new Rotation2d(), 
             new SwerveModulePosition[] {
                 new SwerveModulePosition(),

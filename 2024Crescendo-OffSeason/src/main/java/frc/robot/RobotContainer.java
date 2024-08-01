@@ -52,9 +52,9 @@ public class RobotContainer {
   public static Intaker m_Intaker = Intaker.GetInstance();
   public static Shooter m_Shooter = Shooter.GetInstance();
 
-  private final Gyro gyro = new Gyro();
-  private final VisionIO visionIO = new VisionIO();
-  public final DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
+  private static Gyro gyro = new Gyro();
+  private static VisionIO visionIO = new VisionIO();
+  public static DriveSubsystem m_Swerve = new DriveSubsystem(gyro, visionIO);
   private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
   
   // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();
@@ -67,12 +67,6 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    m_Swerve.setDefaultCommand(
-        m_Swerve.run(() -> m_Swerve.updateControllerInput(
-            MathUtils.signedSquare(m_driverController.getLeftY()),
-            MathUtils.signedSquare(m_driverController.getLeftX()),
-            MathUtils.signedSquare(m_driverController.getRightX()),
-            true)));
   }
 
   /**
