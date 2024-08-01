@@ -228,7 +228,7 @@ public final class Constants {
       public static final int canCoderID = 3;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.6328125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.28125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -240,7 +240,7 @@ public final class Constants {
       public static final int canCoderID = 6;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(143.173828125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(142.3828125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -252,7 +252,7 @@ public final class Constants {
       public static final int canCoderID = 12;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(67.236328125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(63.45703125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -264,7 +264,7 @@ public final class Constants {
       public static final int canCoderID = 9;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-89.033203125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-88.60);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -308,7 +308,11 @@ public final class Constants {
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
         kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
   }
-
+  public static class AutoAlignConstants{
+    public static final double kAutoAlignRotationP=1;
+    public static final double kAutoAlignRotationI=0;
+    public static final double kAutoAlignRotationD=0;
+  }
   public static class PathPlannerConstants {
     public final static PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0, 0); // TODO
     public final static PIDConstants ROTATION_PID = new PIDConstants(0, 0, 0, 0); // TODO
