@@ -118,7 +118,7 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSpeeds _desireChassisSpeeds=new ChassisSpeeds(m_currentDesireVelocity.getX(),m_currentDesireVelocity.getY(),m_currentDesireRotation);
         if(_fieldRelative)
         {
-            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_poseEstimator.sEstimator.getEstimatedPosition().getRotation());
+            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_gyro.getRotation2d().times(-1.));
         }
         desireSpeeds = _desireChassisSpeeds;
        setChassisSpeeds(_desireChassisSpeeds);
