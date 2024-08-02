@@ -63,8 +63,8 @@ public final class Constants {
   }
 
   public static class ArmConstants {
-    public static final int ArmLeft_ID = 0;
-    public static final int ArmRight_ID = 0;
+    public static final int ArmLeft_ID = 14;
+    public static final int ArmRight_ID = 15;
 
     public static final double kP = 0.;
     public static final double kI = 0.;
@@ -126,7 +126,7 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    public final static double kInnerDeadband = 0.02;
+    public final static double kInnerDeadband = 0.01;
     public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
   }
 
