@@ -101,8 +101,8 @@ public final class Constants {
   }
 
   public static class ShooterConstants {
-    public static final int ShooterLeft_ID = 0;
-    public static final int ShooterRight_ID = 0;
+    public static final int ShooterLeft_ID=15;
+    public static final int ShooterRight_ID=16;
 
     public static final double kP = 0.;
     public static final double kI = 0.;
@@ -124,6 +124,22 @@ public final class Constants {
     public static final double PassNoteOutput = 0.;
     public static final double GiveNoteOutput = 0.;
     public static final double AMPOutput = 0.;
+  }
+
+  public static class AutoShootConstants{
+    public static final double kP=0.;
+    public static final double kI=0.;
+    public static final double DegreeTolerance=0.;
+    public static final double RPSInAdvance=0.;
+
+    public static final Point2D[] ArmPoints={
+      new Point2D.Double(0,0)
+    };
+    public static final Point2D[] RPSPoints={
+      new Point2D.Double(0,0)
+    };
+    public static final LinearInterpolationTable ArmTable=new LinearInterpolationTable(ArmPoints);
+    public static final LinearInterpolationTable RPSTable=new LinearInterpolationTable(RPSPoints);
   }
 
   public static class GlobalConstants {
