@@ -68,6 +68,8 @@ public final class Constants {
     public static final int ArmLeft_ID = 14;
     public static final int ArmRight_ID = 15;
 
+    public static final double ArmGearRatio = 200.;
+
     public static final double kP = 0.;
     public static final double kI = 0.;
     public static final double kD = 0.;
@@ -78,7 +80,7 @@ public final class Constants {
 
     public static final double ArmTolerence = 0.;
 
-    public static final double ArmDefaultDegree = 0.;
+    public static final double ArmDefaultDegree = -72.29;
     public static final double ArmAMPDegree = 0.;
     public static final double ArmUpSPKDegree = 0.;
     public static final double ArmDownSPKDegree = 0.;
@@ -191,7 +193,7 @@ public final class Constants {
     public static final double angleKV = 3;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.0001; // TODO: This must be tuned to specific robot
+    public static final double driveKP = 0; // TODO: This must be tuned to specific robot
     public static final double driveKI = 0.0;
     public static final double driveKD = 0;// 0.0;
     public static final double driveKF = 0.0;// 0.0;
@@ -203,8 +205,8 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 6.0; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 5.0; // TODO: This must be tuned to specific robot
+    public static final double maxSpeed = 2.; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 1.6; // TODO: This must be tuned to specific robot
 
     public static final double maxAcceleration = 4;
     public static final double maxDeceleration = 30;

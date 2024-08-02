@@ -72,7 +72,7 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the trigger bindings
     configureBindings();
-    m_Swerve.setDefaultCommand(new ManualDrive(true));
+    m_Swerve.setDefaultCommand(new ManualDrive(false));
   }
 
   /**
