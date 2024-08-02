@@ -40,6 +40,7 @@ public class Arm extends SubsystemBase{
         m_ArmLeftConfig.MotorOutput.PeakReverseDutyCycle=-1;
         m_ArmLeftConfig.Feedback.SensorToMechanismRatio=200;
 
+        m_ArmLeftConfig.Slot0.kG=ArmConstants.kG;
         m_ArmLeftConfig.Slot0.kP=ArmConstants.kP;
         m_ArmLeftConfig.Slot0.kI=ArmConstants.kI;
         m_ArmLeftConfig.Slot0.kD=ArmConstants.kD;
@@ -60,16 +61,14 @@ public class Arm extends SubsystemBase{
 
     public void SetArmDegree(double _degree){
         _rotation=_degree/360.;
-        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
-        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
     }
 
     public double GetArmDegree(){
-        return m_ArmLeft.getPosition().getValue()*360;
+        return m_ArmLeft.getPosition().getValue()*360.;
     }
 
     public double GetTargetDegree(){
-        return _rotation*360;
+        return _rotation*360.;
     }
 
     public boolean IsAtTargetDegree(){
@@ -82,9 +81,12 @@ public class Arm extends SubsystemBase{
 
     @Override
     public void periodic(){
+        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
         SmartDashboard.putNumber("LeftArmPos", m_ArmLeft.getPosition().getValue());
         SmartDashboard.putNumber("RightArmPos", m_ArmRight.getPosition().getValue());
         SmartDashboard.putNumber("LeftArmAngle", m_ArmLeft.getPosition().getValue()*360);
         SmartDashboard.putNumber("RightArmAngle", m_ArmRight.getPosition().getValue()*360);
+        SmartDashboard.putNumber("TargetRota", _rotation);
     }
 }

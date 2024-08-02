@@ -70,13 +70,14 @@ public final class Constants {
 
     public static final double ArmGearRatio = 200.;
 
-    public static final double kP = 0.;
+    public static final double kP = 15.;
     public static final double kI = 0.;
     public static final double kD = 0.;
     public static final double kS = 0.;
+    public static final double kG = 0.;
 
-    public static final double ArmVelocity = 0.;
-    public static final double ArmAcceleration = 0.;
+    public static final double ArmVelocity = 0.25;
+    public static final double ArmAcceleration = 1.7;
 
     public static final double ArmTolerence = 0.;
 
@@ -193,7 +194,7 @@ public final class Constants {
     public static final double angleKV = 3;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0; // TODO: This must be tuned to specific robot
+    public static final double driveKP = 0.001; // TODO: This must be tuned to specific robot
     public static final double driveKI = 0.0;
     public static final double driveKD = 0;// 0.0;
     public static final double driveKF = 0.0;// 0.0;
