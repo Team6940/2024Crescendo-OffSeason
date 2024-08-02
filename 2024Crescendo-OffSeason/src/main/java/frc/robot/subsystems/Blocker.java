@@ -37,4 +37,9 @@ public class Blocker extends SubsystemBase{
     public boolean HasNote(){
         return !m_Sensor.get();
     }
+
+    @Override
+    public void periodic(){
+        //SmartDashboard
+    }
 }

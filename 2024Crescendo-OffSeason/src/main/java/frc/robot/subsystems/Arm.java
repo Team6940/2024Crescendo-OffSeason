@@ -6,14 +6,17 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import frc.robot.Library.team2910.math.MathUtils;
+import frc.robot.Library.team1678.math.Conversions;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase{
     public static Arm m_Instance;
-    private static TalonFX m_ArmLeft = new TalonFX(ArmConstants.ArmLeft_ID);
-    private static TalonFX m_ArmRight = new TalonFX(ArmConstants.ArmRight_ID);
+    private static TalonFX m_ArmLeft = new TalonFX(ArmConstants.ArmLeft_ID, "canivore");
+    private static TalonFX m_ArmRight = new TalonFX(ArmConstants.ArmRight_ID, "canivore");
 
     private TalonFXConfiguration m_ArmLeftConfig = new TalonFXConfiguration();
     private TalonFXConfiguration m_ArmRightConfig = new TalonFXConfiguration();
@@ -31,12 +34,13 @@ public class Arm extends SubsystemBase{
     }
 
     private void ArmConfig(){
-        m_ArmLeftConfig.MotorOutput.NeutralMode=NeutralModeValue.Brake;
-        m_ArmLeftConfig.MotorOutput.Inverted=InvertedValue.Clockwise_Positive;//TODO
+        m_ArmLeftConfig.MotorOutput.NeutralMode=NeutralModeValue.Coast;
+        m_ArmLeftConfig.MotorOutput.Inverted=InvertedValue.CounterClockwise_Positive;//TODO
         m_ArmLeftConfig.MotorOutput.PeakForwardDutyCycle=1;
         m_ArmLeftConfig.MotorOutput.PeakReverseDutyCycle=-1;
-        //m_LeftTalonFXConfiguration.Feedback.SensorToMechanismRatio=250;
+        m_ArmLeftConfig.Feedback.SensorToMechanismRatio=200;
 
+        m_ArmLeftConfig.Slot0.kG=ArmConstants.kG;
         m_ArmLeftConfig.Slot0.kP=ArmConstants.kP;
         m_ArmLeftConfig.Slot0.kI=ArmConstants.kI;
         m_ArmLeftConfig.Slot0.kD=ArmConstants.kD;
@@ -44,27 +48,27 @@ public class Arm extends SubsystemBase{
         m_ArmLeftConfig.Slot0.GravityType=GravityTypeValue.Arm_Cosine;//TODO
         m_ArmLeftConfig.MotionMagic.MotionMagicAcceleration=ArmConstants.ArmAcceleration;
         m_ArmLeftConfig.MotionMagic.MotionMagicCruiseVelocity=ArmConstants.ArmVelocity;
-        //m_LeftTalonFXConfiguration.Feedback.FeedbackRotorOffset=0.;
 
         m_ArmRightConfig=m_ArmLeftConfig;
         m_ArmLeft.getConfigurator().apply(m_ArmLeftConfig);
 
-        m_ArmRightConfig.MotorOutput.Inverted=InvertedValue.CounterClockwise_Positive;//TODO
+        m_ArmRightConfig.MotorOutput.Inverted=InvertedValue.Clockwise_Positive;//TODO
         m_ArmRight.getConfigurator().apply(m_ArmRightConfig);
+
+        m_ArmLeft.setPosition(ArmConstants.ArmDefaultDegree/360.);
+        m_ArmRight.setPosition(ArmConstants.ArmDefaultDegree/360.);
     }
 
     public void SetArmDegree(double _degree){
         _rotation=_degree/360.;
-        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
-        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
     }
 
     public double GetArmDegree(){
-        return m_ArmLeft.getPosition().getValue()*360;
+        return m_ArmLeft.getPosition().getValue()*360.;
     }
 
     public double GetTargetDegree(){
-        return _rotation*360;
+        return _rotation*360.;
     }
 
     public boolean IsAtTargetDegree(){
@@ -77,6 +81,12 @@ public class Arm extends SubsystemBase{
 
     @Override
     public void periodic(){
-        //SmartDashboard
+        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        SmartDashboard.putNumber("LeftArmPos", m_ArmLeft.getPosition().getValue());
+        SmartDashboard.putNumber("RightArmPos", m_ArmRight.getPosition().getValue());
+        SmartDashboard.putNumber("LeftArmAngle", m_ArmLeft.getPosition().getValue()*360);
+        SmartDashboard.putNumber("RightArmAngle", m_ArmRight.getPosition().getValue()*360);
+        SmartDashboard.putNumber("TargetRota", _rotation);
     }
 }
