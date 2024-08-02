@@ -70,13 +70,13 @@ public class DriveSubsystem extends SubsystemBase {
     public Translation2d m_currentDesireVelocity=new Translation2d(0,0);
     public double m_currentDesireRotation=0;
 
-    private static final double PERIOD = 0.01;  // 100Hz (10ms period)
+    private static final double PERIOD = 0.02;  // 50Hz (20ms period)
     private Notifier odometryNotifier;
 
     private final TeleopDriveController teleopDriveController;
     private final AutoRotateAlignController autoRotateAlignController;
 
-    private ChassisSpeeds desireSpeeds;
+    private ChassisSpeeds desireSpeeds = new ChassisSpeeds();
 
     public enum DriveMode{
         STOP,
@@ -101,7 +101,7 @@ public class DriveSubsystem extends SubsystemBase {
         // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         m_poseEstimator=new PoseEstimator();
         odometryNotifier = new Notifier(this::updateOdometry);
-        startOdometry();
+        // startOdometry();
         teleopDriveController = new TeleopDriveController(m_poseEstimator);
         autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
         SmartDashboard.putData("Field",m_field);
@@ -120,6 +120,7 @@ public class DriveSubsystem extends SubsystemBase {
         {
             _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_poseEstimator.sEstimator.getEstimatedPosition().getRotation());
         }
+        desireSpeeds = _desireChassisSpeeds;
        setChassisSpeeds(_desireChassisSpeeds);
     }
     
@@ -318,6 +319,9 @@ public class DriveSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
         }
+        SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
     }
 
     

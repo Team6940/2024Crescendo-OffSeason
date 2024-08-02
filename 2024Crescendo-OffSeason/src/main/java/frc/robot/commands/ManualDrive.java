@@ -25,8 +25,8 @@ public class ManualDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double _controllerX=RobotContainer.m_driverController.getLeftX();
-    double _controllerY=RobotContainer.m_driverController.getLeftY();
+    double _controllerX=RobotContainer.m_driverController.getLeftY();
+    double _controllerY=RobotContainer.m_driverController.getLeftX();
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);

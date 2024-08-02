@@ -47,13 +47,15 @@ public class Arm extends SubsystemBase{
         m_ArmLeftConfig.Slot0.GravityType=GravityTypeValue.Arm_Cosine;//TODO
         m_ArmLeftConfig.MotionMagic.MotionMagicAcceleration=ArmConstants.ArmAcceleration;
         m_ArmLeftConfig.MotionMagic.MotionMagicCruiseVelocity=ArmConstants.ArmVelocity;
-        m_ArmLeftConfig.Feedback.FeedbackRotorOffset = 0.2;
 
         m_ArmRightConfig=m_ArmLeftConfig;
         m_ArmLeft.getConfigurator().apply(m_ArmLeftConfig);
 
         m_ArmRightConfig.MotorOutput.Inverted=InvertedValue.Clockwise_Positive;//TODO
         m_ArmRight.getConfigurator().apply(m_ArmRightConfig);
+
+        m_ArmLeft.setPosition(ArmConstants.ArmDefaultDegree/360.);
+        m_ArmRight.setPosition(ArmConstants.ArmDefaultDegree/360.);
     }
 
     public void SetArmDegree(double _degree){
