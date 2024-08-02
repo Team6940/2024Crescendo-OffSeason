@@ -9,11 +9,15 @@ import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.math.interpolation.InterpolatingDoubleTreeMap;
+import edu.wpi.first.math.interpolation.InterpolatingTreeMap;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.robot.Library.team1706.LinearInterpolationTable;
+import frc.robot.Library.team8814.util.COTSTalonFXSwerveConstants;
+import frc.robot.Library.team8814.util.SwerveModuleConstants;
 import frc.robot.Library.team95.BetterSwerveKinematics;
 import frc.robot.subsystems.ImprovedXboxController.Button;
 
@@ -42,8 +46,6 @@ import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
-import frc.lib.util.COTSTalonFXSwerveConstants;
-import frc.lib.util.SwerveModuleConstants;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -130,14 +132,14 @@ public final class Constants {
     public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
   }
 
-  public static final class Swerve { // From 8814
+  public static final class SwerveConstants { // From 8814
     public static final int pigeonID = 13;
 
     public static final COTSTalonFXSwerveConstants chosenModule = COTSTalonFXSwerveConstants.WCP.SwerveXFlipped
         .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_10);
 
     /* Drivetrain Constants */
-    public static final double trackWidth = 0.6195;
+    public static final double trackWidth = 0.6195;//TODO
     public static final double wheelBase = 0.6195;
     public static final double wheelCircumference = 0.1016 * Math.PI;
 
@@ -289,9 +291,10 @@ public final class Constants {
     public static final double confiTolerance = 0.3;
   }
 
-  public static final class PoseEstimator {
+  public static final class PoseEstimatorConstants {
     public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
     public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
+    public static final InterpolatingDoubleTreeMap tAtoDev=new InterpolatingDoubleTreeMap();
   }
 
   public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
@@ -312,6 +315,10 @@ public final class Constants {
     public static final double kAutoAlignRotationP=1;
     public static final double kAutoAlignRotationI=0;
     public static final double kAutoAlignRotationD=0;
+    
+    public static final double kAutoAlignMovementP=1;
+    public static final double kAutoAlignMovementI=0;
+    public static final double kAutoAlignMovementD=0;
   }
   public static class PathPlannerConstants {
     public final static PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0, 0); // TODO
@@ -320,5 +327,6 @@ public final class Constants {
 
   public static class LimelightConstants {
     public final static String SPKR_LLname = "SPKRLimelight";
+    public final static String AUTP_LLname = "AUTPLimelight";
   }
 }

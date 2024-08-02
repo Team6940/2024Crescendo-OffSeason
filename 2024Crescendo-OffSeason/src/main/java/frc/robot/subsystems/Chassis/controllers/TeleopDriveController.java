@@ -1,7 +1,7 @@
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
-
+//staled
 package frc.robot.subsystems.Chassis.controllers;
 
 import java.security.Principal;
@@ -39,7 +39,7 @@ public class TeleopDriveController {
         controllerY = y;
         controllerOmega = omega;
         this.fieldRelative = fieldRelative;
-        inputDesireVelocity= applyDeadBand(controllerX, controllerY).times(Constants.Swerve.maxSpeed);
+        inputDesireVelocity= applyDeadBand(controllerX, controllerY).times(Constants.SwerveConstants.maxSpeed);
         var alliance = DriverStation.getAlliance();
         if (alliance.isPresent()) {
             if(alliance.get() == DriverStation.Alliance.Red){
@@ -47,7 +47,7 @@ public class TeleopDriveController {
             }
         }
         
-        inputRotation=controllerOmega* Math.max(Constants.Swerve.stationaryAngularVelocity,0);
+        inputRotation=controllerOmega* Math.max(Constants.SwerveConstants.stationaryAngularVelocity,0);
     }
     public Translation2d applyDeadBand(double rawX,double rawY)
     {
@@ -62,7 +62,7 @@ public class TeleopDriveController {
         double rotation=inputRotation;
         desireVelocity=ChassisOptimize.optimizeDesireChassisVelocity(desireVelocity,currentDesireSpeed);
         currentDesireSpeed=desireVelocity;
-        rotation=ChassisOptimize.optimizeDesireChassisAngularSpeed(rotation,currentDesireAngularSpeed);
+        rotation=ChassisOptimize.optimizeDesireChassisRotation(rotation,currentDesireAngularSpeed);
         currentDesireAngularSpeed=rotation;
 
         return fieldRelative ? ChassisSpeeds.fromFieldRelativeSpeeds(
@@ -76,5 +76,6 @@ public class TeleopDriveController {
             desireVelocity.getY(), 
             rotation);
     }
+    
    
 }

@@ -10,6 +10,7 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import edu.wpi.first.math.Matrix;
+import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -31,7 +32,7 @@ public class PoseEstimator {
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
         sEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics, 
+            Constants.SwerveConstants.swerveKinematics, 
             new Rotation2d(), 
             new SwerveModulePosition[] {
                 new SwerveModulePosition(),
@@ -40,8 +41,8 @@ public class PoseEstimator {
                 new SwerveModulePosition()
             },
             new Pose2d(), 
-            Constants.PoseEstimator.stateStdDevs, 
-            Constants.PoseEstimator.visionStdDevs
+            Constants.PoseEstimatorConstants.stateStdDevs, 
+            Constants.PoseEstimatorConstants.visionStdDevs
         );
     }
     /** Check if this returns true before using {@link #updateVision()} 
@@ -72,6 +73,20 @@ public class PoseEstimator {
             new Pose2d(pose.getX(), pose.getY(), gyro),
             timeStamp
         );
+    }
+    
+    /** Update estimator with vision data. 
+     *  Should only be updated when target is visible.
+     * @param latency seconds */
+    public void updateVision(Pose2d pose, double latency,double FOM){
+        double timeStamp = Timer.getFPGATimestamp() - latency;
+        Rotation2d gyro = new Rotation2d(gyroYawBuffer.getSample(timeStamp).get());
+        sEstimator.addVisionMeasurement(
+            new Pose2d(pose.getX(), pose.getY(), gyro),
+            timeStamp,
+            VecBuilder.fill(FOM, FOM, 0.1)
+        );
+        
     }
 
     public void updateVisionWithTime(Pose2d pose, double timeStamp){
