@@ -11,6 +11,7 @@ import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.BlockerConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.AutoShootConstants;
+import frc.robot.Constants.LimelightConstants;;
 
 /** An example command that uses an example subsystem. */
 public class AutoSPKUP extends Command {
@@ -34,10 +35,6 @@ public class AutoSPKUP extends Command {
         RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
         if(LimelightHelpers.getTV("limelight"))
         {
-          // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
-          // _Omega=-AutoShootCommandConstants.NewShootFixingOmega;
-          // else if(LimelightHelpers.getTX("limelight")<-AutoShootCommandConstants.NewShootAngleTolerance)
-          // _Omega=AutoShootCommandConstants.NewShootFixingOmega;
           if(!m_PidController.atSetpoint())
           {
             _Omega=m_PidController.calculate(LimelightHelpers.getTX("limelight"));
@@ -45,9 +42,10 @@ public class AutoSPKUP extends Command {
           else
           {
           //RobotContainer.m_swerve.Drive(new Translation2d(), _Omega, false, false);
+          double _distance=AutoShootConstants.HightDifference/Math.atan(LimelightHelpers.getTY("limelight")+LimelightConstants.LLAngle);
         
           _TargetDegree=AutoShootConstants.ArmTable.getOutput(LimelightHelpers.getTY("limelight"));
-          _TargetRPS=AutoShootConstants.RPSTable.getOutput(LimelightHelpers.getTY("limelight"));
+          _TargetRPS=AutoShootConstants.RPSTable.getOutput(_distance);
 
           m_State=AutoShootState.Accelerate;
           }

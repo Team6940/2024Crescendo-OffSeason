@@ -6,7 +6,6 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.IntakerConstants;
 
@@ -14,7 +13,6 @@ public class Intaker extends SubsystemBase{
     public static Intaker m_Instance;
     
     private static TalonFX m_Intaker = new TalonFX(IntakerConstants.Intaker_ID);
-    DigitalInput m_Sensor = new DigitalInput(IntakerConstants.Sensor_ID);
 
     private MotorOutputConfigs m_OutputConfigs=new MotorOutputConfigs();
     private Slot0Configs m_Slot0Configs = new Slot0Configs();
@@ -49,19 +47,6 @@ public class Intaker extends SubsystemBase{
 
     public double GetOutput(){
         return m_Intaker.get();
-    }
-
-    public boolean HasNote(){
-        return !m_Sensor.get();
-    }
-
-    public void NoteIn(){
-        if(HasNote()) SetOutput(0);
-        else SetOutput(IntakerConstants.NoteInOutput);
-    }
-
-    public void NoteOut(){
-        SetOutput(IntakerConstants.NoteOutOutput);
     }
 
     @Override

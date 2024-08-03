@@ -81,8 +81,8 @@ public class Arm extends SubsystemBase{
 
     @Override
     public void periodic(){
-        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
-        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        // m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        // m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
         SmartDashboard.putNumber("LeftArmPos", m_ArmLeft.getPosition().getValue());
         SmartDashboard.putNumber("RightArmPos", m_ArmRight.getPosition().getValue());
         SmartDashboard.putNumber("LeftArmAngle", m_ArmLeft.getPosition().getValue()*360);
