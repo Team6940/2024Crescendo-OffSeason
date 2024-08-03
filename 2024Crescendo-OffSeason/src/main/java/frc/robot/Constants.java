@@ -89,7 +89,6 @@ public final class Constants {
 
   public static class IntakerConstants {
     public static final int Intaker_ID = 0;
-    public static final int Sensor_ID = 0;
 
     public static final double kP = 0.;
     public static final double kI = 0.;
@@ -97,7 +96,6 @@ public final class Constants {
 
     public static final double NoteInOutput = 0.;
     public static final double NoteOutOutput = 0.;
-    public static final double PassNoteOutput = 0.;
   }
 
   public static class ShooterConstants {
@@ -121,8 +119,8 @@ public final class Constants {
     public static final int Blocker_ID = 0;
     public static final int Sensor_ID = 30;
 
-    public static final double PassNoteOutput = 0.;
-    public static final double GiveNoteOutput = 0.;
+    public static final double NoteInOutput = 0.;//传递球到shooter前
+    public static final double GiveNoteOutput = 0.;//shooter加速完毕后给球
     public static final double AMPOutput = 0.;
   }
 
@@ -131,6 +129,7 @@ public final class Constants {
     public static final double kI=0.;
     public static final double DegreeTolerance=0.;
     public static final double RPSInAdvance=0.;
+    public static final double HightDifference=1.;//单位暂定meter
 
     public static final Point2D[] ArmPoints={
       new Point2D.Double(0,0)
@@ -347,5 +346,7 @@ public final class Constants {
   public static class LimelightConstants {
     public final static String SPKR_LLname = "SPKRLimelight";
     public final static String AUTP_LLname = "AUTPLimelight";
+
+    public final static double LLAngle = 0.;//ll视线相对水平面的仰角
   }
 }
