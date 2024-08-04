@@ -5,13 +5,14 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.BlockerConstants;
 
 public class Blocker extends SubsystemBase{
     public static Blocker m_Instance;
 
-    private static TalonFX m_Blocker = new TalonFX(BlockerConstants.Blocker_ID);
+    private TalonFX m_Blocker = new TalonFX(BlockerConstants.Blocker_ID,"*");
     final DutyCycleOut m_DutyCycleOut = new DutyCycleOut(0);
 
     DigitalInput m_Sensor = new DigitalInput(BlockerConstants.Sensor_ID);
@@ -40,6 +41,8 @@ public class Blocker extends SubsystemBase{
 
     @Override
     public void periodic(){
+        // m_Blocker.set(1);
         //SmartDashboard
+        SmartDashboard.putBoolean("HasNote",HasNote());
     }
 }

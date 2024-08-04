@@ -58,8 +58,8 @@ public static String m_PickLimelight=LimelightConstants.AUTP_LLname;
 public static String m_SPKRLimelight=LimelightConstants.SPKR_LLname;
 //         gyro.getConfigurator().apply(new Pigeon2Configuration());
 private static VisionIO visionIO = new VisionIO();
-public static DriveSubsystem m_Swerve = new DriveSubsystem( visionIO);
-private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
+public static DriveSubsystem m_Swerve = new DriveSubsystem();
+// private final objectTracker objectTracker = new objectTracker(visionIO, m_Swerve);
 public static CommandXboxController m_CommandController = new CommandXboxController(0);
 
 // public static SwerveDriveTrain m_Swerve = SwerveDriveTrain.GetInstance();

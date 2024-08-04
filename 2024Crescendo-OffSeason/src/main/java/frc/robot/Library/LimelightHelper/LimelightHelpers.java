@@ -686,7 +686,7 @@ public class LimelightHelpers {
     public static double getTY(String limelightName) {
         return getLimelightNTDouble(limelightName, "ty");
     }
-
+    
     public static double getTA(String limelightName) {
         return getLimelightNTDouble(limelightName, "ta");
     }
