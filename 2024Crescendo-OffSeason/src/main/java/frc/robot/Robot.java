@@ -121,6 +121,10 @@ public class Robot extends TimedRobot {
     {
       new NoteIntake(Button.kLeftBumper.value).schedule();;
     }
+    if(RobotContainer.m_driverController.getBButtonPressed())
+    {
+      new AMP(Button.kB.value, Button.kY.value).schedule();
+    }
     // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
     //   new PassNote().schedule();
     // }
@@ -144,15 +148,15 @@ public class Robot extends TimedRobot {
        RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
     
     }
-    if(RobotContainer.m_driverController.getPOVUp()){
-      RobotContainer.m_Arm.SetPCT(0.01);
-    }
-    else if(RobotContainer.m_driverController.getPOVDown()){
-      RobotContainer.m_Arm.SetPCT(-0.01);
-    }
-    else{
-      RobotContainer.m_Arm.SetPCT(0);
-    }
+    // if(RobotContainer.m_driverController.getPOVUp()){
+    //   RobotContainer.m_Arm.SetPCT(0.05);
+    // }
+    // else if(RobotContainer.m_driverController.getPOVDown()){
+    //   RobotContainer.m_Arm.SetPCT(-0.05);
+    // }
+    // else{
+    //   RobotContainer.m_Arm.SetPCT(0);
+    // }
   }
 
   /** This function is called once when the robot is first started up. */

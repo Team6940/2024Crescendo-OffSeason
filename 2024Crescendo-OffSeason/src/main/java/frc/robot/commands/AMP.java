@@ -11,6 +11,7 @@ public class AMP extends Command {
   private int m_ExecuteButtonID;
   public AMP(int _ButtonID,int _ExecuteButtonID){
       m_ButtonID=_ButtonID;
+      m_ExecuteButtonID=_ExecuteButtonID;
       addRequirements(RobotContainer.m_Blocker);
       addRequirements(RobotContainer.m_Arm);
     }
