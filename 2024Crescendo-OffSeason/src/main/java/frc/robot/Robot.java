@@ -86,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    RobotContainer.m_Arm.ZeroArmPosition();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -144,11 +144,15 @@ public class Robot extends TimedRobot {
        RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
     
     }
-    if(RobotContainer.m_driverController.getPOV() == 180.){
-      
+    if(RobotContainer.m_driverController.getPOVUp()){
+      RobotContainer.m_Arm.SetPCT(0.01);
     }
-    
-      
+    else if(RobotContainer.m_driverController.getPOVDown()){
+      RobotContainer.m_Arm.SetPCT(-0.01);
+    }
+    else{
+      RobotContainer.m_Arm.SetPCT(0);
+    }
   }
 
   /** This function is called once when the robot is first started up. */
