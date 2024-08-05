@@ -16,18 +16,28 @@ import frc.robot.Constants.LimelightConstants;;
 
 /** An example command that uses an example subsystem. */
 public class TestSPKUP extends Command {
-  private int m_ButtonID;
+  // private int m_ButtonID;
   AutoShootState m_State;
   double m_TargetDegree;
   double m_TargetRPS;
   PIDController m_PidController;
-  public TestSPKUP(int _ButtonID,double _TargetArmAngle,double _TargetRPS){
-    m_ButtonID=_ButtonID;
+  private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
+  private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
+  public TestSPKUP(double _TargetArmAngle,double _TargetRPS){
+    // m_ButtonID=_ButtonID;
     m_TargetDegree=_TargetArmAngle;
     m_TargetRPS=_TargetRPS;
     addRequirements(RobotContainer.m_Shooter);
     addRequirements(RobotContainer.m_Arm);
-    }
+  }
+
+  public TestSPKUP(){
+    // m_ButtonID=_ButtonID;
+    m_TargetDegree=m_TestArmValue.get();
+    m_TargetRPS=m_TestRPSValue.get();
+    addRequirements(RobotContainer.m_Shooter);
+    addRequirements(RobotContainer.m_Arm);
+  }
   enum AutoShootState {
     Aim,Accelerate,Shoot;
   }
@@ -47,7 +57,7 @@ public class TestSPKUP extends Command {
           }
           else
           {
-          //RobotContainer.m_swerve.Drive(new Translation2d(), _Omega, false, false);
+          RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
         
           
           m_State=AutoShootState.Accelerate;
@@ -103,7 +113,8 @@ public class TestSPKUP extends Command {
 
   @Override
   public boolean isFinished() {
-    if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
-    else return true;
+    // if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
+    // else return true;
+    return false;
   }
 }

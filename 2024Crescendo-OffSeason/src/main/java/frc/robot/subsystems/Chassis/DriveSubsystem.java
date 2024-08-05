@@ -84,9 +84,10 @@ public class DriveSubsystem extends SubsystemBase {
     DriveMode currentDriveMode=DriveMode.STOP;
     public DriveSubsystem() {
         // this.m_visionIO=visionIO;
-        this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID);
+        this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID,"canivore");
         this.m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.m_gyro.reset();
+        
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
             new SwerveModule(1, Constants.SwerveConstants.Mod1.constants),

@@ -8,6 +8,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import frc.robot.Library.team2910.math.MathUtils;
 import frc.robot.Library.team1678.math.Conversions;
+import frc.robot.Library.NumberLimiter;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -34,7 +35,7 @@ public class Arm extends SubsystemBase{
     }
 
     private void ArmConfig(){
-        m_ArmLeftConfig.MotorOutput.NeutralMode=NeutralModeValue.Coast;
+        m_ArmLeftConfig.MotorOutput.NeutralMode=NeutralModeValue.Brake;
         m_ArmLeftConfig.MotorOutput.Inverted=InvertedValue.CounterClockwise_Positive;//TODO
         m_ArmLeftConfig.MotorOutput.PeakForwardDutyCycle=1;
         m_ArmLeftConfig.MotorOutput.PeakReverseDutyCycle=-1;
@@ -59,8 +60,19 @@ public class Arm extends SubsystemBase{
         m_ArmRight.setPosition(ArmConstants.ArmDefaultDegree/360.);
     }
 
+    public void ZeroArmPosition(){
+        m_ArmLeft.setPosition(ArmConstants.ArmDefaultDegree/360.);
+        m_ArmRight.setPosition(ArmConstants.ArmDefaultDegree/360.);
+    }
+
     public void SetArmDegree(double _degree){
+        _degree = NumberLimiter.Limit(-72.29, 100., _degree);
         _rotation=_degree/360.;
+    }
+
+    public void SetPCT(double _PCT){
+        m_ArmLeft.set(_PCT);
+        m_ArmRight.set(_PCT);
     }
 
     public double GetArmDegree(){

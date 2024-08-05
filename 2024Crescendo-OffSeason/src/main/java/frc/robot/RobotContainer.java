@@ -7,9 +7,7 @@ package frc.robot;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Library.team1706.MathUtils;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.commands.ManualDrive;
+import frc.robot.commands.*;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Blocker;
 import frc.robot.subsystems.Climber;
@@ -91,10 +89,10 @@ public RobotContainer() {
  * joysticks}.
  */
 private void configureKeyBindings() {
-  m_CommandController.a().onTrue(Commands.runOnce(()->m_Arm.SetArmDegree(-60.)));
-  m_CommandController.b().onTrue(Commands.runOnce(()->m_Arm.SetArmDegree(0.)));
-  m_CommandController.y().onTrue(Commands.runOnce(()->m_Arm.SetArmDegree(30.)));
-  m_CommandController.x().onTrue(Commands.runOnce(()->m_Arm.SetArmDegree(-72.29)));
+  // m_CommandController.a().whileTrue(new TestSPKUP());
+  // m_CommandController.b().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.2)));
+  // m_CommandController.x().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.8)));
+  // m_CommandController.y().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0)));
 }
 
 /**

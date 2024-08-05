@@ -6,6 +6,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.ShooterConstants;
@@ -53,7 +54,7 @@ public class Shooter extends SubsystemBase{
     public void SetRPS(double _RPS){
         m_TargetRPS=_RPS;
         m_ShooterLeft.setControl(m_DutyCycle.withVelocity(_RPS));
-        m_ShooterRight.setControl(m_DutyCycle.withVelocity(_RPS));
+        m_ShooterRight.setControl(m_DutyCycle.withVelocity(_RPS+5));
     }
 
     public void SetPCT(double _PCT){
@@ -78,11 +79,12 @@ public class Shooter extends SubsystemBase{
     }
 
     public boolean IsShooterReady(){
-        return IsAtTargetRPS()&&IsRPSSimilar();
+        return IsAtTargetRPS();
     }
 
     @Override
     public void periodic(){
-        //SmartDashboard
+        SmartDashboard.putNumber("LeftRPS", m_ShooterLeft.getVelocity().getValue());
+        SmartDashboard.putNumber("RightRPS", m_ShooterRight.getVelocity().getValue());
     }
 }
