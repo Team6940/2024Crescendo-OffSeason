@@ -16,13 +16,13 @@ import frc.robot.Constants.ArmConstants;
 public class Arm extends SubsystemBase{
     public static Arm m_Instance;
     private static TalonFX m_ArmLeft = new TalonFX(ArmConstants.ArmLeft_ID, "canivore");
-    private static TalonFX m_ArmRight = new TalonFX(ArmConstants.ArmRight_ID, "canivore");
+    private static TalonFX m_ArmRight = new TalonFX(ArmConstants.ArmRight_ID, "rio");
 
     private TalonFXConfiguration m_ArmLeftConfig = new TalonFXConfiguration();
     private TalonFXConfiguration m_ArmRightConfig = new TalonFXConfiguration();
     private MotionMagicDutyCycle m_MotionMagicDutyCycle = new MotionMagicDutyCycle(0, false, 0., 0, true, false, false);
 
-    private double _rotation;
+    private double _rotation=ArmConstants.ArmDefaultDegree/360.;
 
     public static Arm GetInstance()
     {
@@ -81,8 +81,8 @@ public class Arm extends SubsystemBase{
 
     @Override
     public void periodic(){
-        // m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
-        // m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        m_ArmLeft.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
+        m_ArmRight.setControl(m_MotionMagicDutyCycle.withPosition(_rotation));
         SmartDashboard.putNumber("LeftArmPos", m_ArmLeft.getPosition().getValue());
         SmartDashboard.putNumber("RightArmPos", m_ArmRight.getPosition().getValue());
         SmartDashboard.putNumber("LeftArmAngle", m_ArmLeft.getPosition().getValue()*360);

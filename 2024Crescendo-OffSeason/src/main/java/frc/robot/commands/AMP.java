@@ -8,7 +8,8 @@ import frc.robot.Constants.BlockerConstants;
 /** An example command that uses an example subsystem. */
 public class AMP extends Command {
   private int m_ButtonID;
-  public AMP(int _ButtonID){
+  private int m_ExecuteButtonID;
+  public AMP(int _ButtonID,int _ExecuteButtonID){
       m_ButtonID=_ButtonID;
       addRequirements(RobotContainer.m_Blocker);
       addRequirements(RobotContainer.m_Arm);
@@ -20,8 +21,11 @@ public class AMP extends Command {
 
   @Override
   public void execute() {
-    if(RobotContainer.m_Arm.IsAtTargetDegree())
-      RobotContainer.m_Blocker.SetOutPut(BlockerConstants.AMPOutput);;
+    if(RobotContainer.m_Arm.IsAtTargetDegree()&&RobotContainer.m_driverController.getButton(m_ExecuteButtonID))
+      RobotContainer.m_Blocker.SetOutPut(BlockerConstants.AMPOutput);
+    else{
+      RobotContainer.m_Blocker.SetOutPut(0.);
+    }
   }
 
   @Override
