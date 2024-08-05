@@ -28,13 +28,14 @@ public class SemiAutoPick extends Command {
                                       AutoAlignConstants.kAutoAlignMovementI, 
                                       AutoAlignConstants.kAutoAlignMovementD);
     m_LRController.reset();
+    m_LRController.setSetpoint(0);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double _controllerX=m_LRController.calculate(LimelightHelpers.getTX(RobotContainer.m_PickLimelight));
-    double _controllerY=RobotContainer.m_driverController.getLeftY();
+    double _controllerY=m_LRController.calculate(LimelightHelpers.getTX(RobotContainer.m_PickLimelight));
+    double _controllerX=RobotContainer.m_driverController.getLeftY();
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);

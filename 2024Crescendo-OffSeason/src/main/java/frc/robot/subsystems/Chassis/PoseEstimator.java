@@ -22,6 +22,7 @@ import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Constants;
+import frc.robot.Constants.PoseEstimatorConstants;
 
 /** Add your docs here. */
 public class PoseEstimator {
@@ -31,6 +32,7 @@ public class PoseEstimator {
     public NavigableMap<Double, Pose2d> robotPoseBuffer = new TreeMap<>();//TODO: limit size to save memory
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
+        PoseEstimatorConstants.tAtoDev.put(0., 0.);
         sEstimator = new SwerveDrivePoseEstimator(
             Constants.SwerveConstants.swerveKinematics, 
             new Rotation2d(), 

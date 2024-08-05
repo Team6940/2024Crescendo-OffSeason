@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -16,6 +17,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ManualSPKDown;
 import frc.robot.commands.ManualSPKUp;
 import frc.robot.commands.NoteIntake;
+import frc.robot.commands.SemiAutoPick;
 import frc.robot.commands.TestSPKUP;
 // import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
@@ -84,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    RobotContainer.m_Arm.ZeroArmPosition();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -105,18 +107,19 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.m_Swerve.zeroHeading();
+    RobotContainer.m_Swerve.zeroHeading();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    
     if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
       new AutoSPKUP(Button.kRightBumper.value).schedule();;
     }
     if(RobotContainer.m_driverController.getLeftBumperPressed())
     {
-      new NoteIntake(Button.kLeftBumper.value).schedule();
+      new NoteIntake(Button.kLeftBumper.value).schedule();;
     }
     // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
     //   new PassNote().schedule();
@@ -131,7 +134,26 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if(RobotContainer.m_driverController.getAButton())
+    {
+      RobotContainer.m_Swerve.drive(new Translation2d(2, 0), 0, false);
+    }
+    else
+    {
+       RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
+    
+    }
+    if(RobotContainer.m_driverController.getPOVUp()){
+      RobotContainer.m_Arm.SetPCT(0.01);
+    }
+    else if(RobotContainer.m_driverController.getPOVDown()){
+      RobotContainer.m_Arm.SetPCT(-0.01);
+    }
+    else{
+      RobotContainer.m_Arm.SetPCT(0);
+    }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

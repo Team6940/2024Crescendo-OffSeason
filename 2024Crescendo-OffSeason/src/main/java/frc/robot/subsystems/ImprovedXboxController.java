@@ -108,4 +108,19 @@ public class ImprovedXboxController extends XboxController {
         }
         return getRawButton(button);
     }
+    public boolean POVPressed(){
+        return this.getPOV()>=0;
+    }
+    public boolean getPOVUp(){
+        return this.getPOV()==0;
+    }
+    public boolean getPOVRight(){
+        return this.getPOV()==90;
+    }
+    public boolean getPOVDown(){
+        return this.getPOV()==180;
+    }
+    public boolean getPOVLeft(){
+        return this.getPOV()==270;
+    }
 }
