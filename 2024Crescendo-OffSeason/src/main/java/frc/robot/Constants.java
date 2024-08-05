@@ -76,13 +76,13 @@ public final class Constants {
     public static final double kS = 0.;
     public static final double kG = 0.;
 
-    public static final double ArmVelocity = 0.25;
-    public static final double ArmAcceleration = 1.7;
+    public static final double ArmVelocity = 1.;
+    public static final double ArmAcceleration = 3.4;
 
     public static final double ArmTolerence = 1.;
 
     public static final double ArmDefaultDegree = -72.29;
-    public static final double ArmAMPDegree = 0.;
+    public static final double ArmAMPDegree = 45.;
     public static final double ArmUpSPKDegree = 0.;
     public static final double ArmDownSPKDegree = 0.;
   }
@@ -124,7 +124,7 @@ public final class Constants {
     public static final double NoteOutOutput = -1.;//传递球到shooter前
     public static final double NoteInOutput = 1.;//传递球到shooter前
     public static final double GiveNoteOutput = 1.;//shooter加速完毕后给球
-    public static final double AMPOutput = 0.;
+    public static final double AMPOutput = -1.;
   }
 
   public static class AutoShootConstants{

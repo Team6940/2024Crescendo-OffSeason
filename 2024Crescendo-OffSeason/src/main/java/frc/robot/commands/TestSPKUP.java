@@ -21,8 +21,8 @@ public class TestSPKUP extends Command {
   double m_TargetDegree;
   double m_TargetRPS;
   PIDController m_PidController;
-  private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
-  private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
+  // private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
+  // private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
   public TestSPKUP(double _TargetArmAngle,double _TargetRPS){
     // m_ButtonID=_ButtonID;
     m_TargetDegree=_TargetArmAngle;
@@ -33,8 +33,8 @@ public class TestSPKUP extends Command {
 
   public TestSPKUP(){
     // m_ButtonID=_ButtonID;
-    m_TargetDegree=m_TestArmValue.get();
-    m_TargetRPS=m_TestRPSValue.get();
+    // m_TargetDegree=m_TestArmValue.get();
+    // m_TargetRPS=m_TestRPSValue.get();
     addRequirements(RobotContainer.m_Shooter);
     addRequirements(RobotContainer.m_Arm);
   }
@@ -113,8 +113,8 @@ public class TestSPKUP extends Command {
 
   @Override
   public boolean isFinished() {
-    // if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
-    // else return true;
-    return false;
+    if(RobotContainer.m_driverController.getBButton()) return false;
+    else return true;
+    // return false;
   }
 }

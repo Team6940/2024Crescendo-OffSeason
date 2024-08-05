@@ -89,7 +89,7 @@ public RobotContainer() {
  * joysticks}.
  */
 private void configureKeyBindings() {
-  // m_CommandController.a().whileTrue(new TestSPKUP());
+  // m_CommandController.b().whileTrue(new TestSPKUP());
   // m_CommandController.b().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.2)));
   // m_CommandController.x().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.8)));
   // m_CommandController.y().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0)));
