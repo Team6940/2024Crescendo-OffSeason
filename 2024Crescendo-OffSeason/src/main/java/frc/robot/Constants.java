@@ -351,7 +351,7 @@ public final class Constants {
     public static final double kAutoAlignRotationI=0;
     public static final double kAutoAlignRotationD=0;
     
-    public static final double kAutoAlignMovementP=1;
+    public static final double kAutoAlignMovementP=0.07;
     public static final double kAutoAlignMovementI=0;
     public static final double kAutoAlignMovementD=0;
   }

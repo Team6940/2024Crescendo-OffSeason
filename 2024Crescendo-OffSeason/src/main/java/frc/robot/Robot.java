@@ -117,13 +117,17 @@ public class Robot extends TimedRobot {
     if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
       new AutoSPKUP(Button.kRightBumper.value).schedule();;
     }
+    if(RobotContainer.m_driverController.getLeftStickButtonPressed())
+    {
+      new SemiAutoPick(Button.kLeftStick.value).schedule();;
+    }
     if(RobotContainer.m_driverController.getLeftBumperPressed())
     {
       new NoteIntake(Button.kLeftBumper.value).schedule();;
     }
     if(RobotContainer.m_driverController.getBButtonPressed())
     {
-      new AMP(Button.kB.value, Button.kY.value).schedule();
+      new AMP(Button.kB.value, Button.kRightTrigger.value).schedule();
     }
     // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
     //   new PassNote().schedule();
