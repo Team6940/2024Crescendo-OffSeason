@@ -76,69 +76,83 @@ public final class Constants {
     public static final double kS = 0.;
     public static final double kG = 0.;
 
-    public static final double ArmVelocity = 0.25;
-    public static final double ArmAcceleration = 1.7;
+    public static final double ArmVelocity = 1.;
+    public static final double ArmAcceleration = 3.4;
 
-    public static final double ArmTolerence = 0.;
+    public static final double ArmTolerence = 1.;
 
     public static final double ArmDefaultDegree = -72.29;
-    public static final double ArmAMPDegree = 0.;
+    public static final double ArmAMPDegree = 45.;
     public static final double ArmUpSPKDegree = 0.;
     public static final double ArmDownSPKDegree = 0.;
   }
 
   public static class IntakerConstants {
-    public static final int Intaker_ID = 0;
+    public static final int Intaker_ID = 20;
 
     public static final double kP = 0.;
     public static final double kI = 0.;
     public static final double kD = 0.;
 
-    public static final double NoteInOutput = 0.;
-    public static final double NoteOutOutput = 0.;
+    public static final double NoteInOutput = 1.;
+    public static final double NoteOutOutput = -1.;
+
+    public static final int Sensor_ID = 0;
   }
 
   public static class ShooterConstants {
-    public static final int ShooterLeft_ID=15;
-    public static final int ShooterRight_ID=16;
+    public static final int ShooterLeft_ID=0;
+    public static final int ShooterRight_ID=23;
 
-    public static final double kP = 0.;
+    public static final double kP = 0.1;
     public static final double kI = 0.;
-    public static final double kD = 0.;
-    public static final double kF = 0.;
-    public static final double kV = 0.;
+    public static final double kD = 0.012;
+    public static final double kS = 0.25;
+    public static final double kV = 0.11458;
 
-    public static final double ShooterDifferenceTolerence = 0.;
-    public static final double ShooterSpeedTolerence = 0.;
+    public static final double ShooterDifferenceTolerence = 0.5;
+    public static final double ShooterSpeedTolerence = 1.;
 
     public static final double ShooterAMPRPS = 0.;
     public static final double ShooterManualSPKRPS = 0.;
   }
 
   public static class BlockerConstants {
-    public static final int Blocker_ID = 0;
-    public static final int Sensor_ID = 30;
+    public static final int Blocker_ID = 30;
+    public static final int Sensor_ID = 2;
 
-    public static final double NoteInOutput = 0.;//传递球到shooter前
-    public static final double GiveNoteOutput = 0.;//shooter加速完毕后给球
-    public static final double AMPOutput = 0.;
+    public static final double NoteOutOutput = -1.;//传递球到shooter前
+    public static final double NoteInOutput = 1.;//传递球到shooter前
+    public static final double GiveNoteOutput = 1.;//shooter加速完毕后给球
+    public static final double AMPOutput = -1.;
   }
 
   public static class AutoShootConstants{
-    public static final double kP=0.;
+    public static final double kP=0.12;
     public static final double kI=0.;
-    public static final double DegreeTolerance=0.;
-    public static final double RPSInAdvance=0.;
+    public static final double kD=0.0;
+    public static final double DegreeTolerance=2.;
+    public static final double VelocityTolerance=16.;
+    public static final double RPSInAdvance=30;
     public static final double HightDifference=1.;//单位暂定meter
 
     public static final Point2D[] ArmPoints={
-      new Point2D.Double(0,0)
+      new Point2D.Double(18.04,-33),
+      new Point2D.Double(13.31,-39),
+      new Point2D.Double(2.87,-51),
+      new Point2D.Double(3.15,-57),
+      new Point2D.Double(-2.31,-67),
+      new Point2D.Double(-6.89,-70)
     };
     public static final Point2D[] RPSPoints={
-      new Point2D.Double(0,0)
+      new Point2D.Double(18.04,40),
+      
+      new Point2D.Double(-2.34,50),
+      
+      new Point2D.Double(-6.89,60)
     };
-    public static final LinearInterpolationTable ArmTable=new LinearInterpolationTable(ArmPoints);
-    public static final LinearInterpolationTable RPSTable=new LinearInterpolationTable(RPSPoints);
+    public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
+    public static final InterpolatingDoubleTreeMap RPSTable=new InterpolatingDoubleTreeMap();
   }
 
   public static class GlobalConstants {
@@ -146,8 +160,9 @@ public final class Constants {
   }
 
   public static class DriveConstants {
-    public final static double kInnerDeadband = 0.01;
+    public final static double kInnerDeadband = 0.004;
     public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
+    public static final int IntakeButton = 0;
   }
 
   public static final class SwerveConstants { // From 8814
@@ -209,20 +224,21 @@ public final class Constants {
     public static final double angleKV = 3;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 0.001; // TODO: This must be tuned to specific robot
+    public static final double driveKP = 2.1; // TODO: This must be tuned to specific robot
     public static final double driveKI = 0.0;
     public static final double driveKD = 0;// 0.0;
     public static final double driveKF = 0.0;// 0.0;
 
     /* Drive Motor Characterization Values From SYSID */
-    public static final double driveKS = 0.14185; // TODO: This must be tuned to specific robot
-    public static final double driveKV = 3.00;
+    public static final double driveKS = 0.13; // TODO: This must be tuned to specific robot
+    public static final double driveKV = 3
+    ;
     public static final double driveKA = 0;
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 2.; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 1.6; // TODO: This must be tuned to specific robot
+    public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 8; // TODO: This must be tuned to specific robot
 
     public static final double maxAcceleration = 4;
     public static final double maxDeceleration = 30;
@@ -260,7 +276,7 @@ public final class Constants {
       public static final int canCoderID = 6;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(142.3828125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(143.3828125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -284,7 +300,7 @@ public final class Constants {
       public static final int canCoderID = 9;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-88.60);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-87.60);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -313,6 +329,7 @@ public final class Constants {
     public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
     public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
     public static final InterpolatingDoubleTreeMap tAtoDev=new InterpolatingDoubleTreeMap();
+    
   }
 
   public static final class AutoConstants { // TODO: The below constants are used in the example auto, and must be tuned
@@ -344,8 +361,8 @@ public final class Constants {
   }
 
   public static class LimelightConstants {
-    public final static String SPKR_LLname = "SPKRLimelight";
-    public final static String AUTP_LLname = "AUTPLimelight";
+    public final static String SPKR_LLname = "limelight-spkr";
+    public final static String AUTP_LLname = "limelight-pick";
 
     public final static double LLAngle = 0.;//ll视线相对水平面的仰角
   }

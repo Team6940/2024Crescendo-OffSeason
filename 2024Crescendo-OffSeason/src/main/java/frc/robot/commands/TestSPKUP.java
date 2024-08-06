@@ -7,39 +7,45 @@ import edu.wpi.first.math.controller.PIDController;
 import frc.robot.RobotContainer;
 import frc.robot.Library.LimelightHelper.LimelightHelpers;
 import frc.robot.Library.team2910.control.PidController;
+import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.Constants.AutoAlignConstants;
 import frc.robot.Constants.BlockerConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.LimelightConstants;;
 
 /** An example command that uses an example subsystem. */
-public class AutoSPKUP extends Command {
-  private int m_ButtonID;
+public class TestSPKUP extends Command {
+  // private int m_ButtonID;
+  AutoShootState m_State;
+  double m_TargetDegree;
+  double m_TargetRPS;
+  PIDController m_PidController;
+  // private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
+  // private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
+  public TestSPKUP(double _TargetArmAngle,double _TargetRPS){
+    // m_ButtonID=_ButtonID;
+    m_TargetDegree=_TargetArmAngle;
+    m_TargetRPS=_TargetRPS;
+    addRequirements(RobotContainer.m_Shooter);
+    addRequirements(RobotContainer.m_Arm);
+  }
+
+  public TestSPKUP(){
+    // m_ButtonID=_ButtonID;
+    // m_TargetDegree=m_TestArmValue.get();
+    // m_TargetRPS=m_TestRPSValue.get();
+    addRequirements(RobotContainer.m_Shooter);
+    addRequirements(RobotContainer.m_Arm);
+  }
   enum AutoShootState {
     Aim,Accelerate,Shoot;
   }
-  AutoShootState m_State;
-  double _TargetDegree;
-  double _TargetRPS;
-  PIDController m_PidController;
-  public AutoSPKUP(int _ButtonID){
-    m_ButtonID=_ButtonID;
-    // m_PidController.setTolerance(AutoShootConstants.DegreeTolerance);
-    addRequirements(RobotContainer.m_Shooter);
-    addRequirements(RobotContainer.m_Arm);
-    // for(var a: AutoShootConstants.ArmPoints)
-    // AutoShootConstants.ArmTable.put(a.getX(),a.getY());
-    // for(var a: AutoShootConstants.RPSPoints)
-    // AutoShootConstants.RPSTable.put(a.getX(),a.getY());
-    addRequirements(RobotContainer.m_Swerve);
-    }
   
   void Aim(){
         double _Omega=0.; 
         RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
-        if(LimelightHelpers.getTV(RobotContainer.m_SPKRLimelight))
+        if(LimelightHelpers.getTV("limelight"))
         {
           // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
           // _Omega=-AutoShootCommandConstants.NewShootFixingOmega;
@@ -47,16 +53,13 @@ public class AutoSPKUP extends Command {
           // _Omega=AutoShootCommandConstants.NewShootFixingOmega;
           if(!m_PidController.atSetpoint())
           {
-            _Omega=m_PidController.calculate(-LimelightHelpers.getTX(RobotContainer.m_SPKRLimelight));
-            SmartDashboard.putNumber("Omega", _Omega);
+            _Omega=m_PidController.calculate(LimelightHelpers.getTX(RobotContainer.m_SPKRLimelight));
           }
           else
           {
           RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
         
-          _TargetDegree=AutoShootConstants.ArmTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
-          _TargetRPS=AutoShootConstants.RPSTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
-
+          
           m_State=AutoShootState.Accelerate;
           }
         }
@@ -64,8 +67,8 @@ public class AutoSPKUP extends Command {
   }
 
   void Accelerate(){
-    RobotContainer.m_Arm.SetArmDegree(_TargetDegree);
-    RobotContainer.m_Shooter.SetRPS(_TargetRPS);
+    RobotContainer.m_Arm.SetArmDegree(m_TargetDegree);
+    RobotContainer.m_Shooter.SetRPS(m_TargetRPS);
     if(RobotContainer.m_Arm.IsAtTargetDegree()&&RobotContainer.m_Shooter.IsAtTargetRPS())
     {
         m_State=AutoShootState.Shoot;
@@ -80,8 +83,8 @@ public class AutoSPKUP extends Command {
 
   @Override
   public void initialize() {
-    m_State=AutoShootState.Aim;
-    m_PidController=new PIDController(AutoShootConstants.kP, AutoShootConstants.kI, AutoShootConstants.kD);
+    m_State=AutoShootState.Accelerate;
+    m_PidController=new PIDController(AutoShootConstants.kP, AutoShootConstants.kI, 0.);
     m_PidController.setSetpoint(0.);
     //m_PidController.setIZone(5);
     m_PidController.setTolerance(AutoShootConstants.DegreeTolerance);
@@ -110,7 +113,8 @@ public class AutoSPKUP extends Command {
 
   @Override
   public boolean isFinished() {
-    if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
+    if(RobotContainer.m_driverController.getBButton()) return false;
     else return true;
+    // return false;
   }
 }

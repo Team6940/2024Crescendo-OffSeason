@@ -1,38 +1,38 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.BlockerConstants;
-
+import frc.robot.Constants.IntakerConstants;
+import frc.robot.commands.Rumble;
 /** An example command that uses an example subsystem. */
-public class AMP extends Command {
+public class NoteOut extends Command {
   private int m_ButtonID;
-  private int m_ExecuteButtonID;
-  public AMP(int _ButtonID,int _ExecuteButtonID){
+  public NoteOut(int _ButtonID){
       m_ButtonID=_ButtonID;
-      m_ExecuteButtonID=_ExecuteButtonID;
+      addRequirements(RobotContainer.m_Intaker);
       addRequirements(RobotContainer.m_Blocker);
       addRequirements(RobotContainer.m_Arm);
     }
   @Override
   public void initialize() {
-    RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmAMPDegree);
+    RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
   }
 
   @Override
   public void execute() {
-    if(RobotContainer.m_Arm.IsAtTargetDegree()&&RobotContainer.m_driverController.getButton(m_ExecuteButtonID))
-      RobotContainer.m_Blocker.SetOutPut(BlockerConstants.AMPOutput);
-    else{
-      RobotContainer.m_Blocker.SetOutPut(0.);
-    }
+    RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
+    
+    RobotContainer.m_Intaker.SetOutput(IntakerConstants.NoteOutOutput);
+    RobotContainer.m_Blocker.SetOutPut(BlockerConstants.NoteOutOutput);
   }
 
   @Override
   public void end(boolean interrupted) {
-      RobotContainer.m_Blocker.SetOutPut(0);
-      RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
+    RobotContainer.m_Intaker.SetOutput(0);
+    RobotContainer.m_Blocker.SetOutPut(0);
   }
 
   @Override

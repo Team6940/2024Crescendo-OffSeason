@@ -24,6 +24,7 @@ public class NoteIntake extends Command {
   @Override
   public void execute() {
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
+    
     RobotContainer.m_Intaker.SetOutput(IntakerConstants.NoteInOutput);
     RobotContainer.m_Blocker.SetOutPut(BlockerConstants.NoteInOutput);
   }

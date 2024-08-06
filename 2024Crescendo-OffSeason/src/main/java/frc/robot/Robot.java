@@ -4,14 +4,25 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.*;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.Library.team3476.net.editing.LiveEditableValue;
+import frc.robot.commands.AMP;
+import frc.robot.commands.AutoSPKUP;
+import frc.robot.commands.Autos;
+import frc.robot.commands.ManualSPKDown;
+import frc.robot.commands.ManualSPKUp;
+import frc.robot.commands.NoteIntake;
+import frc.robot.commands.SemiAutoPick;
+import frc.robot.commands.TestSPKUP;
+// import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.subsystems.ImprovedXboxController.Button;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -26,7 +37,9 @@ public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
+  private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
 
+  private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
 
 
   /**
@@ -38,6 +51,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    RobotContainer.m_Swerve.resetModulesToAbsolute();
   }
 
   /**
@@ -54,6 +68,7 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+  
     SmartDashboard.putNumber("XboxLeftX", RobotContainer.m_driverController.getLeftX());
     SmartDashboard.putNumber("XboxLeftY", RobotContainer.m_driverController.getLeftY());
     SmartDashboard.putNumber("XboxRightX", RobotContainer.m_driverController.getRightX());
@@ -71,7 +86,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
+    RobotContainer.m_Arm.ZeroArmPosition();
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
@@ -92,23 +107,23 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    m_robotContainer.m_Swerve.zeroHeading();
+    RobotContainer.m_Swerve.zeroHeading();
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    // if(RobotContainer.m_driverController.getAButton()){//TODO AMP按钮
-    //   new AMP(1).schedule();
-    // }
-    // if(RobotContainer.m_driverController.getAButton()){//TODO ManualSPKDown按钮
-    //   new ManualSPKDown(1).schedule();
-    // }
-    // if(RobotContainer.m_driverController.getAButton()){//TODO ManualSPKUp按钮
-    //   new ManualSPKUp(1).schedule();
-    // }
-    if(RobotContainer.m_driverController.getAButton()){//TODO NoteIntake按钮
-       new testCommand(1).schedule();
+    
+    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
+      new AutoSPKUP(Button.kRightBumper.value).schedule();;
+    }
+    if(RobotContainer.m_driverController.getLeftBumperPressed())
+    {
+      new NoteIntake(Button.kLeftBumper.value).schedule();;
+    }
+    if(RobotContainer.m_driverController.getBButtonPressed())
+    {
+      new AMP(Button.kB.value, Button.kY.value).schedule();
     }
     // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
     //   new PassNote().schedule();
@@ -123,7 +138,26 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    if(RobotContainer.m_driverController.getAButton())
+    {
+      RobotContainer.m_Swerve.drive(new Translation2d(2, 0), 0, false);
+    }
+    else
+    {
+       RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
+    
+    }
+    // if(RobotContainer.m_driverController.getPOVUp()){
+    //   RobotContainer.m_Arm.SetPCT(0.05);
+    // }
+    // else if(RobotContainer.m_driverController.getPOVDown()){
+    //   RobotContainer.m_Arm.SetPCT(-0.05);
+    // }
+    // else{
+    //   RobotContainer.m_Arm.SetPCT(0);
+    // }
+  }
 
   /** This function is called once when the robot is first started up. */
   @Override

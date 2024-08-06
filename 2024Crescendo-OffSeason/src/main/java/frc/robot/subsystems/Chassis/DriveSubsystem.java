@@ -58,7 +58,6 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 public class DriveSubsystem extends SubsystemBase {
 
     PoseEstimator m_poseEstimator;
-    VisionIO m_visionIO;
     Pigeon2 m_gyro;
 
     public SwerveModule[] mSwerveMods;
@@ -70,11 +69,9 @@ public class DriveSubsystem extends SubsystemBase {
     public Translation2d m_currentDesireVelocity=new Translation2d(0,0);
     public double m_currentDesireRotation=0;
 
-    private static final double PERIOD = 0.02;  // 50Hz (20ms period)
-    private Notifier odometryNotifier;
 
-    private final TeleopDriveController teleopDriveController;
-    private final AutoRotateAlignController autoRotateAlignController;
+    // private final TeleopDriveController teleopDriveController;
+    // private final AutoRotateAlignController autoRotateAlignController;
 
     private ChassisSpeeds desireSpeeds = new ChassisSpeeds();
 
@@ -85,11 +82,12 @@ public class DriveSubsystem extends SubsystemBase {
         AUTO_ALIGN,
     }
     DriveMode currentDriveMode=DriveMode.STOP;
-    public DriveSubsystem(VisionIO visionIO) {
-        this.m_visionIO=visionIO;
-        this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID);
+    public DriveSubsystem() {
+        // this.m_visionIO=visionIO;
+        this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID,"canivore");
         this.m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.m_gyro.reset();
+        
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
             new SwerveModule(1, Constants.SwerveConstants.Mod1.constants),
@@ -100,10 +98,9 @@ public class DriveSubsystem extends SubsystemBase {
 
         // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         m_poseEstimator=new PoseEstimator();
-        odometryNotifier = new Notifier(this::updateOdometry);
         // startOdometry();
-        teleopDriveController = new TeleopDriveController(m_poseEstimator);
-        autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
+        // teleopDriveController = new TeleopDriveController(m_poseEstimator);
+        // autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
         SmartDashboard.putData("Field",m_field);
     }
 
@@ -125,16 +122,16 @@ public class DriveSubsystem extends SubsystemBase {
     }
     
         
-    public Translation2d getDriverDesireSpeeds(){
-        return teleopDriveController.inputDesireVelocity;
-    }
-    public double getDriverDesireRotation(){
-        return teleopDriveController.inputRotation;
-    }
+    // public Translation2d getDriverDesireSpeeds(){
+    //     return teleopDriveController.inputDesireVelocity;
+    // }
+    // public double getDriverDesireRotation(){
+    //     return teleopDriveController.inputRotation;
+    // }
     private void updateOdometry() {
         // swerveOdometry.update(getGyroYaw(), getModulePositions());
         m_poseEstimator.updateSwerve(getGyroYaw(), getModulePositions());
-        LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().getDegrees(), m_gyro.getRate(), 0, 0, 0,0);
+        // LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_gyro.getAngle(), m_gyro.getRate(), 0, 0, 0,0);
          LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
       if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
@@ -142,17 +139,7 @@ public class DriveSubsystem extends SubsystemBase {
       }
         // SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
     }
-    public void stopOdometry() {
-        if (odometryNotifier != null) {
-            odometryNotifier.stop();
-        }
-    }
 
-    public void startOdometry() {
-        if (odometryNotifier != null) {
-            odometryNotifier.startPeriodic(PERIOD);
-        }
-    }
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
@@ -293,26 +280,26 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){      
+        updateOdometry();
+        // ChassisSpeeds teleopSpeeds = teleopDriveController.getDesireSpeeds();
+        // switch (currentDriveMode) {
+        //     case TELEOP -> {
+        //         teleopSpeeds = teleopDriveController.getDesireSpeeds();
+        //         // Plain teleop drive
+        //     }
+        //     case AUTO_ALIGN -> {
+        //         teleopSpeeds = autoRotateAlignController.getDesireSpeeds();
+        //     }
+        //     default ->{
+        //     }
+        // }        
+        // setChassisSpeeds(teleopSpeeds);
 
-        ChassisSpeeds teleopSpeeds = teleopDriveController.getDesireSpeeds();
-        switch (currentDriveMode) {
-            case TELEOP -> {
-                teleopSpeeds = teleopDriveController.getDesireSpeeds();
-                // Plain teleop drive
-            }
-            case AUTO_ALIGN -> {
-                teleopSpeeds = autoRotateAlignController.getDesireSpeeds();
-            }
-            default ->{
-            }
-        }        
-        setChassisSpeeds(teleopSpeeds);
-
-        List<TimestampedVisionUpdate> visionPoses=m_visionIO.getRobotPose3ds();
+        // List<TimestampedVisionUpdate> visionPoses=m_visionIO.getRobotPose3ds();
         // m_poseEstimator.visionInput(visionPoses,10*(Math.PI)/180);
 
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
-        SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
+        // SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
         //print debuging information
         for(SwerveModule mod : mSwerveMods){
             SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
