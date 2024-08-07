@@ -45,6 +45,7 @@ public class AutoSPKUP extends Command {
           // _Omega=-AutoShootCommandConstants.NewShootFixingOmega;
           // else if(LimelightHelpers.getTX("limelight")<-AutoShootCommandConstants.NewShootAngleTolerance)
           // _Omega=AutoShootCommandConstants.NewShootFixingOmega;
+          _TargetDegree=AutoShootConstants.ArmTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
           if(!m_PidController.atSetpoint())
           {
             _Omega=m_PidController.calculate(-LimelightHelpers.getTX(RobotContainer.m_SPKRLimelight));
@@ -54,11 +55,11 @@ public class AutoSPKUP extends Command {
           {
           RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
         
-          _TargetDegree=AutoShootConstants.ArmTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
           _TargetRPS=AutoShootConstants.RPSTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
 
           m_State=AutoShootState.Accelerate;
           }
+          RobotContainer.m_Arm.SetArmDegree(_TargetDegree);
         }
         RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
   }

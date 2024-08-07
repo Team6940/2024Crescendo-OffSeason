@@ -40,7 +40,6 @@ public class Intaker extends SubsystemBase{
 
         m_Intaker.getConfigurator().apply(m_OutputConfigs);
         m_Intaker.getConfigurator().apply(m_Slot0Configs);
-        
     }
     
     public void SetOutput(double _Out){
