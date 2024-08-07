@@ -32,7 +32,7 @@ public class Blocker extends SubsystemBase{
     }
 
     public void SetOutPut(double _PCT){
-        m_Blocker.setControl(m_DutyCycleOut.withOutput(_PCT));
+        m_Blocker.setControl(m_DutyCycleOut.withOutput(_PCT).withEnableFOC(true));
     }
 
     public boolean HasNote(){

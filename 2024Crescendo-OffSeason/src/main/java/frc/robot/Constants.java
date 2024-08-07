@@ -77,7 +77,7 @@ public final class Constants {
     public static final double kG = 0.;
 
     public static final double ArmVelocity = 1.;
-    public static final double ArmAcceleration = 3.4;
+    public static final double ArmAcceleration = 2;
 
     public static final double ArmTolerence = 1.;
 
@@ -214,7 +214,7 @@ public final class Constants {
      * loop driving.
      * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
      */
-    public static final double openLoopRamp = 0.25;
+    public static final double openLoopRamp = 0.;
     public static final double closedLoopRamp = 0;
 
     /* Angle Motor PID Values */
@@ -224,7 +224,7 @@ public final class Constants {
     public static final double angleKV = 3;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 2.1; // TODO: This must be tuned to specific robot
+    public static final double driveKP = 2.0; // TODO: This must be tuned to specific robot
     public static final double driveKI = 0.0;
     public static final double driveKD = 0;// 0.0;
     public static final double driveKF = 0.0;// 0.0;
@@ -240,7 +240,7 @@ public final class Constants {
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
     public static final double maxModuleSpeed = 8; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 4;
+    public static final double maxAcceleration = 8;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second
@@ -249,7 +249,7 @@ public final class Constants {
     public static final double stationaryAngularVelocity = 1.5 * Math.PI * 2; // TODO: This must be tuned to specific
                                                                               // robot
     public static final double maxRadius = 0.4;
-    public static final double maxAngularAcceleration = 10;
+    public static final double maxAngularAcceleration = 20;
     public static final double maxAngularDeceleration = 30;
 
     /* Neutral Modes */
