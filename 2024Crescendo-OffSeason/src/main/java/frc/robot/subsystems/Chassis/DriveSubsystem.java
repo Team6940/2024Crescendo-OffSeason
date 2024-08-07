@@ -237,6 +237,9 @@ public class DriveSubsystem extends SubsystemBase {
     public PathPlannerPath generatePath(String pathName){
         return PathPlannerPath.fromPathFile(pathName);
     }
+    public PathPlannerPath generateChoreoPath(String pathName){
+        return PathPlannerPath.fromChoreoTrajectory(pathName);
+    }
 
     //return an auto command
     public Command followPathCommand(PathPlannerPath path){

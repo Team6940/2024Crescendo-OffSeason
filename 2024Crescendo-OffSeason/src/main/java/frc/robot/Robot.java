@@ -19,6 +19,7 @@ import frc.robot.commands.ManualSPKUp;
 import frc.robot.commands.NoteIntake;
 import frc.robot.commands.SemiAutoPick;
 import frc.robot.commands.TestSPKUP;
+import frc.robot.commands.AutoCommand.C131;
 // import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
@@ -85,12 +86,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    RobotContainer.m_Arm.ZeroArmPosition();
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    new C131().schedule();
     
   }
 

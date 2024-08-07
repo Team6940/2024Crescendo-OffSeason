@@ -18,7 +18,7 @@ import frc.robot.Constants.LimelightConstants;;
 public class AutoSPKUP extends Command {
   private int m_ButtonID;
   enum AutoShootState {
-    Aim,Accelerate,Shoot;
+    Aim,Accelerate,Shoot,End;
   }
   AutoShootState m_State;
   double _TargetDegree;
@@ -29,6 +29,7 @@ public class AutoSPKUP extends Command {
     // m_PidController.setTolerance(AutoShootConstants.DegreeTolerance);
     addRequirements(RobotContainer.m_Shooter);
     addRequirements(RobotContainer.m_Arm);
+    addRequirements(RobotContainer.m_Blocker);
     // for(var a: AutoShootConstants.ArmPoints)
     // AutoShootConstants.ArmTable.put(a.getX(),a.getY());
     // for(var a: AutoShootConstants.RPSPoints)
@@ -74,7 +75,14 @@ public class AutoSPKUP extends Command {
   }
 
   void Shoot(){
-    RobotContainer.m_Blocker.SetOutPut(BlockerConstants.GiveNoteOutput);
+    if(RobotContainer.m_Blocker.HasNote())
+    {
+      RobotContainer.m_Blocker.SetOutPut(BlockerConstants.GiveNoteOutput);
+    }
+    else
+    {
+      m_State=AutoShootState.End;
+    }
   }
 
 
@@ -111,6 +119,7 @@ public class AutoSPKUP extends Command {
   @Override
   public boolean isFinished() {
     if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
-    else return true;
+    if(m_State==AutoShootState.End) return true;
+    return true;
   }
 }
