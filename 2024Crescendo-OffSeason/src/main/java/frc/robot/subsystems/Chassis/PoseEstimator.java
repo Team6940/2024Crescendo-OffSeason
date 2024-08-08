@@ -32,7 +32,9 @@ public class PoseEstimator {
     public NavigableMap<Double, Pose2d> robotPoseBuffer = new TreeMap<>();//TODO: limit size to save memory
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
-        PoseEstimatorConstants.tAtoDev.put(0., 0.);
+        PoseEstimatorConstants.tAtoDev.put(0.294, 0.01);
+        PoseEstimatorConstants.tAtoDev.put(0.071, 0.1);
+        PoseEstimatorConstants.tAtoDev.put(0.046, 0.2);
         sEstimator = new SwerveDrivePoseEstimator(
             Constants.SwerveConstants.swerveKinematics, 
             new Rotation2d(), 
@@ -82,9 +84,8 @@ public class PoseEstimator {
      * @param latency seconds */
     public void updateVision(Pose2d pose, double latency,double FOM){
         double timeStamp = Timer.getFPGATimestamp() - latency;
-        Rotation2d gyro = new Rotation2d(gyroYawBuffer.getSample(timeStamp).get());
         sEstimator.addVisionMeasurement(
-            new Pose2d(pose.getX(), pose.getY(), gyro),
+            new Pose2d(pose.getX(), pose.getY(),pose.getRotation()),
             timeStamp,
             VecBuilder.fill(FOM, FOM, 0.1)
         );
