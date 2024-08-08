@@ -40,6 +40,37 @@ public class AutoSPKUP extends Command {
     // for(var a: AutoShootConstants.RPSPoints)
     // AutoShootConstants.RPSTable.put(a.getX(),a.getY());
     addRequirements(RobotContainer.m_Swerve);
+<<<<<<< HEAD
+=======
+    }
+  
+  void Aim(){
+        double _Omega=0.; 
+        RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
+        if(LimelightHelpers.getTV(RobotContainer.m_SPKRLimelight))
+        {
+          // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
+          // _Omega=-AutoShootCommandConstants.NewShootFixingOmega;
+          // else if(LimelightHelpers.getTX("limelight")<-AutoShootCommandConstants.NewShootAngleTolerance)
+          // _Omega=AutoShootCommandConstants.NewShootFixingOmega;
+          _TargetDegree=AutoShootConstants.ArmTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
+          if(!m_PidController.atSetpoint())
+          {
+            _Omega=m_PidController.calculate(-LimelightHelpers.getTX(RobotContainer.m_SPKRLimelight));
+            SmartDashboard.putNumber("Omega", _Omega);
+          }
+          else
+          {
+          RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
+        
+          _TargetRPS=AutoShootConstants.RPSTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
+
+          m_State=AutoShootState.Accelerate;
+          }
+          RobotContainer.m_Arm.SetArmDegree(_TargetDegree);
+        }
+        RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
+>>>>>>> af48d2301953451fef568a8cfc0e1f178659310c
   }
 
   void Aim() {

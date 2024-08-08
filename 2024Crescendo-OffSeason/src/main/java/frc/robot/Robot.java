@@ -23,6 +23,7 @@ import frc.robot.commands.Autos;
 import frc.robot.commands.ManualSPKDown;
 import frc.robot.commands.ManualSPKUp;
 import frc.robot.commands.NoteIntake;
+import frc.robot.commands.NoteOut;
 import frc.robot.commands.SemiAutoPick;
 import frc.robot.commands.TestSPKUP;
 import frc.robot.commands.AutoCommand.C131;
@@ -131,13 +132,9 @@ public class Robot extends TimedRobot {
     {
       new AMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
-    if(RobotContainer.m_driverController.getBButtonPressed())
-    {
-      new TestSPKUP(ArmConstants.ArmUpSPKDegree,40,Button.kB.value).schedule();
+    if(RobotContainer.m_driverController.getBButtonPressed()){
+      new NoteOut(Button.kB.value).schedule();
     }
-    // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
-    //   new PassNote().schedule();
-    // }
   }
 
   @Override
