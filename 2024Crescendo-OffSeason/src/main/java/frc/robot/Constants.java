@@ -139,8 +139,8 @@ public final class Constants {
     public static final Point2D[] ArmPoints={
       new Point2D.Double(18.04,-33),
       new Point2D.Double(13.31,-39),
-      new Point2D.Double(2.87,-51),
-      new Point2D.Double(3.15,-56),
+      new Point2D.Double(7.15,-50),
+      new Point2D.Double(2.86,-56),
       new Point2D.Double(-2.31,-62),
       new Point2D.Double(-6.91,-70)
     };
@@ -225,7 +225,7 @@ public final class Constants {
      * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
      */
     public static final double openLoopRamp = 0.;
-    public static final double closedLoopRamp = 0;
+    public static final double closedLoopRamp = 0.0;
 
     /* Angle Motor PID Values */
     public static final double angleKP = chosenModule.angleKP;
@@ -248,7 +248,7 @@ public final class Constants {
     /* Swerve Profiling Values */
     /** Meters per Second */
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 5 ; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 7 ; // TODO: This must be tuned to specific robot
 
     public static final double maxAcceleration = 8;
     public static final double maxDeceleration = 30;

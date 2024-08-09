@@ -12,6 +12,7 @@ import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Blocker;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.ImprovedPS4Controller;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
@@ -41,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  */
 public class RobotContainer {
 /* Controllers */
-public static ImprovedXboxController m_driverController = new ImprovedXboxController(0, 0.3);
+public static ImprovedPS4Controller m_driverController = new ImprovedPS4Controller(0);
 
 /* Drive Controls */
 
