@@ -38,7 +38,7 @@ public class NewSemiAutoPick extends Command {
   public void execute() {
     double _controllerY=m_LRController.calculate(-LimelightHelpers.getTX(RobotContainer.m_PickLimelight));
     _controllerY=NumberLimiter.Limit(-AutoAlignConstants.kAutoAlignPeak,-AutoAlignConstants.kAutoAlignPeak, _controllerY);
-    double _controllerX=-RobotContainer.m_driverController.getLeftTriggerAxis();
+    double _controllerX=-RobotContainer.m_driverController.getL2Axis();
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);
