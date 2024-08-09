@@ -7,9 +7,9 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
-import frc.robot.commands.AutoSPKUP;
-import frc.robot.commands.NoteIntake;
-import frc.robot.commands.TestSPKUP;
+import frc.robot.commands.IntakeCommands.NoteIntake;
+import frc.robot.commands.SPKCommands.AutoSPKUP;
+import frc.robot.commands.SPKCommands.TestSPKUP;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
 
 public class C131 extends SequentialCommandGroup{
