@@ -2,7 +2,10 @@ package frc.robot.commands;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.SwerveConstants;
@@ -30,6 +33,10 @@ public class ManualDrive extends Command {
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);
+    // if(DriverStation.getAlliance().get()==Alliance.Red)
+    // {
+    //   _controllerTranslation2d=_controllerTranslation2d.rotateBy(new Rotation2d(Math.PI));
+    // }
     double _controllerOmega=-RobotContainer.m_driverController.getRightX();
     _controllerOmega=MathUtils.signedSquare(_controllerOmega);
     _controllerOmega=MathUtils.applyDeadband(_controllerOmega);

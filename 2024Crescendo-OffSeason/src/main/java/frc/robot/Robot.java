@@ -30,7 +30,7 @@ import frc.robot.commands.SPKCommands.TestSPKUP;
 // import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
-import frc.robot.subsystems.ImprovedXboxController.Button;
+import frc.robot.subsystems.ImprovedPS4Controller.Button;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -110,30 +110,26 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(1.385,5.579, new Rotation2d()));
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
-      new AutoSPKUP(Button.kRightBumper.value).schedule();;
+    if(RobotContainer.m_driverController.getR1ButtonPressed()){//TODO AMP按钮
+      new AutoSPKUP(Button.kR1.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getLeftStickButtonPressed())
+    if(RobotContainer.m_driverController.getL1ButtonPressed())
     {
-      new SemiAutoPick(Button.kLeftStick.value).schedule();;
+      new NoteIntake(Button.kL1.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getLeftBumperPressed())
+    if(RobotContainer.m_driverController.getCrossButtonPressed())
     {
-      new NoteIntake(Button.kLeftBumper.value).schedule();;
+      new AMP(Button.kCross.value, Button.kR2.value).schedule();
     }
-    if(RobotContainer.m_driverController.getAButtonPressed())
-    {
-      new AMP(Button.kA.value, Button.kRightTrigger.value).schedule();
-    }
-    if(RobotContainer.m_driverController.getBButtonPressed()){
-      new NoteOut(Button.kB.value).schedule();
+    if(RobotContainer.m_driverController.getCircleButtonPressed()){
+      new NoteOut(Button.kCircle.value).schedule();
     }
   }
 
@@ -146,15 +142,15 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    if(RobotContainer.m_driverController.getAButton())
-    {
-      RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
-    }
-    else
-    {
-       RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
+    // if(RobotContainer.m_driverController.getAButton())
+    // {
+    //   RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
+    // }
+    // else
+    // {
+    //    RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
     
-    }
+    // }
     // if(RobotContainer.m_driverController.getPOVUp()){
     //   RobotContainer.m_Arm.SetPCT(0.05);
     // }
