@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 

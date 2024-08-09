@@ -168,11 +168,20 @@ public final class Constants {
     public final static double AutoAMPRotationkP=1.0;
     public final static double AutoAMPRotationkI=0.;
     public final static double AutoAMPRotationkD=0.;
-    public final static double AutoAMPRotationTolerance=0.;
+    public final static double AutoAMPDegreeTolerance=0.;
+    public final static double AutoAMPDegreeOmegaTolerance=0.;
     public final static double AutoAMPTranslationkP=0.;
     public final static double AutoAMPTranslationkI=0.;
     public final static double AutoAMPTranslationkD=0.;
-    public final static double AutoAMPTranslationkTolerance=0.;
+    public final static double AutoAMPTranslationTolerance=0.;
+    public final static class AMPTagID{   //TODO
+      public final static int Blue = 0;
+      public final static int Red = 0;
+    }
+    public final static class AMPPose{    //TODO
+      public final static Pose2d Blue = new Pose2d(0, 0, new Rotation2d(0));
+      public final static Pose2d Red = new Pose2d(0, 0, new Rotation2d(0));
+    }
   }
 
   public static final class SwerveConstants { // From 8814
