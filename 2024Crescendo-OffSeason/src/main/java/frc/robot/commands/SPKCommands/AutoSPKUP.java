@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.SPKCommands;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -14,7 +14,8 @@ import frc.robot.Constants.BlockerConstants;
 import frc.robot.Constants.IntakerConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.Constants.AutoShootConstants;
-import frc.robot.Constants.LimelightConstants;;
+import frc.robot.Constants.LimelightConstants;
+import edu.wpi.first.apriltag.AprilTag;
 
 /** An example command that uses an example subsystem. */
 public class AutoSPKUP extends Command {
@@ -40,8 +41,6 @@ public class AutoSPKUP extends Command {
     // for(var a: AutoShootConstants.RPSPoints)
     // AutoShootConstants.RPSTable.put(a.getX(),a.getY());
     addRequirements(RobotContainer.m_Swerve);
-<<<<<<< HEAD
-=======
     }
   
   void Aim(){
@@ -61,51 +60,13 @@ public class AutoSPKUP extends Command {
           }
           else
           {
-          RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
-        
+          // RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
           _TargetRPS=AutoShootConstants.RPSTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
-
           m_State=AutoShootState.Accelerate;
           }
           RobotContainer.m_Arm.SetArmDegree(_TargetDegree);
         }
         RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
->>>>>>> af48d2301953451fef568a8cfc0e1f178659310c
-  }
-
-  void Aim() {
-    double _Omega = 0.;
-    RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
-    if (LimelightHelpers.getTV(RobotContainer.m_SPKRLimelight)) {
-      // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
-      // _Omega=-AutoShootCommandConstants.NewShootFixingOmega;
-      // else
-      // if(LimelightHelpers.getTX("limelight")<-AutoShootCommandConstants.NewShootAngleTolerance)
-      // _Omega=AutoShootCommandConstants.NewShootFixingOmega;
-      if (!m_PidController.atSetpoint() || !RobotContainer.m_Blocker.HasNote()) {
-        _Omega = m_PidController.calculate(LimelightHelpers.getTX(RobotContainer.m_SPKRLimelight));
-        _Omega = NumberLimiter.Limit(-1., 1., _Omega);
-        SmartDashboard.putNumber("Omega", _Omega);
-
-        if (!RobotContainer.m_Blocker.HasNote()) {
-          RobotContainer.m_Intaker.SetOutput(IntakerConstants.NoteInOutput);
-          RobotContainer.m_Blocker.SetOutPut(BlockerConstants.NoteInOutput);
-
-        } else {
-          RobotContainer.m_Intaker.SetOutput(0.);
-
-          RobotContainer.m_Blocker.SetOutPut(0.);
-        }
-      } else {
-        RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
-
-        _TargetDegree = AutoShootConstants.ArmTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
-        _TargetRPS = AutoShootConstants.RPSTable.get(LimelightHelpers.getTY(RobotContainer.m_SPKRLimelight));
-
-        m_State = AutoShootState.Accelerate;
-      }
-    }
-    RobotContainer.m_Swerve.drive(new Translation2d(), _Omega, false);
   }
 
   void Accelerate() {
