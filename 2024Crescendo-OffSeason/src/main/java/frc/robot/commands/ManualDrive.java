@@ -33,10 +33,10 @@ public class ManualDrive extends Command {
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);
-    // if(DriverStation.getAlliance().get()==Alliance.Red)
-    // {
-    //   _controllerTranslation2d=_controllerTranslation2d.rotateBy(new Rotation2d(Math.PI));
-    // }
+    if(DriverStation.getAlliance().get()==Alliance.Red)
+    {
+      _controllerTranslation2d=_controllerTranslation2d.rotateBy(new Rotation2d(Math.PI));
+    }
     double _controllerOmega=-RobotContainer.m_driverController.getRightX();
     _controllerOmega=MathUtils.signedSquare(_controllerOmega);
     _controllerOmega=MathUtils.applyDeadband(_controllerOmega);

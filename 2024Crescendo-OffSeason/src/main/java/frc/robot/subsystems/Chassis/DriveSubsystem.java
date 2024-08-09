@@ -93,7 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
         this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID,"canivore");
         this.m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.m_gyro.reset();
-        this.m_OdometryNotifier = new Notifier(this::updateOdometry);
+        // this.m_OdometryNotifier = new Notifier(this::updateOdometry);
         
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
@@ -128,7 +128,7 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSpeeds _desireChassisSpeeds=new ChassisSpeeds(m_currentDesireVelocity.getX(),m_currentDesireVelocity.getY(),m_currentDesireRotation);
         if(_fieldRelative)
         {
-            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_gyro.getRotation2d().times(-1.));
+            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().times(-1));
         }
         desireSpeeds = _desireChassisSpeeds;
        setChassisSpeeds(_desireChassisSpeeds);
@@ -303,7 +303,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic(){      
-        // updateOdometry();
+        updateOdometry();
         // ChassisSpeeds teleopSpeeds = teleopDriveController.getDesireSpeeds();
         // switch (currentDriveMode) {
         //     case TELEOP -> {

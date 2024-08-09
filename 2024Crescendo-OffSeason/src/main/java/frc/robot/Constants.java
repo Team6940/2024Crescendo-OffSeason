@@ -185,22 +185,23 @@ public final class Constants {
     public static final int IntakeButton = 0;
   }
   public static class AutoAMPConstants{
-    public final static double AutoAMPRotationkP=1.0;
+    public final static double AutoAMPRotationkP=0.15;
     public final static double AutoAMPRotationkI=0.;
     public final static double AutoAMPRotationkD=0.;
-    public final static double AutoAMPDegreeTolerance=0.;
-    public final static double AutoAMPDegreeOmegaTolerance=0.;
-    public final static double AutoAMPTranslationkP=0.;
+    public final static double AutoAMPDegreeTolerance=3;
+    public final static double AutoAMPDegreeOmegaTolerance=0.1;
+    public final static double AutoAMPTranslationkP=3;
     public final static double AutoAMPTranslationkI=0.;
     public final static double AutoAMPTranslationkD=0.;
-    public final static double AutoAMPTranslationTolerance=0.;
+    public final static double AutoAMPTranslationTolerance=0.2;
+      public final static double AMPDistancetoGo=0.5;
     public final static class AMPTagID{   //TODO
       public final static int Blue = 0;
       public final static int Red = 0;
     }
     public final static class AutoAMPPose{    //TODO
       public final static Pose2d Blue = new Pose2d(0, 0, new Rotation2d(0));
-      public final static Pose2d Red = new Pose2d(0, 0, new Rotation2d(0));
+      public final static Pose2d Red = new Pose2d(14.7,7.0, new Rotation2d(-Math.PI/2));
     }
   }
 
@@ -279,7 +280,7 @@ public final class Constants {
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
     public static final double maxModuleSpeed = 7 ; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 8;
+    public static final double maxAcceleration = 5;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second

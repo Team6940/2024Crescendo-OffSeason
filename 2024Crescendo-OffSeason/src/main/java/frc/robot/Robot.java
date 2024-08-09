@@ -19,11 +19,12 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.Autos;
 import frc.robot.commands.AMPCommands.AMP;
+import frc.robot.commands.AMPCommands.AutoAMP;
 import frc.robot.commands.AutoCommand.C131;
 import frc.robot.commands.IntakeCommands.NoteIntake;
 import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.commands.IntakeCommands.SemiAutoPick;
-import frc.robot.commands.SPKCommands.AutoSPKUP;
+import frc.robot.commands.SPKCommands.NewAutoSPKUP;
 import frc.robot.commands.SPKCommands.ManualSPKDown;
 import frc.robot.commands.SPKCommands.ManualSPKUp;
 import frc.robot.commands.SPKCommands.TestSPKUP;
@@ -118,7 +119,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     
     if(RobotContainer.m_driverController.getR1ButtonPressed()){//TODO AMP按钮
-      new AutoSPKUP(Button.kR1.value).schedule();;
+      new NewAutoSPKUP(Button.kR1.value).schedule();;
     }
     if(RobotContainer.m_driverController.getL1ButtonPressed())
     {
@@ -126,7 +127,7 @@ public class Robot extends TimedRobot {
     }
     if(RobotContainer.m_driverController.getCrossButtonPressed())
     {
-      new AMP(Button.kCross.value, Button.kR2.value).schedule();
+      new AutoAMP(Button.kCross.value, Button.kR2.value).schedule();
     }
     if(RobotContainer.m_driverController.getCircleButtonPressed()){
       new NoteOut(Button.kCircle.value).schedule();
