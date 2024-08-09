@@ -116,7 +116,6 @@ public class AutoSPKUP extends Command {
     RobotContainer.m_Swerve.drive(new Translation2d(), 0., false);
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
     RobotContainer.m_Shooter.SetPCT(0.);
-    ;
   }
 
   @Override

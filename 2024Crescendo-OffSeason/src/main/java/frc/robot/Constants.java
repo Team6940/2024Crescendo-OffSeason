@@ -151,12 +151,32 @@ public final class Constants {
       
       new Point2D.Double(-6.89,60)
     };
+
+    public static final Point2D[] DisToArmPoints = {
+      new Point2D.Double(0., 0.)
+    };
+
+    public static final Point2D[] DisToRPSPoints = {
+      new Point2D.Double(0., 0.)
+    };
+
     public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap RPSTable=new InterpolatingDoubleTreeMap();
+    public static final InterpolatingDoubleTreeMap DisToArmTable = new InterpolatingDoubleTreeMap();
+    public static final InterpolatingDoubleTreeMap DisToRPSTable = new InterpolatingDoubleTreeMap();
+    public static final double MaxRange = 0.;
+    public static final double CoastVelocity = 0.;
   }
 
   public static class GlobalConstants {
     public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
+  }
+
+  public static final class FieldConstants{
+      public static final class SPKTranslation{
+        public static final Translation2d Blue = new Translation2d(0, 0);
+        public static final Translation2d Red = new Translation2d(0, 0);
+    }
   }
 
   public static class DriveConstants {
@@ -178,7 +198,7 @@ public final class Constants {
       public final static int Blue = 0;
       public final static int Red = 0;
     }
-    public final static class AMPPose{    //TODO
+    public final static class AutoAMPPose{    //TODO
       public final static Pose2d Blue = new Pose2d(0, 0, new Rotation2d(0));
       public final static Pose2d Red = new Pose2d(0, 0, new Rotation2d(0));
     }
@@ -323,6 +343,7 @@ public final class Constants {
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
+    public static final double OdometryPeriod = 0.01;
   }
 
   public static final class BlackholeVisionConstants {
