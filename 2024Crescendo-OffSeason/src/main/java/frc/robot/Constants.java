@@ -378,4 +378,8 @@ public final class Constants {
 
     public final static double LLAngle = 0.;//ll视线相对水平面的仰角
   }
+
+  public static class ManualShootConstants{
+    public final static double ChassisSpeedTolerance = 0.5;
+  }
 }
