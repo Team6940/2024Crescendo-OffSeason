@@ -46,7 +46,7 @@ public class AutoAMP extends Command{
         m_RotationController.setTolerance(AutoAMPConstants.AutoAMPDegreeTolerance, AutoAMPConstants.AutoAMPDegreeOmegaTolerance);
         m_TranslationXController.setTolerance(AutoAMPConstants.AutoAMPTranslationTolerance);
         m_TranslationYController.setTolerance(AutoAMPConstants.AutoAMPTranslationTolerance);
-        m_TargetPose = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? AutoAMPConstants.AMPPose.Blue : AutoAMPConstants.AMPPose.Red; 
+        m_TargetPose = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? AutoAMPConstants.AutoAMPPose.Blue : AutoAMPConstants.AutoAMPPose.Red; 
         m_RotationController.setSetpoint(m_TargetPose.getRotation().getDegrees());
         m_TranslationXController.setSetpoint(m_TargetPose.getX());
         m_TranslationYController.setSetpoint(m_TargetPose.getY());

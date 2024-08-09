@@ -19,8 +19,10 @@ import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.Library.LimelightHelper.LimelightHelpers;
 import frc.robot.Library.team8814.util.ChassisOptimize;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -49,6 +51,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -70,6 +73,8 @@ public class DriveSubsystem extends SubsystemBase {
     public Translation2d m_currentDesireVelocity=new Translation2d(0,0);
     public double m_currentDesireRotation=0;
 
+    public Notifier m_OdometryNotifier;
+
 
     // private final TeleopDriveController teleopDriveController;
     // private final AutoRotateAlignController autoRotateAlignController;
@@ -88,6 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
         this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID,"canivore");
         this.m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.m_gyro.reset();
+        this.m_OdometryNotifier = new Notifier(this::updateOdometry);
         
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
@@ -99,10 +105,16 @@ public class DriveSubsystem extends SubsystemBase {
 
         // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         m_poseEstimator=new PoseEstimator();
-        // startOdometry();
+        startOdometry();
         // teleopDriveController = new TeleopDriveController(m_poseEstimator);
         // autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
         SmartDashboard.putData("Field",m_field);
+    }
+
+    public void startOdometry(){
+        if (m_OdometryNotifier!=null){
+            m_OdometryNotifier.startPeriodic(SwerveConstants.OdometryPeriod);
+        }
     }
 
     public void drive(
@@ -283,11 +295,15 @@ public class DriveSubsystem extends SubsystemBase {
             return DriverStation.Alliance.Red;
         }
     }
-    
+    public Translation2d getToSPKTranslation2d(){
+        Translation2d targetTranslation = DriverStation.getAlliance().get()==Alliance.Blue?FieldConstants.SPKTranslation.Blue:FieldConstants.SPKTranslation.Red;
+        Translation2d m_Translation2d = this.getPose().getTranslation();
+        return targetTranslation.minus(m_Translation2d);
+    }
 
     @Override
     public void periodic(){      
-        updateOdometry();
+        // updateOdometry();
         // ChassisSpeeds teleopSpeeds = teleopDriveController.getDesireSpeeds();
         // switch (currentDriveMode) {
         //     case TELEOP -> {

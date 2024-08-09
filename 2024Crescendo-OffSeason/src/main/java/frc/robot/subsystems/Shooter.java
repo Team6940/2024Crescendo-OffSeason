@@ -34,6 +34,10 @@ public class Shooter extends SubsystemBase{
         AutoShootConstants.ArmTable.put(a.getX(),a.getY());
     for(var a: AutoShootConstants.RPSPoints)
         AutoShootConstants.RPSTable.put(a.getX(),a.getY());
+    for (var a: AutoShootConstants.DisToArmPoints)
+        AutoShootConstants.DisToArmTable.put(a.getX(), a.getY());
+    for (var a: AutoShootConstants.DisToRPSPoints)
+        AutoShootConstants.DisToRPSTable.put(a.getX(), a.getY());
     }
 
     private void ShooterConfig(){
