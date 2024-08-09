@@ -4,11 +4,17 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.AutoAMPConstants;
+import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.AMP;
@@ -104,7 +110,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.zeroHeading();
+    RobotContainer.m_Swerve.setPose(new Pose2d(1.385,5.579, new Rotation2d()));
   }
 
   /** This function is called periodically during operator control. */
@@ -142,7 +148,7 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     if(RobotContainer.m_driverController.getAButton())
     {
-      RobotContainer.m_Swerve.drive(new Translation2d(2, 0), 0, false);
+      RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
     }
     else
     {

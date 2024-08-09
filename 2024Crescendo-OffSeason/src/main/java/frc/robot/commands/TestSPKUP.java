@@ -16,15 +16,15 @@ import frc.robot.Constants.LimelightConstants;;
 
 /** An example command that uses an example subsystem. */
 public class TestSPKUP extends Command {
-  // private int m_ButtonID;
+  private int m_ButtonID;
   AutoShootState m_State;
   double m_TargetDegree;
   double m_TargetRPS;
   PIDController m_PidController;
   // private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
   // private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
-  public TestSPKUP(double _TargetArmAngle,double _TargetRPS){
-    // m_ButtonID=_ButtonID;
+  public TestSPKUP(double _TargetArmAngle,double _TargetRPS,int _ButtonID){
+    m_ButtonID=_ButtonID;
     m_TargetDegree=_TargetArmAngle;
     m_TargetRPS=_TargetRPS;
     addRequirements(RobotContainer.m_Shooter);
@@ -39,7 +39,7 @@ public class TestSPKUP extends Command {
     addRequirements(RobotContainer.m_Arm);
   }
   enum AutoShootState {
-    Aim,Accelerate,Shoot;
+    Aim,Accelerate,Shoot,End;
   }
   
   void Aim(){
@@ -77,7 +77,14 @@ public class TestSPKUP extends Command {
   }
 
   void Shoot(){
-    RobotContainer.m_Blocker.SetOutPut(BlockerConstants.GiveNoteOutput);
+    if(RobotContainer.m_Blocker.HasNote())
+    {
+      RobotContainer.m_Blocker.SetOutPut(BlockerConstants.GiveNoteOutput);
+    }
+    else
+    {
+      m_State=AutoShootState.End;
+    }
   }
 
 
@@ -102,6 +109,7 @@ public class TestSPKUP extends Command {
     if(m_State==AutoShootState.Shoot){
         Shoot();
     }
+    
   }
 
   @Override
@@ -113,7 +121,8 @@ public class TestSPKUP extends Command {
 
   @Override
   public boolean isFinished() {
-    if(RobotContainer.m_driverController.getBButton()) return false;
+    if(m_State==AutoShootState.End) return true;
+    if(RobotContainer.m_driverController.getButton(m_ButtonID)) return false;
     else return true;
     // return false;
   }

@@ -24,21 +24,31 @@ public class NoteIntake extends Command {
   @Override
   public void execute() {
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
-    
-    RobotContainer.m_Intaker.SetOutput(IntakerConstants.NoteInOutput);
+    if(!RobotContainer.m_Blocker.HasNote())
+    {
+      RobotContainer.m_Intaker.SetOutput(IntakerConstants.NoteInOutput);
     RobotContainer.m_Blocker.SetOutPut(BlockerConstants.NoteInOutput);
-  }
+  
+    }
+    else
+    {
+      RobotContainer.m_Intaker.SetOutput(0.);
+      
+    RobotContainer.m_Blocker.SetOutPut(0.);
+    }
+    }
 
   @Override
   public void end(boolean interrupted) {
     RobotContainer.m_Intaker.SetOutput(0);
     RobotContainer.m_Blocker.SetOutPut(0);
-    new Rumble(RumbleType.kBothRumble, 1).withTimeout(0.1).schedule();
+    
   }
 
   @Override
   public boolean isFinished() {
-    if(!RobotContainer.m_driverController.getButton(m_ButtonID)||RobotContainer.m_Blocker.HasNote()) return true;
+    if(m_ButtonID==0)return false;
+    if(!RobotContainer.m_driverController.getButton(m_ButtonID)) return true;
     else return false;
   }
 }

@@ -36,6 +36,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -121,6 +122,9 @@ public class DriveSubsystem extends SubsystemBase {
        setChassisSpeeds(_desireChassisSpeeds);
     }
     
+    public void drive(ChassisSpeeds _ChassisSpeeds) {
+        drive(new Translation2d(_ChassisSpeeds.vxMetersPerSecond,_ChassisSpeeds.vyMetersPerSecond),_ChassisSpeeds.omegaRadiansPerSecond,false);
+    }
         
     // public Translation2d getDriverDesireSpeeds(){
     //     return teleopDriveController.inputDesireVelocity;
@@ -130,14 +134,14 @@ public class DriveSubsystem extends SubsystemBase {
     // }
     private void updateOdometry() {
         // swerveOdometry.update(getGyroYaw(), getModulePositions());
-        m_poseEstimator.updateSwerve(getGyroYaw(), getModulePositions());
-        // LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_gyro.getAngle(), m_gyro.getRate(), 0, 0, 0,0);
-         LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
-      if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
-      {
-        m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
-      }
-        // SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
+        m_poseEstimator.sEstimator.update(getGyroYaw(), getModulePositions());
+        LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().getDegrees(), m_gyro.getRate(), 0, 0, 0,0);
+    //      LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
+    //   if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
+    //   {
+    //     m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
+    //   }
+        SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
     }
 
 
@@ -200,7 +204,7 @@ public class DriveSubsystem extends SubsystemBase {
         }
     }
     public Rotation2d getGyroYaw() {
-        return new Rotation2d(m_gyro.getYaw().getValue());
+        return new Rotation2d(Math.toRadians(-m_gyro.getAngle()));
     }
 
     public Pose2d inversePose2dUsingAlliance(Pose2d pose,DriverStation.Alliance allianceColor){
@@ -249,7 +253,7 @@ public class DriveSubsystem extends SubsystemBase {
                 path,
                 this::getPose, // Robot pose supplier
                 this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                             new PIDConstants(Constants.AutoConstants.kPTranslationController, 0.0, 0.0), // Translation PID constants
                             new PIDConstants(Constants.AutoConstants.kPRotationController, 0.0, 0.0), // Rotation PID constants
@@ -302,16 +306,18 @@ public class DriveSubsystem extends SubsystemBase {
         // m_poseEstimator.visionInput(visionPoses,10*(Math.PI)/180);
 
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+        SmartDashboard.putData("FieldPose", m_field);
         // SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
         //print debuging information
-        for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
-        SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
-        SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
+
+        // for(SwerveModule mod : mSwerveMods){
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        // }
+        // SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
+        // SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
+        // SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
     }
 
     
