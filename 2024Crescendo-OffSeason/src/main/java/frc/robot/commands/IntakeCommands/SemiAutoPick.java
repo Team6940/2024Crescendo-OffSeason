@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 
@@ -10,6 +10,8 @@ import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.SwerveConstants;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.subsystems.Chassis.controllers.AutoMoveAlignController;
+import frc.robot.Library.NumberLimiter;
 import frc.robot.Library.LimelightHelper.LimelightHelpers;
 import frc.robot.Library.team1706.MathUtils;
 public class SemiAutoPick extends Command {
@@ -35,11 +37,12 @@ public class SemiAutoPick extends Command {
   @Override
   public void execute() {
     double _controllerY=m_LRController.calculate(-LimelightHelpers.getTX(RobotContainer.m_PickLimelight));
-    double _controllerX=RobotContainer.m_driverController.getLeftY();
+    _controllerY=NumberLimiter.Limit(-AutoAlignConstants.kAutoAlignPeak,-AutoAlignConstants.kAutoAlignPeak, _controllerY);
+    double _controllerX=-RobotContainer.m_driverController.getLeftY();
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);
-    double _controllerOmega=RobotContainer.m_driverController.getRightX();
+    double _controllerOmega=-RobotContainer.m_driverController.getRightX();
     _controllerOmega=MathUtils.signedSquare(_controllerOmega);
     _controllerOmega=MathUtils.applyDeadband(_controllerOmega);
     Translation2d _desireVelocity=_controllerTranslation2d.times(SwerveConstants.maxSpeed);

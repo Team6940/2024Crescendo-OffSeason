@@ -77,13 +77,13 @@ public final class Constants {
     public static final double kG = 0.;
 
     public static final double ArmVelocity = 1.;
-    public static final double ArmAcceleration = 3.4;
+    public static final double ArmAcceleration = 2;
 
     public static final double ArmTolerence = 1.;
 
     public static final double ArmDefaultDegree = -72.29;
     public static final double ArmAMPDegree = 45.;
-    public static final double ArmUpSPKDegree = 0.;
+    public static final double ArmUpSPKDegree = 50;
     public static final double ArmDownSPKDegree = 0.;
   }
 
@@ -128,21 +128,21 @@ public final class Constants {
   }
 
   public static class AutoShootConstants{
-    public static final double kP=0.12;
+    public static final double kP=0.10;
     public static final double kI=0.;
     public static final double kD=0.0;
     public static final double DegreeTolerance=2.;
-    public static final double VelocityTolerance=16.;
+    public static final double VelocityTolerance=4.;
     public static final double RPSInAdvance=30;
     public static final double HightDifference=1.;//单位暂定meter
 
     public static final Point2D[] ArmPoints={
       new Point2D.Double(18.04,-33),
       new Point2D.Double(13.31,-39),
-      new Point2D.Double(2.87,-51),
-      new Point2D.Double(3.15,-57),
-      new Point2D.Double(-2.31,-67),
-      new Point2D.Double(-6.89,-70)
+      new Point2D.Double(7.15,-50),
+      new Point2D.Double(2.86,-56),
+      new Point2D.Double(-2.31,-62),
+      new Point2D.Double(-6.91,-70)
     };
     public static final Point2D[] RPSPoints={
       new Point2D.Double(18.04,40),
@@ -151,18 +151,58 @@ public final class Constants {
       
       new Point2D.Double(-6.89,60)
     };
+
+    public static final Point2D[] DisToArmPoints = {
+      new Point2D.Double(0., 0.)
+    };
+
+    public static final Point2D[] DisToRPSPoints = {
+      new Point2D.Double(0., 0.)
+    };
+
     public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap RPSTable=new InterpolatingDoubleTreeMap();
+    public static final InterpolatingDoubleTreeMap DisToArmTable = new InterpolatingDoubleTreeMap();
+    public static final InterpolatingDoubleTreeMap DisToRPSTable = new InterpolatingDoubleTreeMap();
+    public static final double MaxRange = 0.;
+    public static final double CoastVelocity = 0.;
   }
 
   public static class GlobalConstants {
     public final static float INF = (float) Math.pow(10, 6); // this was defined for the 1690 lib
   }
 
+  public static final class FieldConstants{
+      public static final class SPKTranslation{
+        public static final Translation2d Blue = new Translation2d(0, 0);
+        public static final Translation2d Red = new Translation2d(0, 0);
+    }
+  }
+
   public static class DriveConstants {
     public final static double kInnerDeadband = 0.004;
     public final static double kOuterDeadband = 0.98; // these were defined for the 1706 lib;
     public static final int IntakeButton = 0;
+  }
+  public static class AutoAMPConstants{
+    public final static double AutoAMPRotationkP=0.15;
+    public final static double AutoAMPRotationkI=0.;
+    public final static double AutoAMPRotationkD=0.;
+    public final static double AutoAMPDegreeTolerance=3;
+    public final static double AutoAMPDegreeOmegaTolerance=0.1;
+    public final static double AutoAMPTranslationkP=3;
+    public final static double AutoAMPTranslationkI=0.;
+    public final static double AutoAMPTranslationkD=0.;
+    public final static double AutoAMPTranslationTolerance=0.2;
+      public final static double AMPDistancetoGo=0.5;
+    public final static class AMPTagID{   //TODO
+      public final static int Blue = 0;
+      public final static int Red = 0;
+    }
+    public final static class AutoAMPPose{    //TODO
+      public final static Pose2d Blue = new Pose2d(0, 0, new Rotation2d(0));
+      public final static Pose2d Red = new Pose2d(14.7,7.0, new Rotation2d(-Math.PI/2));
+    }
   }
 
   public static final class SwerveConstants { // From 8814
@@ -214,8 +254,8 @@ public final class Constants {
      * loop driving.
      * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
      */
-    public static final double openLoopRamp = 0.25;
-    public static final double closedLoopRamp = 0;
+    public static final double openLoopRamp = 0.;
+    public static final double closedLoopRamp = 0.0;
 
     /* Angle Motor PID Values */
     public static final double angleKP = chosenModule.angleKP;
@@ -224,7 +264,7 @@ public final class Constants {
     public static final double angleKV = 3;
 
     /* Drive Motor PID Values */
-    public static final double driveKP = 2.1; // TODO: This must be tuned to specific robot
+    public static final double driveKP = 2.0; // TODO: This must be tuned to specific robot
     public static final double driveKI = 0.0;
     public static final double driveKD = 0;// 0.0;
     public static final double driveKF = 0.0;// 0.0;
@@ -238,9 +278,9 @@ public final class Constants {
     /* Swerve Profiling Values */
     /** Meters per Second */
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 8; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 7 ; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 4;
+    public static final double maxAcceleration = 5;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second
@@ -249,7 +289,7 @@ public final class Constants {
     public static final double stationaryAngularVelocity = 1.5 * Math.PI * 2; // TODO: This must be tuned to specific
                                                                               // robot
     public static final double maxRadius = 0.4;
-    public static final double maxAngularAcceleration = 10;
+    public static final double maxAngularAcceleration = 20;
     public static final double maxAngularDeceleration = 30;
 
     /* Neutral Modes */
@@ -259,30 +299,18 @@ public final class Constants {
     /* Module Specific Constants */
     /* Front Left Module - Module 0 */
     public static final class Mod0 {
-      public static final int driveMotorID = 2;
-      public static final int angleMotorID = 1;
-      public static final int canCoderID = 3;
+      public static final int driveMotorID = 8;
+      public static final int angleMotorID = 7;
+      public static final int canCoderID = 9;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.28125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-87.60);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
 
     /* Front Right Module - Module 1 */
     public static final class Mod1 {
-      public static final int driveMotorID = 5;
-      public static final int angleMotorID = 4;
-      public static final int canCoderID = 6;
-      // the bigger the offset, the smaller the setPosition, thus the relative CW
-      // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(143.3828125);
-      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
-          canCoderID, angleOffset);
-    }
-
-    /* Back Left Module - Module 2 */
-    public static final class Mod2 {
       public static final int driveMotorID = 11;
       public static final int angleMotorID = 10;
       public static final int canCoderID = 12;
@@ -293,17 +321,30 @@ public final class Constants {
           canCoderID, angleOffset);
     }
 
-    /* Back Right Module - Module 3 */
-    public static final class Mod3 {
-      public static final int driveMotorID = 8;
-      public static final int angleMotorID = 7;
-      public static final int canCoderID = 9;
+    /* Back Left Module - Module 2 */
+    public static final class Mod2 {
+      public static final int driveMotorID = 5;
+      public static final int angleMotorID = 4;
+      public static final int canCoderID = 6;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-87.60);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(143.3828125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
+
+    /* Back Right Module - Module 3 */
+    public static final class Mod3 {
+      public static final int driveMotorID = 2;
+      public static final int angleMotorID = 1;
+      public static final int canCoderID = 3;
+      // the bigger the offset, the smaller the setPosition, thus the relative CW
+      // point of the start angle
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.28125);
+      public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
+          canCoderID, angleOffset);
+    }
+    public static final double OdometryPeriod = 0.01;
   }
 
   public static final class BlackholeVisionConstants {
@@ -339,8 +380,8 @@ public final class Constants {
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
-    public static final double kPTranslationController = 6;
-    public static final double kPRotationController = 5;
+    public static final double kPTranslationController = 2;
+    public static final double kPRotationController = 2;
 
     /* Constraint for the motion profilied robot angle controller */
     public static final TrapezoidProfile.Constraints kThetaControllerConstraints = new TrapezoidProfile.Constraints(
@@ -354,6 +395,8 @@ public final class Constants {
     public static final double kAutoAlignMovementP=0.07;
     public static final double kAutoAlignMovementI=0;
     public static final double kAutoAlignMovementD=0;
+    public static final double kAutoAlignTolerance=2;
+    public static final double kAutoAlignPeak=0.5;
   }
   public static class PathPlannerConstants {
     public final static PIDConstants TRANSLATION_PID = new PIDConstants(0, 0, 0, 0); // TODO
@@ -365,5 +408,9 @@ public final class Constants {
     public final static String AUTP_LLname = "limelight-pick";
 
     public final static double LLAngle = 0.;//ll视线相对水平面的仰角
+  }
+
+  public static class ManualShootConstants{
+    public final static double ChassisSpeedTolerance = 0.5;
   }
 }

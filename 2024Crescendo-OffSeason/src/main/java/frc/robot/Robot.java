@@ -4,25 +4,34 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.AutoAMPConstants;
+import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Library.team3476.net.editing.LiveEditableValue;
-import frc.robot.commands.AMP;
-import frc.robot.commands.AutoSPKUP;
 import frc.robot.commands.Autos;
-import frc.robot.commands.ManualSPKDown;
-import frc.robot.commands.ManualSPKUp;
-import frc.robot.commands.NoteIntake;
-import frc.robot.commands.SemiAutoPick;
-import frc.robot.commands.TestSPKUP;
+import frc.robot.commands.AMPCommands.AMP;
+import frc.robot.commands.AMPCommands.AutoAMP;
+import frc.robot.commands.AutoCommand.C131;
+import frc.robot.commands.IntakeCommands.NoteIntake;
+import frc.robot.commands.IntakeCommands.NoteOut;
+import frc.robot.commands.IntakeCommands.SemiAutoPick;
+import frc.robot.commands.SPKCommands.NewAutoSPKUP;
+import frc.robot.commands.SPKCommands.ManualSPKDown;
+import frc.robot.commands.SPKCommands.ManualSPKUp;
+import frc.robot.commands.SPKCommands.TestSPKUP;
 // import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
-import frc.robot.subsystems.ImprovedXboxController.Button;
+import frc.robot.subsystems.ImprovedPS4Controller.Button;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -85,12 +94,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    RobotContainer.m_Arm.ZeroArmPosition();
-    // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
-    }
+    new C131().schedule();
     
   }
 
@@ -107,31 +111,27 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.zeroHeading();
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
-      new AutoSPKUP(Button.kRightBumper.value).schedule();;
+    if(RobotContainer.m_driverController.getR1ButtonPressed()){//TODO AMP按钮
+      new NewAutoSPKUP(Button.kR1.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getLeftStickButtonPressed())
+    if(RobotContainer.m_driverController.getL1ButtonPressed())
     {
-      new SemiAutoPick(Button.kLeftStick.value).schedule();;
+      new NoteIntake(Button.kL1.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getLeftBumperPressed())
+    if(RobotContainer.m_driverController.getCrossButtonPressed())
     {
-      new NoteIntake(Button.kLeftBumper.value).schedule();;
+      new AutoAMP(Button.kCross.value, Button.kR2.value).schedule();
     }
-    if(RobotContainer.m_driverController.getBButtonPressed())
-    {
-      new AMP(Button.kB.value, Button.kRightTrigger.value).schedule();
+    if(RobotContainer.m_driverController.getCircleButtonPressed()){
+      new NoteOut(Button.kCircle.value).schedule();
     }
-    // if(RobotContainer.m_Arm.IsAtDefaultDegree()&&RobotContainer.m_Intaker.HasNote()){
-    //   new PassNote().schedule();
-    // }
   }
 
   @Override
@@ -143,15 +143,15 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    if(RobotContainer.m_driverController.getAButton())
-    {
-      RobotContainer.m_Swerve.drive(new Translation2d(2, 0), 0, false);
-    }
-    else
-    {
-       RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
+    // if(RobotContainer.m_driverController.getAButton())
+    // {
+    //   RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
+    // }
+    // else
+    // {
+    //    RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
     
-    }
+    // }
     // if(RobotContainer.m_driverController.getPOVUp()){
     //   RobotContainer.m_Arm.SetPCT(0.05);
     // }

@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.commands.IntakeCommands;
 
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -37,6 +37,7 @@ public class NoteOut extends Command {
 
   @Override
   public boolean isFinished() {
+    if(m_ButtonID==0)return false;
     if(!RobotContainer.m_driverController.getButton(m_ButtonID)) return true;
     else return false;
   }

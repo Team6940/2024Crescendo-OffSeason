@@ -40,6 +40,7 @@ public class Arm extends SubsystemBase{
         m_ArmLeftConfig.MotorOutput.PeakForwardDutyCycle=1;
         m_ArmLeftConfig.MotorOutput.PeakReverseDutyCycle=-1;
         m_ArmLeftConfig.Feedback.SensorToMechanismRatio=200;
+        m_ArmLeftConfig.MotorOutput.DutyCycleNeutralDeadband=0.02;
 
         m_ArmLeftConfig.Slot0.kG=ArmConstants.kG;
         m_ArmLeftConfig.Slot0.kP=ArmConstants.kP;

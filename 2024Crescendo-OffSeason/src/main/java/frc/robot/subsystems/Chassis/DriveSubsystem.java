@@ -19,8 +19,10 @@ import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.AutoConstants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.PoseEstimatorConstants;
+import frc.robot.Constants.SwerveConstants;
 import frc.robot.Library.LimelightHelper.LimelightHelpers;
 import frc.robot.Library.team8814.util.ChassisOptimize;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -36,6 +38,7 @@ import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
 import com.pathplanner.lib.util.PIDConstants;
 import com.pathplanner.lib.util.ReplanningConfig;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.VecBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -48,6 +51,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -69,6 +73,8 @@ public class DriveSubsystem extends SubsystemBase {
     public Translation2d m_currentDesireVelocity=new Translation2d(0,0);
     public double m_currentDesireRotation=0;
 
+    public Notifier m_OdometryNotifier;
+
 
     // private final TeleopDriveController teleopDriveController;
     // private final AutoRotateAlignController autoRotateAlignController;
@@ -87,6 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
         this.m_gyro=new Pigeon2(Constants.SwerveConstants.pigeonID,"canivore");
         this.m_gyro.getConfigurator().apply(new Pigeon2Configuration());
         this.m_gyro.reset();
+        // this.m_OdometryNotifier = new Notifier(this::updateOdometry);
         
         mSwerveMods = new SwerveModule[] {
             new SwerveModule(0, Constants.SwerveConstants.Mod0.constants),
@@ -98,10 +105,16 @@ public class DriveSubsystem extends SubsystemBase {
 
         // swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         m_poseEstimator=new PoseEstimator();
-        // startOdometry();
+        startOdometry();
         // teleopDriveController = new TeleopDriveController(m_poseEstimator);
         // autoRotateAlignController = new AutoRotateAlignController(m_poseEstimator,LimelightConstants.AUTP_LLname);
         SmartDashboard.putData("Field",m_field);
+    }
+
+    public void startOdometry(){
+        if (m_OdometryNotifier!=null){
+            m_OdometryNotifier.startPeriodic(SwerveConstants.OdometryPeriod);
+        }
     }
 
     public void drive(
@@ -115,12 +128,15 @@ public class DriveSubsystem extends SubsystemBase {
         ChassisSpeeds _desireChassisSpeeds=new ChassisSpeeds(m_currentDesireVelocity.getX(),m_currentDesireVelocity.getY(),m_currentDesireRotation);
         if(_fieldRelative)
         {
-            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_gyro.getRotation2d().times(-1.));
+            _desireChassisSpeeds=ChassisSpeeds.fromRobotRelativeSpeeds(_desireChassisSpeeds, m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().times(-1));
         }
         desireSpeeds = _desireChassisSpeeds;
        setChassisSpeeds(_desireChassisSpeeds);
     }
     
+    public void drive(ChassisSpeeds _ChassisSpeeds) {
+        drive(new Translation2d(_ChassisSpeeds.vxMetersPerSecond,_ChassisSpeeds.vyMetersPerSecond),_ChassisSpeeds.omegaRadiansPerSecond,false);
+    }
         
     // public Translation2d getDriverDesireSpeeds(){
     //     return teleopDriveController.inputDesireVelocity;
@@ -130,14 +146,14 @@ public class DriveSubsystem extends SubsystemBase {
     // }
     private void updateOdometry() {
         // swerveOdometry.update(getGyroYaw(), getModulePositions());
-        m_poseEstimator.updateSwerve(getGyroYaw(), getModulePositions());
-        // LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_gyro.getAngle(), m_gyro.getRate(), 0, 0, 0,0);
+        m_poseEstimator.sEstimator.update(getGyroYaw(), getModulePositions());
+        LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().getDegrees(), m_gyro.getRate(), 0, 0, 0,0);
          LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
       if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
         m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
       }
-        // SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
+        SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
     }
 
 
@@ -200,7 +216,7 @@ public class DriveSubsystem extends SubsystemBase {
         }
     }
     public Rotation2d getGyroYaw() {
-        return new Rotation2d(m_gyro.getYaw().getValue());
+        return new Rotation2d(Math.toRadians(-m_gyro.getAngle()));
     }
 
     public Pose2d inversePose2dUsingAlliance(Pose2d pose,DriverStation.Alliance allianceColor){
@@ -237,6 +253,9 @@ public class DriveSubsystem extends SubsystemBase {
     public PathPlannerPath generatePath(String pathName){
         return PathPlannerPath.fromPathFile(pathName);
     }
+    public PathPlannerPath generateChoreoPath(String pathName){
+        return PathPlannerPath.fromChoreoTrajectory(pathName);
+    }
 
     //return an auto command
     public Command followPathCommand(PathPlannerPath path){
@@ -246,7 +265,7 @@ public class DriveSubsystem extends SubsystemBase {
                 path,
                 this::getPose, // Robot pose supplier
                 this::getRobotRelativeSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-                this::setChassisSpeeds, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
+                this::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
             new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
                             new PIDConstants(Constants.AutoConstants.kPTranslationController, 0.0, 0.0), // Translation PID constants
                             new PIDConstants(Constants.AutoConstants.kPRotationController, 0.0, 0.0), // Rotation PID constants
@@ -276,7 +295,11 @@ public class DriveSubsystem extends SubsystemBase {
             return DriverStation.Alliance.Red;
         }
     }
-    
+    public Translation2d getToSPKTranslation2d(){
+        Translation2d targetTranslation = DriverStation.getAlliance().get()==Alliance.Blue?FieldConstants.SPKTranslation.Blue:FieldConstants.SPKTranslation.Red;
+        Translation2d m_Translation2d = this.getPose().getTranslation();
+        return targetTranslation.minus(m_Translation2d);
+    }
 
     @Override
     public void periodic(){      
@@ -299,16 +322,18 @@ public class DriveSubsystem extends SubsystemBase {
         // m_poseEstimator.visionInput(visionPoses,10*(Math.PI)/180);
 
         m_field.setRobotPose(m_poseEstimator.getEstimatedPosition());
+        SmartDashboard.putData("FieldPose", m_field);
         // SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
         //print debuging information
-        for(SwerveModule mod : mSwerveMods){
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        }
-        SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
-        SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
-        SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
+
+        // for(SwerveModule mod : mSwerveMods){
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        // }
+        // SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
+        // SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
+        // SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
     }
 
     

@@ -61,25 +61,25 @@ public class SwerveModule {
 
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop){
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle); 
-        mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()));
+        mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()).withEnableFOC(true));
         setSpeed(desiredState, isOpenLoop);
     }
     public void setDesiredState(SwerveModuleState desiredState, double robotAngularVelocityInRps,boolean isOpenLoop){
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle); 
         mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()).
-            withFeedForward(-robotAngularVelocityInRps*Constants.SwerveConstants.angleKV));
+            withFeedForward(-robotAngularVelocityInRps*Constants.SwerveConstants.angleKV).withEnableFOC(true));
         setSpeed(desiredState, isOpenLoop);
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop){
         if(isOpenLoop){
             driveDutyCycle.Output = desiredState.speedMetersPerSecond / Constants.SwerveConstants.maxSpeed;
-            mDriveMotor.setControl(driveDutyCycle);
+            mDriveMotor.setControl(driveDutyCycle.withEnableFOC(true));
         }
         else {
             driveVelocity.Velocity = Conversions.MPSToRPS(desiredState.speedMetersPerSecond, Constants.SwerveConstants.wheelCircumference);
             driveVelocity.FeedForward = driveFeedForward.calculate(desiredState.speedMetersPerSecond);
-            mDriveMotor.setControl(driveVelocity);
+            mDriveMotor.setControl(driveVelocity.withEnableFOC(true));
         }
     }
 

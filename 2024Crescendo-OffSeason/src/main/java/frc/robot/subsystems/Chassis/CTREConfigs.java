@@ -59,5 +59,8 @@ public final class CTREConfigs {
 
         swerveDriveFXConfig.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = Constants.SwerveConstants.closedLoopRamp;
         swerveDriveFXConfig.ClosedLoopRamps.VoltageClosedLoopRampPeriod = Constants.SwerveConstants.closedLoopRamp;
+
+        /* Duty Cycle Neutral Deadband */
+        swerveDriveFXConfig.MotorOutput.DutyCycleNeutralDeadband=0.1;
     }
 }
