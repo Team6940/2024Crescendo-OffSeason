@@ -31,7 +31,7 @@ import frc.robot.commands.SPKCommands.TestSPKUP;
 // import frc.robot.commands.PassNote;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
-import frc.robot.subsystems.ImprovedPS4Controller.Button;
+import frc.robot.subsystems.ImprovedXboxController.Button;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -118,19 +118,19 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getR1ButtonPressed()){//TODO AMP按钮
-      new NewAutoSPKUP(Button.kR1.value).schedule();;
+    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
+      new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getL1ButtonPressed())
+    if(RobotContainer.m_driverController.getLeftBumperPressed())
     {
-      new NoteIntake(Button.kL1.value).schedule();;
+      new NoteIntake(Button.kLeftBumper.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getCrossButtonPressed())
+    if(RobotContainer.m_driverController.getAButtonPressed())
     {
-      new AutoAMP(Button.kCross.value, Button.kR2.value).schedule();
+      new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
-    if(RobotContainer.m_driverController.getCircleButtonPressed()){
-      new NoteOut(Button.kCircle.value).schedule();
+    if(RobotContainer.m_driverController.getBButtonPressed()){
+      new NoteOut(Button.kB.value).schedule();
     }
   }
 
