@@ -28,9 +28,9 @@ public class CU103 extends SequentialCommandGroup{
         
       
         }
-        addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
+        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-1")).raceWith(new NoteIntake(0)));
-        addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
+        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-2")).raceWith(new NoteIntake(0)));
         addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-3")).raceWith(new NoteIntake(0)));

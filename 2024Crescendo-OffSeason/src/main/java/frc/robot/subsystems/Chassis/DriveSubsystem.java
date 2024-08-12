@@ -152,6 +152,7 @@ public class DriveSubsystem extends SubsystemBase {
       if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
         m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
+        // m_poseEstimator.updateVision(new Pose2d(0, 0, new Rotation2d()), 0, PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
         SmartDashboard.putNumber("Dev", PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
       }
         SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
@@ -327,14 +328,14 @@ public class DriveSubsystem extends SubsystemBase {
         // SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
         //print debuging information
 
-        // for(SwerveModule mod : mSwerveMods){
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        // }
-        // SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
-        // SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
-        // SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
+        for(SwerveModule mod : mSwerveMods){
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        }
+        SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
     }
 
     
