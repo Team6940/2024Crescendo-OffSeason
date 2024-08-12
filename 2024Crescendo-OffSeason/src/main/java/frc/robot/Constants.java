@@ -70,19 +70,19 @@ public final class Constants {
 
     public static final double ArmGearRatio = 200.;
 
-    public static final double kP = 15.;
+    public static final double kP = 17.;
     public static final double kI = 0.;
     public static final double kD = 0.;
     public static final double kS = 0.;
     public static final double kG = 0.;
 
     public static final double ArmVelocity = 1.;
-    public static final double ArmAcceleration = 2;
+    public static final double ArmAcceleration = 4;
 
-    public static final double ArmTolerence = 1.;
+    public static final double ArmTolerence = 1;
 
     public static final double ArmDefaultDegree = -72.29;
-    public static final double ArmAMPDegree = 45.;
+    public static final double ArmAMPDegree = 46.;
     public static final double ArmUpSPKDegree = 50;
     public static final double ArmDownSPKDegree = 0.;
   }
@@ -128,7 +128,7 @@ public final class Constants {
   }
 
   public static class AutoShootConstants{
-    public static final double kP=0.10;
+    public static final double kP=0.2;
     public static final double kI=0.;
     public static final double kD=0.0;
     public static final double DegreeTolerance=2.;
@@ -153,19 +153,30 @@ public final class Constants {
     };
 
     public static final Point2D[] DisToArmPoints = {
-      new Point2D.Double(0., 0.)
+      new Point2D.Double(1.66,-45),
+      new Point2D.Double(2.08,-52),
+      new Point2D.Double(2.54,-56),
+      new Point2D.Double(3.08,-63),
+      
+      new Point2D.Double(3.5,-65),
+      new Point2D.Double(4.07,-70),
+      new Point2D.Double(5.16,-72)
     };
 
     public static final Point2D[] DisToRPSPoints = {
-      new Point2D.Double(0., 0.)
+      new Point2D.Double(1.66,40),
+      
+      new Point2D.Double(3.07,50),
+      
+      new Point2D.Double(5.16,60)
     };
 
     public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap RPSTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap DisToArmTable = new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap DisToRPSTable = new InterpolatingDoubleTreeMap();
-    public static final double MaxRange = 0.;
-    public static final double CoastVelocity = 0.;
+    public static final double MaxRange = 5.;
+    public static final double CoastVelocity = 2.;
   }
 
   public static class GlobalConstants {
@@ -175,7 +186,7 @@ public final class Constants {
   public static final class FieldConstants{
       public static final class SPKTranslation{
         public static final Translation2d Blue = new Translation2d(0, 0);
-        public static final Translation2d Red = new Translation2d(0, 0);
+        public static final Translation2d Red = new Translation2d(16.43, 5.50);
     }
   }
 
@@ -194,7 +205,8 @@ public final class Constants {
     public final static double AutoAMPTranslationkI=0.;
     public final static double AutoAMPTranslationkD=0.;
     public final static double AutoAMPTranslationTolerance=0.2;
-      public final static double AMPDistancetoGo=0.5;
+    public final static double AutoAMPArmThreshold=10;
+      public final static double AMPDistancetoGo=0.4;
     public final static class AMPTagID{   //TODO
       public final static int Blue = 0;
       public final static int Red = 0;
@@ -367,7 +379,7 @@ public final class Constants {
   }
 
   public static final class PoseEstimatorConstants {
-    public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
+    public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.7, 0.7, 0.1);
     public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
     public static final InterpolatingDoubleTreeMap tAtoDev=new InterpolatingDoubleTreeMap();
     

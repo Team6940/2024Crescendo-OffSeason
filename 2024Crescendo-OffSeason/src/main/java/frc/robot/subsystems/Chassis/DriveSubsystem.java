@@ -147,11 +147,12 @@ public class DriveSubsystem extends SubsystemBase {
     private void updateOdometry() {
         // swerveOdometry.update(getGyroYaw(), getModulePositions());
         m_poseEstimator.sEstimator.update(getGyroYaw(), getModulePositions());
-        LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().getDegrees(), m_gyro.getRate(), 0, 0, 0,0);
+        LimelightHelpers.SetRobotOrientation(RobotContainer.m_SPKRLimelight,m_poseEstimator.sEstimator.getEstimatedPosition().getRotation().getDegrees(),0, 0, 0, 0,0);
          LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
       if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
         m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
+        SmartDashboard.putNumber("Dev", PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
       }
         SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());
     }

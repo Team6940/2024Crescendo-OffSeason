@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getRightBumperPressed()){
+    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
       new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
     }
     if(RobotContainer.m_driverController.getLeftBumperPressed())
@@ -127,7 +127,7 @@ public class Robot extends TimedRobot {
     }
     if(RobotContainer.m_driverController.getAButtonPressed())
     {
-      new AutoAMP(Button.kA.value, Button.kY.value).schedule();
+      new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     if(RobotContainer.m_driverController.getBButtonPressed()){
       new NoteOut(Button.kB.value).schedule();

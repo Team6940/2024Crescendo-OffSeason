@@ -32,7 +32,7 @@ public class PoseEstimator {
     public NavigableMap<Double, Pose2d> robotPoseBuffer = new TreeMap<>();//TODO: limit size to save memory
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
-        PoseEstimatorConstants.tAtoDev.put(0.294, 0.01);
+        PoseEstimatorConstants.tAtoDev.put(0.374, 0.003);
         PoseEstimatorConstants.tAtoDev.put(0.071, 0.1);
         PoseEstimatorConstants.tAtoDev.put(0.046, 0.2);
         sEstimator = new SwerveDrivePoseEstimator(
@@ -87,7 +87,7 @@ public class PoseEstimator {
         sEstimator.addVisionMeasurement(
             new Pose2d(pose.getX(), pose.getY(),pose.getRotation()),
             timeStamp,
-            VecBuilder.fill(FOM, FOM, 0.1)
+            VecBuilder.fill(FOM, FOM, 100000000)
         );
         
     }
