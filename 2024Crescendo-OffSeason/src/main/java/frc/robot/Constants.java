@@ -153,13 +153,13 @@ public final class Constants {
     };
 
     public static final Point2D[] DisToArmPoints = {
-      new Point2D.Double(1.66,-45),
-      new Point2D.Double(2.08,-52),
+      new Point2D.Double(1.66,-40),
+      new Point2D.Double(2.08,-48),
       new Point2D.Double(2.54,-56),
-      new Point2D.Double(3.08,-63),
+      new Point2D.Double(3.08,-60),
       
       new Point2D.Double(3.5,-65),
-      new Point2D.Double(4.07,-70),
+      new Point2D.Double(4.07,-68),
       new Point2D.Double(5.16,-72)
     };
 
@@ -221,7 +221,7 @@ public final class Constants {
     public static final int pigeonID = 13;
 
     public static final COTSTalonFXSwerveConstants chosenModule = COTSTalonFXSwerveConstants.WCP.SwerveXFlipped
-        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_10);
+        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_12);
 
     /* Drivetrain Constants */
     public static final double trackWidth = 0.6195;//TODO
@@ -251,12 +251,12 @@ public final class Constants {
     public static final SensorDirectionValue cancoderInvert = chosenModule.cancoderInvert;
 
     /* Swerve Current Limiting */
-    public static final int angleCurrentLimit = 25;
+    public static final int angleCurrentLimit = 20;
     public static final int angleCurrentThreshold = 40;
     public static final double angleCurrentThresholdTime = 0.1;
     public static final boolean angleEnableCurrentLimit = true;
 
-    public static final int driveCurrentLimit = 50;
+    public static final int driveCurrentLimit = 40;
     public static final int driveCurrentThreshold = 60;
     public static final double driveCurrentThresholdTime = 0.1;
     public static final boolean driveEnableCurrentLimit = true;
@@ -289,10 +289,10 @@ public final class Constants {
 
     /* Swerve Profiling Values */
     /** Meters per Second */
-    public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 7 ; // TODO: This must be tuned to specific robot
+    public static final double maxSpeed = 4.5; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 7. ; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 5;
+    public static final double maxAcceleration = 4.6;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second
