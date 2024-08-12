@@ -43,9 +43,9 @@ public class AutoAMP extends Command{
     @Override
     public void initialize()
     {
-        LimelightHelpers.setPriorityTagID(RobotContainer.m_SPKRLimelight, DriverStation.getAlliance().get()==DriverStation.Alliance.Blue?AutoAMPConstants.AMPTagID.Blue:AutoAMPConstants.AMPTagID.Red);
+        // LimelightHelpers.setPriorityTagID(RobotContainer.m_SPKRLimelight, DriverStation.getAlliance().get()==DriverStation.Alliance.Blue?AutoAMPConstants.AMPTagID.Blue:AutoAMPConstants.AMPTagID.Red);
         m_State = AMPState.Aligning;
-        m_RotationController.setTolerance(AutoAMPConstants.AutoAMPDegreeTolerance, AutoAMPConstants.AutoAMPDegreeOmegaTolerance);
+        m_RotationController.setTolerance(AutoAMPConstants.AutoAMPDegreeTolerance);
         m_TranslationXController.setTolerance(AutoAMPConstants.AutoAMPTranslationTolerance);
         m_TranslationYController.setTolerance(AutoAMPConstants.AutoAMPTranslationTolerance);
         m_TargetPose = DriverStation.getAlliance().get() == DriverStation.Alliance.Blue ? AutoAMPConstants.AutoAMPPose.Blue : AutoAMPConstants.AutoAMPPose.Red; 
@@ -83,8 +83,9 @@ public class AutoAMP extends Command{
 
     public void align(){
         moveto();
-        
-        if(m_RotationController.atSetpoint() && RobotContainer.m_Arm.IsAtTargetDegree()){
+        SmartDashboard.putBoolean("IsatTargetAngle", m_RotationController.atSetpoint());
+        SmartDashboard.putBoolean("IsatTargetarm", RobotContainer.m_Arm.GetArmDegree()>AutoAMPConstants.AutoAMPArmThreshold);
+        if(m_RotationController.atSetpoint() && RobotContainer.m_Arm.GetArmDegree()>AutoAMPConstants.AutoAMPArmThreshold){
              m_RotationController.setSetpoint(m_TargetPose.getRotation().getDegrees());
        m_TranslationXController.setSetpoint(m_TargetPose.getX());
         m_TranslationYController.setSetpoint(m_TargetPose.getY()+AutoAMPConstants.AMPDistancetoGo);
@@ -98,8 +99,8 @@ public class AutoAMP extends Command{
         _controllerY=0.;
         _controllerX = m_TranslationXController.calculate(RobotContainer.m_Swerve.getPose().getX());
         _controllerY = m_TranslationYController.calculate(RobotContainer.m_Swerve.getPose().getY());
-        _controllerX=NumberLimiter.Limit(-2, 2, _controllerX);
-        _controllerY=NumberLimiter.Limit(-2, 2, _controllerY);
+        _controllerX=NumberLimiter.Limit(-1.5, 1.5, _controllerX);
+        _controllerY=NumberLimiter.Limit(-1.5, 1.5, _controllerY);
         _Omega=NumberLimiter.Limit(-3, 3, _Omega);
         RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmAMPDegree);
         RobotContainer.m_Swerve.drive(new Translation2d(_controllerX, _controllerY), _Omega, true);
@@ -107,13 +108,13 @@ public class AutoAMP extends Command{
     }
     public void push(){
         moveto();
-        if(RobotContainer.m_driverController.getRawButton(m_ExecuteButtonID)){
+        if(RobotContainer.m_driverController.getButton(m_ExecuteButtonID)){
                 m_State = AMPState.Shooting;
             }
     }
     public void shoot(){
         RobotContainer.m_Blocker.SetOutPut(BlockerConstants.AMPOutput);
-        if(!RobotContainer.m_driverController.getRawButton(m_ExecuteButtonID))
+        if(!RobotContainer.m_driverController.getButton(m_ExecuteButtonID))
         {
             m_State=AMPState.END;
             m_RotationController.setSetpoint(m_TargetPose.getRotation().getDegrees());
