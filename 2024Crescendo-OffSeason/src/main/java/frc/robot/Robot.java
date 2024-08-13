@@ -20,7 +20,9 @@ import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.Autos;
 import frc.robot.commands.AMPCommands.AMP;
 import frc.robot.commands.AMPCommands.AutoAMP;
+import frc.robot.commands.AutoCommand.C103;
 import frc.robot.commands.AutoCommand.C131;
+import frc.robot.commands.AutoCommand.CU103;
 import frc.robot.commands.IntakeCommands.NoteIntake;
 import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.commands.IntakeCommands.SemiAutoPick;
@@ -94,7 +96,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    new C131().schedule();
+    new CU103().schedule();
     
   }
 
@@ -111,7 +113,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
   }
 
   /** This function is called periodically during operator control. */
@@ -130,6 +132,13 @@ public class Robot extends TimedRobot {
       new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     if(RobotContainer.m_driverController.getBButtonPressed()){
+      new NoteOut(Button.kB.value).schedule();
+    }
+    
+    if(RobotContainer.m_driverController.getXButtonPressed()){
+      new TestSPKUP(-33,40,0).schedule();
+    }
+    if(RobotContainer.m_driverController.getYButtonPressed()){
       new NoteOut(Button.kB.value).schedule();
     }
   }

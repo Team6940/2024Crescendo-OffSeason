@@ -111,7 +111,7 @@ public final class Constants {
     public static final double kV = 0.11458;
 
     public static final double ShooterDifferenceTolerence = 0.5;
-    public static final double ShooterSpeedTolerence = 1.;
+    public static final double ShooterSpeedTolerence = 1.5;
 
     public static final double ShooterAMPRPS = 0.;
     public static final double ShooterManualSPKRPS = 0.;
@@ -128,10 +128,10 @@ public final class Constants {
   }
 
   public static class AutoShootConstants{
-    public static final double kP=0.2;
-    public static final double kI=0.;
+    public static final double kP=0.12;
+    public static final double kI=0.0005;
     public static final double kD=0.0;
-    public static final double DegreeTolerance=2.;
+    public static final double DegreeTolerance=3.;
     public static final double VelocityTolerance=4.;
     public static final double RPSInAdvance=30;
     public static final double HightDifference=1.;//单位暂定meter
@@ -153,14 +153,17 @@ public final class Constants {
     };
 
     public static final Point2D[] DisToArmPoints = {
-      new Point2D.Double(1.66,-45),
-      new Point2D.Double(2.08,-52),
-      new Point2D.Double(2.54,-56),
-      new Point2D.Double(3.08,-63),
       
-      new Point2D.Double(3.5,-65),
-      new Point2D.Double(4.07,-70),
-      new Point2D.Double(5.16,-72)
+      new Point2D.Double(0.9,-33),
+      new Point2D.Double(1.37,-37),
+      new Point2D.Double(2.08,-45),
+      new Point2D.Double(2.54,-55),
+      new Point2D.Double(3.08,-61),
+      
+      new Point2D.Double(3.5,-63),
+      new Point2D.Double(4.07,-65),
+      new Point2D.Double(5.16,-67),
+      new Point2D.Double(5.5,-70)
     };
 
     public static final Point2D[] DisToRPSPoints = {
@@ -168,14 +171,14 @@ public final class Constants {
       
       new Point2D.Double(3.07,50),
       
-      new Point2D.Double(5.16,60)
+      new Point2D.Double(5.16,55)
     };
 
     public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap RPSTable=new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap DisToArmTable = new InterpolatingDoubleTreeMap();
     public static final InterpolatingDoubleTreeMap DisToRPSTable = new InterpolatingDoubleTreeMap();
-    public static final double MaxRange = 5.;
+    public static final double MaxRange = 6;
     public static final double CoastVelocity = 2.;
   }
 
@@ -205,15 +208,15 @@ public final class Constants {
     public final static double AutoAMPTranslationkI=0.;
     public final static double AutoAMPTranslationkD=0.;
     public final static double AutoAMPTranslationTolerance=0.2;
-    public final static double AutoAMPArmThreshold=10;
-      public final static double AMPDistancetoGo=0.4;
+    public final static double AutoAMPArmThreshold=0;
+      public final static double AMPDistancetoGo=0.5;
     public final static class AMPTagID{   //TODO
       public final static int Blue = 0;
       public final static int Red = 0;
     }
     public final static class AutoAMPPose{    //TODO
-      public final static Pose2d Blue = new Pose2d(1.8, 7.0, new Rotation2d(-Math.PI/2.));
-      public final static Pose2d Red = new Pose2d(14.7,7.0, new Rotation2d(-Math.PI/2.));
+      public final static Pose2d Blue = new Pose2d(1.8, 7.3, new Rotation2d(-Math.PI/2.));
+      public final static Pose2d Red = new Pose2d(14.7,7.3, new Rotation2d(-Math.PI/2.));
     }
   }
 
@@ -221,7 +224,7 @@ public final class Constants {
     public static final int pigeonID = 13;
 
     public static final COTSTalonFXSwerveConstants chosenModule = COTSTalonFXSwerveConstants.WCP.SwerveXFlipped
-        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_10);
+        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_12);
 
     /* Drivetrain Constants */
     public static final double trackWidth = 0.6195;//TODO
@@ -256,8 +259,8 @@ public final class Constants {
     public static final double angleCurrentThresholdTime = 0.1;
     public static final boolean angleEnableCurrentLimit = true;
 
-    public static final int driveCurrentLimit = 50;
-    public static final int driveCurrentThreshold = 60;
+    public static final int driveCurrentLimit = 60;
+    public static final int driveCurrentThreshold = 70;
     public static final double driveCurrentThresholdTime = 0.1;
     public static final boolean driveEnableCurrentLimit = true;
 
@@ -267,7 +270,7 @@ public final class Constants {
      * We found a small open loop ramp (0.25) helps with tread wear, tipping, etc
      */
     public static final double openLoopRamp = 0.;
-    public static final double closedLoopRamp = 0.0;
+    public static final double closedLoopRamp = 0.1;
 
     /* Angle Motor PID Values */
     public static final double angleKP = chosenModule.angleKP;
@@ -290,9 +293,9 @@ public final class Constants {
     /* Swerve Profiling Values */
     /** Meters per Second */
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
-    public static final double maxModuleSpeed = 7 ; // TODO: This must be tuned to specific robot
+    public static final double maxModuleSpeed = 5 ; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 5;
+    public static final double maxAcceleration = 6;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second
@@ -379,7 +382,7 @@ public final class Constants {
   }
 
   public static final class PoseEstimatorConstants {
-    public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.7, 0.7, 0.1);
+    public static final Matrix<N3, N1> stateStdDevs = VecBuilder.fill(0.3, 0.3, 0.1);
     public static final Matrix<N3, N1> visionStdDevs = VecBuilder.fill(0.9, 0.9, 0.9);
     public static final InterpolatingDoubleTreeMap tAtoDev=new InterpolatingDoubleTreeMap();
     

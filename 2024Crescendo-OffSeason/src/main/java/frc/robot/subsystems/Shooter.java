@@ -66,8 +66,11 @@ public class Shooter extends SubsystemBase{
         m_ShooterRight.set(_PCT);
     }
 
-    public double GetRPS(){
+    public double GetLeftRPS(){
         return m_ShooterLeft.getVelocity().getValue();
+    }
+    public double GetRighttRPS(){
+        return m_ShooterRight.getVelocity().getValue();
     }
 
     public double GetTargetRPS(){
@@ -79,7 +82,8 @@ public class Shooter extends SubsystemBase{
     }
 
     public boolean IsAtTargetRPS(){
-        return Math.abs(GetRPS()-GetTargetRPS())<ShooterConstants.ShooterSpeedTolerence;
+        return Math.abs(GetLeftRPS()-GetTargetRPS())<ShooterConstants.ShooterSpeedTolerence
+        && Math.abs(GetRighttRPS()-GetTargetRPS()-5)<ShooterConstants.ShooterSpeedTolerence;
     }
 
     public boolean IsShooterReady(){

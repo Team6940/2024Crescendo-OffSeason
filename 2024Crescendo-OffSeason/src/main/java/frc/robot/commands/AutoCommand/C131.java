@@ -32,10 +32,8 @@ public class C131 extends SequentialCommandGroup{
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-1")).raceWith(new NoteIntake(0)));
         addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-2")).raceWith(new NoteIntake(0)));
-        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-3")).raceWith(new NoteIntake(0)));
-        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-4")).raceWith(new NoteIntake(0)));
-        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
     }
 }
