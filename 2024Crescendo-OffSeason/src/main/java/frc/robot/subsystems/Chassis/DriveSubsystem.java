@@ -327,14 +327,14 @@ public class DriveSubsystem extends SubsystemBase {
         // SmartDashboard.putString("teleSpeed", teleopSpeeds.toString());
         //print debuging information
 
-        // for(SwerveModule mod : mSwerveMods){
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
-        // }
-        // SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
-        // SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
-        // SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
+        for(SwerveModule mod : mSwerveMods){
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " CANcoder", mod.getCANcoder().getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Angle", mod.getPosition().angle.getDegrees());
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
+        }
+        SmartDashboard.putNumber("desireSpeeds vx", desireSpeeds.vxMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds vy", desireSpeeds.vyMetersPerSecond);
+        SmartDashboard.putNumber("desireSpeeds om", desireSpeeds.omegaRadiansPerSecond);
     }
 
     

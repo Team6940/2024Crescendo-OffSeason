@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.AutoAMPConstants;
 import frc.robot.Constants.AutoShootConstants;
@@ -132,8 +133,12 @@ public class Robot extends TimedRobot {
     if(RobotContainer.m_driverController.getBButtonPressed()){
       new NoteOut(Button.kB.value).schedule();
     }
+    if(RobotContainer.m_driverController.getXButtonPressed()){
+      new TestSPKUP(-33, 40, Button.kX.value).raceWith(
+      Commands.runOnce(()->RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, RobotContainer.m_Swerve.getPose().getRotation())
+      )));
+    }
   }
-
   @Override
   public void testInit() {
     // Cancels all running commands at the start of test mode.
