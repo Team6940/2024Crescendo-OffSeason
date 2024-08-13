@@ -45,7 +45,7 @@ public class NewAutoSPKUP extends Command{
         SmartDashboard.putNumber("AimtargetAngle", AimTranslation.getAngle().getDegrees());
         SmartDashboard.putNumber("AimNowAngle", RobotContainer.m_Swerve.getPose().getRotation().getDegrees());
         _Omega = m_RotationPidController.calculate(RobotContainer.m_Swerve.getPose().getRotation().getDegrees(), AimTranslation.getAngle().getDegrees());
-        _Omega=NumberLimiter.Limit(-2, 2, _Omega);
+        _Omega=NumberLimiter.Limit(-3, 3, _Omega);
         _controllerX=-RobotContainer.m_driverController.getLeftY();
         _controllerY=-RobotContainer.m_driverController.getLeftX();
         Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
@@ -59,6 +59,9 @@ public class NewAutoSPKUP extends Command{
         RobotContainer.m_Arm.SetArmDegree(_ArmAngle);
         RobotContainer.m_Shooter.SetRPS(_RPS);
 
+        SmartDashboard.putBoolean("AimIsAtTargetDegree",RobotContainer.m_Arm.IsAtTargetDegree());
+        SmartDashboard.putBoolean("AimIsAtTargetRPS",RobotContainer.m_Shooter.IsAtTargetRPS());
+        SmartDashboard.putBoolean("AimIsAtTargetpose",m_RotationPidController.atSetpoint());
         if(AimTranslation.getNorm()<=AutoShootConstants.MaxRange && 
             RobotContainer.m_Swerve.getChassisSpeed() <= AutoShootConstants.CoastVelocity  &&
             RobotContainer.m_Arm.IsAtTargetDegree() &&
@@ -80,8 +83,8 @@ public class NewAutoSPKUP extends Command{
 
     @Override
     public boolean isFinished(){
-        if(!RobotContainer.m_driverController.getRawButton(m_ButtonID)) return true;
-        // if(!RobotContainer.m_Blocker.HasNote()) return true;
+        if(!RobotContainer.m_driverController.getButton(m_ButtonID)) return true;
+        if(!RobotContainer.m_Blocker.HasNote()) return true;
         return false;
     }
 }

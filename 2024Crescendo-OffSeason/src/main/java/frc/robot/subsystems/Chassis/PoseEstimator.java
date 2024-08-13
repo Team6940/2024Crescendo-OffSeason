@@ -33,8 +33,8 @@ public class PoseEstimator {
     public Pose2d visionPose = new Pose2d();
     public PoseEstimator(){
         PoseEstimatorConstants.tAtoDev.put(0.374, 0.003);
-        PoseEstimatorConstants.tAtoDev.put(0.071, 0.1);
-        PoseEstimatorConstants.tAtoDev.put(0.046, 0.2);
+        PoseEstimatorConstants.tAtoDev.put(0.071, 0.2);
+        PoseEstimatorConstants.tAtoDev.put(0.046, 0.4);
         sEstimator = new SwerveDrivePoseEstimator(
             Constants.SwerveConstants.swerveKinematics, 
             new Rotation2d(), 
