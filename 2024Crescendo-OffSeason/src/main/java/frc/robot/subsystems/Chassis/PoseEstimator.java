@@ -82,8 +82,7 @@ public class PoseEstimator {
     /** Update estimator with vision data. 
      *  Should only be updated when target is visible.
      * @param latency seconds */
-    public void updateVision(Pose2d pose, double latency,double FOM){
-        double timeStamp = Timer.getFPGATimestamp() - latency;
+    public void updateVision(Pose2d pose, double timeStamp,double FOM){
         sEstimator.addVisionMeasurement(
             new Pose2d(pose.getX(), pose.getY(),pose.getRotation()),
             timeStamp,

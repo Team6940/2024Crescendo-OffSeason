@@ -111,7 +111,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
   }
 
   /** This function is called periodically during operator control. */
