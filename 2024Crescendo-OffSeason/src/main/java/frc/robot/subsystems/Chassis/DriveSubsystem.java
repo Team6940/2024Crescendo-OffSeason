@@ -151,8 +151,7 @@ public class DriveSubsystem extends SubsystemBase {
          LimelightHelpers.PoseEstimate mt2 = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(RobotContainer.m_SPKRLimelight);
       if(Math.abs(m_gyro.getRate()) < 720&&mt2.tagCount>0) // if our angular velocity is greater than 720 degrees per second, ignore vision updates
       {
-        m_poseEstimator.updateVision(mt2.pose, mt2.latency,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
-        // m_poseEstimator.updateVision(new Pose2d(0, 0, new Rotation2d()), 0, PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
+        m_poseEstimator.updateVision(mt2.pose, mt2.timestampSeconds,PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
         SmartDashboard.putNumber("Dev", PoseEstimatorConstants.tAtoDev.get(mt2.avgTagArea));
       }
         SmartDashboard.putNumber("odometry time", Timer.getFPGATimestamp());

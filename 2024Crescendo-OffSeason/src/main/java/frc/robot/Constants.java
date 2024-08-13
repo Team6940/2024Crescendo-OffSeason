@@ -185,7 +185,7 @@ public final class Constants {
 
   public static final class FieldConstants{
       public static final class SPKTranslation{
-        public static final Translation2d Blue = new Translation2d(0, 0);
+        public static final Translation2d Blue = new Translation2d(0.12, 5.50);
         public static final Translation2d Red = new Translation2d(16.43, 5.50);
     }
   }
@@ -212,8 +212,8 @@ public final class Constants {
       public final static int Red = 0;
     }
     public final static class AutoAMPPose{    //TODO
-      public final static Pose2d Blue = new Pose2d(0, 0, new Rotation2d(0));
-      public final static Pose2d Red = new Pose2d(14.7,7.0, new Rotation2d(-Math.PI/2));
+      public final static Pose2d Blue = new Pose2d(1.8, 7.0, new Rotation2d(-Math.PI/2.));
+      public final static Pose2d Red = new Pose2d(14.7,7.0, new Rotation2d(-Math.PI/2.));
     }
   }
 
