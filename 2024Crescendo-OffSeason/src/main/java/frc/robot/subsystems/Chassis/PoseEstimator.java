@@ -81,12 +81,27 @@ public class PoseEstimator {
     
     /** Update estimator with vision data. 
      *  Should only be updated when target is visible.
+     *  !!! UNSAFE FUNCTION !!! NOT TUNED !!!
      * @param latency seconds */
-    public void updateVision(Pose2d pose, double latency,double FOM){
+    public void updateVisionWithLatency(Pose2d pose, double latency,double FOM){
         double timeStamp = Timer.getFPGATimestamp() - latency;
         sEstimator.addVisionMeasurement(
             new Pose2d(pose.getX(), pose.getY(),pose.getRotation()),
             timeStamp,
+            VecBuilder.fill(FOM, FOM, 100000000)
+        );
+        
+    }
+
+    /** Update estimator with vision data. 
+     *  Should only be updated when target is visible.
+     *  !!! UNSAFE FUNCTION !!! NOT TUNED !!!
+     * @param timestamp seconds */
+
+    public void updateVisionWithTime(Pose2d pose, double timestamp, double FOM){
+        sEstimator.addVisionMeasurement(
+            new Pose2d(pose.getX(), pose.getY(),pose.getRotation()),
+            timestamp,
             VecBuilder.fill(FOM, FOM, 100000000)
         );
         
