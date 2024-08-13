@@ -26,6 +26,7 @@ import frc.robot.commands.IntakeCommands.NoteIntake;
 import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.commands.IntakeCommands.SemiAutoPick;
 import frc.robot.commands.SPKCommands.NewAutoSPKUP;
+import frc.robot.commands.SPKCommands.AutoSPKUP;
 import frc.robot.commands.SPKCommands.ManualSPKDown;
 import frc.robot.commands.SPKCommands.ManualSPKUp;
 import frc.robot.commands.SPKCommands.TestSPKUP;
@@ -119,25 +120,31 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
-      new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
+    // if(RobotContainer.m_driverController.getRightBumperPressed()){
+    //   new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
+    // }
+    if(RobotContainer.m_driverController.getRightBumperPressed()){
+      new AutoSPKUP(Button.kRightBumper.value).schedule();
     }
     if(RobotContainer.m_driverController.getLeftBumperPressed())
     {
       new NoteIntake(Button.kLeftBumper.value).schedule();;
     }
-    if(RobotContainer.m_driverController.getAButtonPressed())
-    {
-      new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
+    // if(RobotContainer.m_driverController.getAButtonPressed())
+    // {
+    //   new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
+    // }
+    if(RobotContainer.m_driverController.getAButtonPressed()){
+      new AMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     if(RobotContainer.m_driverController.getBButtonPressed()){
       new NoteOut(Button.kB.value).schedule();
     }
-    if(RobotContainer.m_driverController.getXButtonPressed()){
-      new TestSPKUP(-33, 40, Button.kX.value).raceWith(
-      Commands.runOnce(()->RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, RobotContainer.m_Swerve.getPose().getRotation())
-      )));
-    }
+    // if(RobotContainer.m_driverController.getXButtonPressed()){
+    //   new TestSPKUP(-33, 40, Button.kX.value).schedule();
+    //   Commands.runOnce(()->RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, RobotContainer.m_Swerve.getPose().getRotation())
+    //   )).schedule();;
+    // }
   }
   @Override
   public void testInit() {
