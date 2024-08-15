@@ -8,8 +8,10 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.AutoPassNoteConstants;
 import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.ShooterConstants;
+import frc.robot.commands.SPKCommands.AutoPassNote;
 import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase{
@@ -38,6 +40,8 @@ public class Shooter extends SubsystemBase{
         AutoShootConstants.DisToArmTable.put(a.getX(), a.getY());
     for (var a: AutoShootConstants.DisToRPSPoints)
         AutoShootConstants.DisToRPSTable.put(a.getX(), a.getY());
+    for (var a: AutoPassNoteConstants.DisToArmPoints)
+        AutoPassNoteConstants.DisToArmTable.put(a.getX(), a.getY());
     }
 
     private void ShooterConfig(){

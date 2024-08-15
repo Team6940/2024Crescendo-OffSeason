@@ -428,4 +428,18 @@ public final class Constants {
   public static class ManualShootConstants{
     public final static double ChassisSpeedTolerance = 0.5;
   }
+
+  public static class AutoPassNoteConstants{
+    public static final Point2D[] DisToArmPoints = {    //TODO
+      new Point2D.Double(0, 0),
+    };
+    public static final double ShooterRPS = 50.;    //TODO
+    public static final InterpolatingDoubleTreeMap DisToArmTable = new InterpolatingDoubleTreeMap();
+    public static final double CoastVelocity = 2.;
+    public static final class targetTranslation{
+      public static final Translation2d Blue = new Translation2d(0, 0);
+      public static final Translation2d Red = new Translation2d(0, 0);
+    }
+    public static final Double DegreeTolerance = 2.0;    //TODO
+  }
 }
