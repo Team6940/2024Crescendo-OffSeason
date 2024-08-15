@@ -224,7 +224,7 @@ public final class Constants {
     public static final int pigeonID = 13;
 
     public static final COTSTalonFXSwerveConstants chosenModule = COTSTalonFXSwerveConstants.WCP.SwerveXFlipped
-        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_12);
+        .KrakenX60(COTSTalonFXSwerveConstants.WCP.SwerveXFlipped.driveRatios.X3_10);
 
     /* Drivetrain Constants */
     public static final double trackWidth = 0.6195;//TODO

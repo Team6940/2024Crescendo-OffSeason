@@ -8,12 +8,13 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.RobotContainer;
 import frc.robot.commands.IntakeCommands.NoteIntake;
+import frc.robot.commands.SPKCommands.AutoSPKUP;
 import frc.robot.commands.SPKCommands.NewAutoSPKUP;
 import frc.robot.commands.SPKCommands.TestSPKUP;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
 
-public class CU103 extends SequentialCommandGroup {
-    public CU103() {
+public class CU112 extends SequentialCommandGroup {
+    public CU112() {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
             addCommands(new InstantCommand(() -> RobotContainer.m_Swerve
                     .setPose(RobotContainer.m_Swerve.generateChoreoPath("CU103-1").getPreviewStartingHolonomicPose())));
@@ -35,5 +36,8 @@ public class CU103 extends SequentialCommandGroup {
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-3"))
                 .raceWith(new NoteIntake(0)));
         addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-4"))
+                .raceWith(new NoteIntake(0)));
+        addCommands(new AutoSPKUP(0).withTimeout(1.5));
     }
 }

@@ -22,7 +22,7 @@ import frc.robot.commands.AMPCommands.AMP;
 import frc.robot.commands.AMPCommands.AutoAMP;
 import frc.robot.commands.AutoCommand.C103;
 import frc.robot.commands.AutoCommand.C131;
-import frc.robot.commands.AutoCommand.CU103;
+import frc.robot.commands.AutoCommand.CU111;
 import frc.robot.commands.IntakeCommands.NoteIntake;
 import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.commands.IntakeCommands.SemiAutoPick;
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    new CU103().schedule();
+    new CU111().schedule();
     
   }
 
