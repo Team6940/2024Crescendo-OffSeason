@@ -32,12 +32,16 @@ public class CU11X extends SequentialCommandGroup{
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-2"))
                 .raceWith(new NoteIntake(0)));
         addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(FirstP)))
-                .raceWith(new NoteIntake(0)));
-        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(SecondP)))
-                .raceWith(new NoteIntake(0)));
-        addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        if(FirstP!=0){
+            addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(FirstP)))
+                    .raceWith(new NoteIntake(0)));
+            addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        }
+        if(SecondP!=0){
+            addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(SecondP)))
+                    .raceWith(new NoteIntake(0)));
+            addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        }
 
     }
     
