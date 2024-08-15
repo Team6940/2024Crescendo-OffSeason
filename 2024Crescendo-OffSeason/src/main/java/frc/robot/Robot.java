@@ -25,6 +25,7 @@ import frc.robot.commands.AMPCommands.AutoAMP;
 import frc.robot.commands.AutoCommand.C103;
 import frc.robot.commands.AutoCommand.C131;
 import frc.robot.commands.AutoCommand.CU111;
+import frc.robot.commands.AutoCommand.CU11X;
 import frc.robot.commands.IntakeCommands.NoteIntake;
 import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.commands.IntakeCommands.SemiAutoPick;
@@ -118,6 +119,8 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     AutoCommand.schedule();
+    //new CU11X(1,2).schedule();
+
   }
 
   /** This function is called periodically during autonomous. */
@@ -133,7 +136,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
   }
 
   /** This function is called periodically during operator control. */
