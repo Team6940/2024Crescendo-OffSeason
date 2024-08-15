@@ -14,13 +14,13 @@ public class CU11X extends SequentialCommandGroup{
 
     public CU11X(int _FirstP, int _SecondP){
         if(DriverStation.getAlliance().get()==DriverStation.Alliance.Blue)
-        { addCommands(new InstantCommand(()->RobotContainer.m_Swerve.setPose(RobotContainer.m_Swerve.generateChoreoPath("C103-1").getPreviewStartingHolonomicPose())));
+        { addCommands(new InstantCommand(()->RobotContainer.m_Swerve.setPose(RobotContainer.m_Swerve.generateChoreoPath("CU103-1").getPreviewStartingHolonomicPose())));
         
       
         }
         else
         {
-            Pose2d m_Pose=RobotContainer.m_Swerve.generateChoreoPath("C103-1").flipPath().getPreviewStartingHolonomicPose();
+            Pose2d m_Pose=RobotContainer.m_Swerve.generateChoreoPath("CU103-1").flipPath().getPreviewStartingHolonomicPose();
             Pose2d flipm_Pose=new Pose2d(m_Pose.getX(), m_Pose.getY(), m_Pose.getRotation().plus(new Rotation2d(Math.PI)));
             addCommands(new InstantCommand(()->RobotContainer.m_Swerve.setPose(flipm_Pose)));
         }
