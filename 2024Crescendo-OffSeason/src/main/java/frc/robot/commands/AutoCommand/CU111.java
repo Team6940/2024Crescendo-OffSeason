@@ -32,7 +32,7 @@ public class CU111 extends SequentialCommandGroup {
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-2"))
                 .raceWith(new NoteIntake(0)));
         addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-3"))
+        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P1"))
                 .raceWith(new NoteIntake(0)));
         addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
     }
