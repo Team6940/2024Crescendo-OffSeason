@@ -298,8 +298,15 @@ public class DriveSubsystem extends SubsystemBase {
     }
     public Translation2d getToSPKTranslation2d(){
         Translation2d targetTranslation = DriverStation.getAlliance().get()==Alliance.Blue?FieldConstants.SPKTranslation.Blue:FieldConstants.SPKTranslation.Red;
+        // Translation2d m_Translation2d = this.getPose().getTranslation();
+        // return targetTranslation.minus(m_Translation2d);
+        return getToTargetPointTranslation2d(targetTranslation);
+    }
+
+    public Translation2d getToTargetPointTranslation2d(Translation2d targetPosition){
+        Translation2d targetTranslation2d = targetPosition;
         Translation2d m_Translation2d = this.getPose().getTranslation();
-        return targetTranslation.minus(m_Translation2d);
+        return targetTranslation2d.minus(m_Translation2d);
     }
 
     @Override
