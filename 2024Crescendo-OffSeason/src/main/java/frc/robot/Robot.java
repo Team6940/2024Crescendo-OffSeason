@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.io.DataInput;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -34,6 +36,7 @@ import frc.robot.commands.SPKCommands.TestSPKUP;
 import frc.robot.subsystems.ImprovedXboxController;
 import frc.robot.subsystems.Chassis.CTREConfigs;
 import frc.robot.subsystems.ImprovedXboxController.Button;
+import frc.robot.commands.AutoCommand.AutoCommandGenerator;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -51,6 +54,10 @@ public class Robot extends TimedRobot {
   private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
 
   private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
+
+  private Command AutoCommand = AutoCommandGenerator.generate(0, 0, 0);
+  int AutoChoice[] = {0, 0, 0};
+  
 
 
   /**
@@ -91,13 +98,26 @@ public class Robot extends TimedRobot {
   public void disabledInit() {}
 
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    if(RobotContainer.m_driverController.getXButtonPressed()){
+      AutoChoice[0] = (AutoChoice[0]+1) % 4;
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+    }
+    if(RobotContainer.m_driverController.getYButtonPressed()){
+      AutoChoice[1] = (AutoChoice[1]+1) % 4;
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+    }
+    if(RobotContainer.m_driverController.getBButtonPressed()){
+      AutoChoice[2] = (AutoChoice[2]+1) % 4;
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+    }
+    SmartDashboard.putString("AutoType", Integer.toString(AutoChoice[0])+Integer.toString(AutoChoice[1])+Integer.toString(AutoChoice[2]));
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    new CU111().schedule();
-    
+    AutoCommand.schedule();
   }
 
   /** This function is called periodically during autonomous. */
