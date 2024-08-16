@@ -42,12 +42,16 @@ public class NoteIntake extends Command {
   public void end(boolean interrupted) {
     RobotContainer.m_Intaker.SetOutput(0);
     RobotContainer.m_Blocker.SetOutPut(0);
+    if(RobotContainer.m_Blocker.HasNote()){
+      new Rumble(RumbleType.kBothRumble, 1).withTimeout(0.2).schedule();   
+    }
     
   }
 
   @Override
   public boolean isFinished() {
     if(m_ButtonID==0)return false;
+    if(RobotContainer.m_Blocker.HasNote()) return true;
     if(!RobotContainer.m_driverController.getButton(m_ButtonID)) return true;
     else return false;
   }

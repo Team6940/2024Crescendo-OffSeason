@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import com.ctre.phoenix6.mechanisms.swerve.SwerveDrivetrainConstants;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -15,9 +16,12 @@ import frc.robot.Library.team1706.MathUtils;
 public class ManualDrive extends Command {
   @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
     boolean m_fieldRelative;
+    // SlewRateLimiter m_NormSlewRateLimiter;
+    // SlewRateLimiter m_OmeggaSlewRateLimiter;
   public ManualDrive(boolean _fieldRelative) {
     addRequirements(RobotContainer.m_Swerve);
     m_fieldRelative=_fieldRelative;
+    // m_NormSlewRateLimiter=new SlewRateLimiter(12, -50, 0);
   }
    
   // Called when the command is initially scheduled.
@@ -30,6 +34,7 @@ public class ManualDrive extends Command {
   public void execute() {
     double _controllerX=-RobotContainer.m_driverController.getLeftY();
     double _controllerY=-RobotContainer.m_driverController.getLeftX();
+    
     Translation2d _controllerTranslation2d=new Translation2d(_controllerX, _controllerY);
     _controllerTranslation2d=MathUtils.signedSquare(_controllerTranslation2d);
     _controllerTranslation2d=MathUtils.applyDeadband(_controllerTranslation2d);
