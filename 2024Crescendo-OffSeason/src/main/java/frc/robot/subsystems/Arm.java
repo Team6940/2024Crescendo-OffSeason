@@ -6,6 +6,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import frc.robot.Library.team2910.math.MathUtils;
 import frc.robot.Library.team1678.math.Conversions;
 import frc.robot.Library.NumberLimiter;
@@ -24,6 +26,8 @@ public class Arm extends SubsystemBase{
     private MotionMagicDutyCycle m_MotionMagicDutyCycle = new MotionMagicDutyCycle(0, false, 0., 0, true, false, false);
 
     private double _rotation=ArmConstants.ArmDefaultDegree/360.;
+
+    private double m_OffsetDeg = 0.;
 
     public static Arm GetInstance()
     {
@@ -68,6 +72,7 @@ public class Arm extends SubsystemBase{
 
     public void SetArmDegree(double _degree){
         _degree = NumberLimiter.Limit(-72.29, 100., _degree);
+        _degree=_degree+m_OffsetDeg;
         _rotation=_degree/360.;
     }
 
@@ -82,6 +87,14 @@ public class Arm extends SubsystemBase{
 
     public double GetTargetDegree(){
         return _rotation*360.;
+    }
+
+    public double GetArmOffsetDeg(){
+        return m_OffsetDeg;
+    }
+
+    public void SetArmOffsetDeg(double _Deg){
+        m_OffsetDeg=_Deg;
     }
 
     public boolean IsAtTargetDegree(){

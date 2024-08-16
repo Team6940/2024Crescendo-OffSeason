@@ -94,6 +94,8 @@ private void configureKeyBindings() {
   // m_CommandController.b().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.2)));
   // m_CommandController.x().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0.8)));
   // m_CommandController.y().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0)));
+  m_CommandController.pov(0).onTrue(Commands.runOnce(() -> m_Arm.SetArmOffsetDeg(m_Arm.GetArmOffsetDeg()+0.5)));
+  m_CommandController.pov(180).onTrue(Commands.runOnce(() -> m_Arm.SetArmOffsetDeg(m_Arm.GetArmOffsetDeg()-0.5)));
 }
 
 /**
