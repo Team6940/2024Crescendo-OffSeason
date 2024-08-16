@@ -12,8 +12,11 @@ import frc.robot.commands.SPKCommands.NewAutoSPKUP;
 import frc.robot.commands.SPKCommands.TestSPKUP;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
 
-public class C103 extends SequentialCommandGroup {
-    public C103() {
+public class C10X extends SequentialCommandGroup {
+        
+    int FirstP,SecondP;
+    public C10X(int _FirstP,int _SecondP)
+    {
         if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
             addCommands(new InstantCommand(() -> RobotContainer.m_Swerve
                     .setPose(RobotContainer.m_Swerve.generateChoreoPath("C103-1").getPreviewStartingHolonomicPose())));
@@ -26,17 +29,15 @@ public class C103 extends SequentialCommandGroup {
             addCommands(new InstantCommand(() -> RobotContainer.m_Swerve.setPose(flipm_Pose)));
 
         }
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C103-1"))
-                .raceWith(new NoteIntake(0)));
-        // addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C103-2"))
-                .raceWith(new NoteIntake(0)));
-        // addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C103-3"))
-                .raceWith(new NoteIntake(0)));
-        // addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
-        addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C103-4"))
-                .raceWith(new NoteIntake(0)));
-        // addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        if(FirstP!=0){
+            addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(FirstP)))
+                    .raceWith(new NoteIntake(0)));
+            addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        }
+        if(SecondP!=0){
+            addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("CU103-P"+Integer.toString(SecondP)))
+                    .raceWith(new NoteIntake(0)));
+            addCommands(new NewAutoSPKUP(0).withTimeout(1.5));
+        }
     }
 }
