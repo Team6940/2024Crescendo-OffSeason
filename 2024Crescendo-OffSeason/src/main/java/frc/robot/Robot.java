@@ -22,7 +22,7 @@ import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.Autos;
 import frc.robot.commands.AMPCommands.AMP;
 import frc.robot.commands.AMPCommands.AutoAMP;
-import frc.robot.commands.AutoCommand.C103;
+import frc.robot.commands.AutoCommand.C10X;
 import frc.robot.commands.AutoCommand.C131;
 import frc.robot.commands.AutoCommand.CU111;
 import frc.robot.commands.AutoCommand.CU11X;

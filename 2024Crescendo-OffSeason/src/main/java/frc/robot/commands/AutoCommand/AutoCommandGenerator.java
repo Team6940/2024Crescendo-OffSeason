@@ -11,6 +11,8 @@ public class AutoCommandGenerator {
                 return new CU11X(SecondChoice, thirdChoice);
             case 2:
                 return new C13X(SecondChoice,thirdChoice);
+            case 3:
+                return new C10X(SecondChoice,thirdChoice);
             default:
                 break;
         }
