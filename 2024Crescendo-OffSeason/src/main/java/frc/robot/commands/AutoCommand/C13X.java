@@ -36,7 +36,7 @@ public class C13X extends SequentialCommandGroup{
         if(SecondP==0)
         {
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-1")).raceWith(new NoteIntake(0)));
-        addCommands(new TestSPKUP(-40,40,0).withTimeout(1.5));
+        addCommands(new TestSPKUP(-45,40,0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-2")).raceWith(new NoteIntake(0)));
         addCommands(new TestSPKUP(-33,40,0).withTimeout(1.5));
         addCommands(RobotContainer.m_Swerve.followPathCommand(RobotContainer.m_Swerve.generateChoreoPath("C131-3")).raceWith(new NoteIntake(0)));

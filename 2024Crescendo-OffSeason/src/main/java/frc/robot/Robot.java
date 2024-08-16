@@ -117,7 +117,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    AutoCommand.schedule();
+    AutoCommand.withTimeout(15.).schedule();
     //new CU11X(1,2).schedule();
 
   }
