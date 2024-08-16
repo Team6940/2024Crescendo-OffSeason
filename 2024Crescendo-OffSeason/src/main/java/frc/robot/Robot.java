@@ -70,7 +70,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    RobotContainer.m_Swerve.resetModulesToAbsolute();
   }
 
   /**
@@ -102,15 +101,15 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     if(RobotContainer.m_driverController.getXButtonPressed()){
       AutoChoice[0] = (AutoChoice[0]+1) % 4;
-      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
     if(RobotContainer.m_driverController.getYButtonPressed()){
       AutoChoice[1] = (AutoChoice[1]+1) % 4;
-      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
     if(RobotContainer.m_driverController.getBButtonPressed()){
       AutoChoice[2] = (AutoChoice[2]+1) % 4;
-      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[3]);
+      AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
     SmartDashboard.putString("AutoType", Integer.toString(AutoChoice[0])+Integer.toString(AutoChoice[1])+Integer.toString(AutoChoice[2]));
   }
@@ -170,6 +169,8 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
+    
+    RobotContainer.m_Swerve.resetModulesToAbsolute();
   }
 
   /** This function is called periodically during test mode. */

@@ -319,7 +319,7 @@ public final class Constants {
       public static final int canCoderID = 9;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(-87.60);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(93.6+180);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
@@ -331,7 +331,7 @@ public final class Constants {
       public static final int canCoderID = 12;
       // the bigger the offset, the smaller the setPosition, thus the relative CW
       // point of the start angle
-      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(63.45703125);
+      public static final Rotation2d angleOffset = Rotation2d.fromDegrees(68.03703125);
       public static final SwerveModuleConstants constants = new SwerveModuleConstants(driveMotorID, angleMotorID,
           canCoderID, angleOffset);
     }
