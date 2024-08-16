@@ -62,7 +62,8 @@ public class NewAutoSPKUP extends Command{
         SmartDashboard.putBoolean("AimIsAtTargetDegree",RobotContainer.m_Arm.IsAtTargetDegree());
         SmartDashboard.putBoolean("AimIsAtTargetRPS",RobotContainer.m_Shooter.IsAtTargetRPS());
         SmartDashboard.putBoolean("AimIsAtTargetpose",m_RotationPidController.atSetpoint());
-        if(AimTranslation.getNorm()<=AutoShootConstants.MaxRange && 
+        if(
+            // AimTranslation.getNorm()<=AutoShootConstants.MaxRange && 
             RobotContainer.m_Swerve.getChassisSpeed() <= AutoShootConstants.CoastVelocity  &&
             RobotContainer.m_Arm.IsAtTargetDegree() &&
             RobotContainer.m_Shooter.IsAtTargetRPS()&&

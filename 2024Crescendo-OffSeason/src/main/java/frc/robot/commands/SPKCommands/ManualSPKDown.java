@@ -8,9 +8,10 @@ import frc.robot.Constants.ShooterConstants;
 
 /** An example command that uses an example subsystem. */
 public class ManualSPKDown extends Command {
-  private int m_ButtonID;
-  public ManualSPKDown(int _ButtonID){
+  private int m_ButtonID, m_ExecuteID;
+  public ManualSPKDown(int _ButtonID, int _ExecuteID){
     m_ButtonID=_ButtonID;
+    m_ExecuteID = _ExecuteID;
     addRequirements(RobotContainer.m_Shooter);
     addRequirements(RobotContainer.m_Arm);
     }
@@ -22,7 +23,7 @@ public class ManualSPKDown extends Command {
 
   @Override
   public void execute() {
-    if(RobotContainer.m_Shooter.IsAtTargetRPS()&&RobotContainer.m_Arm.IsAtTargetDegree())
+    if(RobotContainer.m_driverController.getButton(m_ExecuteID))
       RobotContainer.m_Blocker.SetOutPut(BlockerConstants.GiveNoteOutput);
   }
 

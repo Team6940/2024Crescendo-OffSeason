@@ -161,7 +161,7 @@ public class Robot extends TimedRobot {
       new TestSPKUP(-33,40,0).schedule();
     }
     if(RobotContainer.m_driverController.getYButtonPressed()){
-      new NoteOut(Button.kB.value).schedule();
+      new ManualSPKDown(Button.kY.value, Button.kRightTrigger.value).schedule();
     }
   }
 
