@@ -153,9 +153,9 @@ public class Robot extends TimedRobot {
     {
       new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
-    if(RobotContainer.m_driverController.getBButtonPressed()){
-      new NoteOut(Button.kB.value).schedule();
-    }
+    // if(RobotContainer.m_driverController.getBButtonPressed()){
+    //   new NoteOut(Button.kB.value).schedule();
+    // }
     
     if(RobotContainer.m_driverController.getXButtonPressed()){
       new TestSPKUP(-33,40,0).schedule();

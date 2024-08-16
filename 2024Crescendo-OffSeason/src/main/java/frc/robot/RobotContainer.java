@@ -8,6 +8,7 @@ import frc.robot.Constants.LimelightConstants;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.Library.team1706.MathUtils;
 import frc.robot.commands.*;
+import frc.robot.commands.IntakeCommands.NoteOut;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Blocker;
 import frc.robot.subsystems.Climber;
@@ -17,6 +18,7 @@ import frc.robot.subsystems.ImprovedPS4Controller;
 import frc.robot.subsystems.Intaker;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Chassis.DriveSubsystem;
+import frc.robot.subsystems.ImprovedXboxController.Button;
 import frc.robot.subsystems.Vision.VisionIO;
 import frc.robot.subsystems.Vision.objectTracker;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -96,6 +98,7 @@ private void configureKeyBindings() {
   // m_CommandController.y().onTrue(Commands.runOnce(()->m_Shooter.SetPCT(0)));
   m_CommandController.pov(0).onTrue(Commands.runOnce(() -> m_Arm.SetArmOffsetDeg(m_Arm.GetArmOffsetDeg()+0.5)));
   m_CommandController.pov(180).onTrue(Commands.runOnce(() -> m_Arm.SetArmOffsetDeg(m_Arm.GetArmOffsetDeg()-0.5)));
+  m_CommandController.b().onTrue(new NoteOut(Button.kB.value));
 }
 
 /**
