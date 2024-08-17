@@ -83,8 +83,8 @@ public final class Constants {
 
     public static final double ArmDefaultDegree = -72.29;
     public static final double ArmAMPDegree = 46.;
-    public static final double ArmUpSPKDegree = 0.;
-    public static final double ArmDownSPKDegree = 55.;
+    public static final double ArmUpSPKDegree = 50;
+    public static final double ArmDownSPKDegree = 0.;
   }
 
   public static class IntakerConstants {
@@ -114,7 +114,7 @@ public final class Constants {
     public static final double ShooterSpeedTolerence = 1.5;
 
     public static final double ShooterAMPRPS = 0.;
-    public static final double ShooterManualSPKRPS = 45.;
+    public static final double ShooterManualSPKRPS = 0.;
   }
 
   public static class BlockerConstants {
@@ -163,11 +163,7 @@ public final class Constants {
       new Point2D.Double(3.5,-63),
       new Point2D.Double(4.07,-65),
       new Point2D.Double(5.16,-67),
-      new Point2D.Double(5.5,-70),
-
-      //The following are for Passing Notes
-      new Point2D.Double(5.51,-50),
-      new Point2D.Double(5.52, -50),
+      new Point2D.Double(5.5,-70)
     };
 
     public static final Point2D[] DisToRPSPoints = {
@@ -175,13 +171,7 @@ public final class Constants {
       
       new Point2D.Double(3.07,50),
       
-      new Point2D.Double(5.16,55),
-
-      new Point2D.Double(5.5, 55),
-      //The following are for Passing Notes:
-
-      new Point2D.Double(5.51, 40),
-      new Point2D.Double(10, 40),
+      new Point2D.Double(5.16,55)
     };
 
     public static final InterpolatingDoubleTreeMap ArmTable=new InterpolatingDoubleTreeMap();
@@ -269,8 +259,8 @@ public final class Constants {
     public static final double angleCurrentThresholdTime = 0.1;
     public static final boolean angleEnableCurrentLimit = true;
 
-    public static final int driveCurrentLimit = 60;
-    public static final int driveCurrentThreshold = 70;
+    public static final int driveCurrentLimit = 40;
+    public static final int driveCurrentThreshold = 50;
     public static final double driveCurrentThresholdTime = 0.1;
     public static final boolean driveEnableCurrentLimit = true;
 
@@ -305,7 +295,7 @@ public final class Constants {
     public static final double maxSpeed = 4.; // TODO: This must be tuned to specific robot
     public static final double maxModuleSpeed = 5 ; // TODO: This must be tuned to specific robot
 
-    public static final double maxAcceleration = 6;
+    public static final double maxAcceleration = 5.5;
     public static final double maxDeceleration = 30;
 
     public static final double loopDuration = 0.02; // in second

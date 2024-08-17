@@ -22,6 +22,7 @@ import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.Autos;
 import frc.robot.commands.AMPCommands.AMP;
 import frc.robot.commands.AMPCommands.AutoAMP;
+import frc.robot.commands.AMPCommands.HybridAMP;
 import frc.robot.commands.AutoCommand.C10X;
 import frc.robot.commands.AutoCommand.C131;
 import frc.robot.commands.AutoCommand.CU111;
@@ -135,7 +136,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
+    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d(Math.PI)));
   }
 
   /** This function is called periodically during operator control. */
@@ -151,7 +152,7 @@ public class Robot extends TimedRobot {
     }
     if(RobotContainer.m_driverController.getAButtonPressed())
     {
-      new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
+      new HybridAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     // if(RobotContainer.m_driverController.getBButtonPressed()){
     //   new NoteOut(Button.kB.value).schedule();
