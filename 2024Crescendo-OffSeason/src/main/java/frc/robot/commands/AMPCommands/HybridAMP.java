@@ -97,8 +97,8 @@ public class HybridAMP extends Command{
     _Omega = m_RotationController.calculate(RobotContainer.m_Swerve.getPose().getRotation().getDegrees());
         _controllerX=0.;
         _controllerY=0.;
-        _controllerX = m_TranslationXController.calculate(RobotContainer.m_Swerve.getPose().getX())+MathUtils.signedSquare(-RobotContainer.m_driverController.getLeftY());
-        _controllerY = m_TranslationYController.calculate(RobotContainer.m_Swerve.getPose().getY())+MathUtils.signedSquare(-RobotContainer.m_driverController.getLeftX());
+        _controllerX = m_TranslationXController.calculate(RobotContainer.m_Swerve.getPose().getX())-RobotContainer.m_driverController.getLeftY();
+        _controllerY = m_TranslationYController.calculate(RobotContainer.m_Swerve.getPose().getY())-RobotContainer.m_driverController.getLeftX();
         _controllerX=NumberLimiter.Limit(-1.5, 1.5, _controllerX);
         _controllerY=NumberLimiter.Limit(-1.5, 1.5, _controllerY);
         _Omega=NumberLimiter.Limit(-3, 3, _Omega);
