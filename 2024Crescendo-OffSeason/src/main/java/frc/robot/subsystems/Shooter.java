@@ -22,7 +22,6 @@ public class Shooter extends SubsystemBase{
 
     private TalonFXConfiguration m_Configs = new TalonFXConfiguration();
     final VelocityVoltage m_DutyCycle = new VelocityVoltage(0,0,false,0.,0,false,false,false);
-
     private double m_TargetRPS;
 
     public static Shooter GetInstance()

@@ -10,7 +10,9 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -22,6 +24,7 @@ import frc.robot.Library.team3476.net.editing.LiveEditableValue;
 import frc.robot.commands.Autos;
 import frc.robot.commands.AMPCommands.AMP;
 import frc.robot.commands.AMPCommands.AutoAMP;
+import frc.robot.commands.AMPCommands.HybridAMP;
 import frc.robot.commands.AutoCommand.C10X;
 import frc.robot.commands.AutoCommand.C131;
 import frc.robot.commands.AutoCommand.CU111;
@@ -135,15 +138,19 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
+    if(DriverStation.getAlliance().get()==Alliance.Red)
+      RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
+    else
+      RobotContainer.m_Swerve.setPose(new Pose2d(1.4, 5.579, new Rotation2d()));
   }
 
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
     
-    if(RobotContainer.m_driverController.getRightBumperPressed()){//TODO AMP按钮
+    if(RobotContainer.m_driverController.getRightBumperPressed()){
       new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
+      // new ManualSPKUp(Button.kRightBumper.value, -33, 40).schedule();;
     }
     if(RobotContainer.m_driverController.getLeftBumperPressed())
     {
@@ -151,12 +158,11 @@ public class Robot extends TimedRobot {
     }
     if(RobotContainer.m_driverController.getAButtonPressed())
     {
-      new AutoAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
+      new HybridAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     // if(RobotContainer.m_driverController.getBButtonPressed()){
     //   new NoteOut(Button.kB.value).schedule();
     // }
-    
     if(RobotContainer.m_driverController.getXButtonPressed()){
       new TestSPKUP(-33,40,0).schedule();
     }
