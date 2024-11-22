@@ -57,16 +57,16 @@ public class NewAutoSPKUP extends Command{
         _ArmAngle = AutoShootConstants.DisToArmTable.get(AimTranslation.getNorm());
         _RPS = AutoShootConstants.DisToRPSTable.get(AimTranslation.getNorm());
         RobotContainer.m_Arm.SetArmDegree(_ArmAngle);
-        RobotContainer.m_Shooter.SetRPS(_RPS);
+        RobotContainer.m_Shooter.setRPS(_RPS);
 
         SmartDashboard.putBoolean("AimIsAtTargetDegree",RobotContainer.m_Arm.IsAtTargetDegree());
-        SmartDashboard.putBoolean("AimIsAtTargetRPS",RobotContainer.m_Shooter.IsAtTargetRPS());
+        SmartDashboard.putBoolean("AimIsAtTargetRPS",RobotContainer.m_Shooter.isAtTargetRPS());
         SmartDashboard.putBoolean("AimIsAtTargetpose",m_RotationPidController.atSetpoint());
         if(
             // AimTranslation.getNorm()<=AutoShootConstants.MaxRange && 
             RobotContainer.m_Swerve.getChassisSpeed() <= AutoShootConstants.CoastVelocity  &&
             RobotContainer.m_Arm.IsAtTargetDegree() &&
-            RobotContainer.m_Shooter.IsAtTargetRPS()&&
+            RobotContainer.m_Shooter.isAtTargetRPS()&&
             m_RotationPidController.atSetpoint()
         ) {
         RobotContainer.m_Swerve.drive(new Translation2d(), 0, true);
@@ -77,7 +77,7 @@ public class NewAutoSPKUP extends Command{
     @Override
     public void end(boolean interrupted){
         RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
-        RobotContainer.m_Shooter.SetPCT(0.);
+        RobotContainer.m_Shooter.stop();
         RobotContainer.m_Blocker.SetOutPut(0.);
         new Rumble(RumbleType.kRightRumble, 1).withTimeout(0.3).schedule();
     }

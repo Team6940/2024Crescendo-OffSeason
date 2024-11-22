@@ -18,7 +18,7 @@ public class ManualSPKDown extends Command {
   @Override
   public void initialize() {
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDownSPKDegree);
-    RobotContainer.m_Shooter.SetRPS(ShooterConstants.ShooterManualSPKRPS);
+    RobotContainer.m_Shooter.setRPS(ShooterConstants.ShooterManualSPKRPS);
   }
 
   @Override
@@ -29,7 +29,7 @@ public class ManualSPKDown extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_Shooter.SetPCT(0);
+    RobotContainer.m_Shooter.stop();
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
   }
 

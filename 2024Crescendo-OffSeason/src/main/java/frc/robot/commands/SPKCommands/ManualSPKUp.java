@@ -45,8 +45,8 @@ public class ManualSPKUp extends Command {
 
   private void prepare(){
     RobotContainer.m_Arm.SetArmDegree(m_ArmAngle);
-    RobotContainer.m_Shooter.SetRPS(m_RPS);
-    if(RobotContainer.m_Arm.IsAtTargetDegree() && RobotContainer.m_Shooter.IsAtTargetRPS() && RobotContainer.m_Swerve.getChassisSpeed() <= ManualShootConstants.ChassisSpeedTolerance){
+    RobotContainer.m_Shooter.setRPS(m_RPS);
+    if(RobotContainer.m_Arm.IsAtTargetDegree() && RobotContainer.m_Shooter.isAtTargetRPS() && RobotContainer.m_Swerve.getChassisSpeed() <= ManualShootConstants.ChassisSpeedTolerance){
       m_State = ShootState.Shooting;
     }
   }
@@ -56,7 +56,7 @@ public class ManualSPKUp extends Command {
 
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.m_Shooter.SetPCT(0);
+    RobotContainer.m_Shooter.stop();
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
   }
 

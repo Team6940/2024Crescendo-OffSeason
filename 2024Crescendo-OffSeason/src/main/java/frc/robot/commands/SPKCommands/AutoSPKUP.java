@@ -45,7 +45,7 @@ public class AutoSPKUP extends Command {
   
   void Aim(){
         double _Omega=0.; 
-        RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
+        RobotContainer.m_Shooter.setRPS(AutoShootConstants.RPSInAdvance);
         if(LimelightHelpers.getTV(RobotContainer.m_SPKRLimelight))
         {
           // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
@@ -71,10 +71,10 @@ public class AutoSPKUP extends Command {
 
   void Accelerate() {
     RobotContainer.m_Arm.SetArmDegree(_TargetDegree);
-    RobotContainer.m_Shooter.SetRPS(_TargetRPS);
+    RobotContainer.m_Shooter.setRPS(_TargetRPS);
     SmartDashboard.putNumber("AutoSPKUpArmDegree", _TargetDegree);
     SmartDashboard.putNumber("AutoSPKUpRPS", _TargetRPS);
-    if (RobotContainer.m_Arm.IsAtTargetDegree() && RobotContainer.m_Shooter.IsAtTargetRPS()) {
+    if (RobotContainer.m_Arm.IsAtTargetDegree() && RobotContainer.m_Shooter.isAtTargetRPS()) {
       m_State = AutoShootState.Shoot;
     }
 
@@ -115,7 +115,7 @@ public class AutoSPKUP extends Command {
   public void end(boolean interrupted) {
     RobotContainer.m_Swerve.drive(new Translation2d(), 0., false);
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
-    RobotContainer.m_Shooter.SetPCT(0.);
+    RobotContainer.m_Shooter.stop();
   }
 
   @Override

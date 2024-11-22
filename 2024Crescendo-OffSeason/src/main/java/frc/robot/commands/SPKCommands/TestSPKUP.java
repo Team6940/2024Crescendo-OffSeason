@@ -44,7 +44,7 @@ public class TestSPKUP extends Command {
   
   void Aim(){
         double _Omega=0.; 
-        RobotContainer.m_Shooter.SetRPS(AutoShootConstants.RPSInAdvance);
+        RobotContainer.m_Shooter.setRPS(AutoShootConstants.RPSInAdvance);
         if(LimelightHelpers.getTV("limelight"))
         {
           // if(LimelightHelpers.getTX("limelight")>AutoShootCommandConstants.NewShootAngleTolerance)
@@ -68,8 +68,8 @@ public class TestSPKUP extends Command {
 
   void Accelerate(){
     RobotContainer.m_Arm.SetArmDegree(m_TargetDegree);
-    RobotContainer.m_Shooter.SetRPS(m_TargetRPS);
-    if(RobotContainer.m_Arm.IsAtTargetDegree()&&RobotContainer.m_Shooter.IsAtTargetRPS())
+    RobotContainer.m_Shooter.setRPS(m_TargetRPS);
+    if(RobotContainer.m_Arm.IsAtTargetDegree()&&RobotContainer.m_Shooter.isAtTargetRPS())
     {
         m_State=AutoShootState.Shoot;
     }
@@ -116,7 +116,7 @@ public class TestSPKUP extends Command {
   public void end(boolean interrupted) {
     RobotContainer.m_Swerve.drive(new Translation2d(), 0., false);
     RobotContainer.m_Arm.SetArmDegree(ArmConstants.ArmDefaultDegree);
-    RobotContainer.m_Shooter.SetPCT(0.);;
+    RobotContainer.m_Shooter.stop();;
   }
 
   @Override
