@@ -6,6 +6,13 @@ package frc.robot;
 
 import java.io.DataInput;
 
+import org.littletonrobotics.junction.LogFileUtil;
+import org.littletonrobotics.junction.LoggedRobot;
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.NT4Publisher;
+import org.littletonrobotics.junction.wpilog.WPILOGReader;
+import org.littletonrobotics.junction.wpilog.WPILOGWriter;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -13,6 +20,8 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.PowerDistribution;
+import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -43,53 +52,79 @@ import frc.robot.subsystems.ImprovedXboxController.Button;
 import frc.robot.commands.AutoCommand.AutoCommandGenerator;
 
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
+public class Robot extends LoggedRobot {
 
   public static final CTREConfigs ctreConfigs = new CTREConfigs();
-  
+
   private Command m_autonomousCommand;
 
   private RobotContainer m_robotContainer;
-  private LiveEditableValue<Double> m_TestRPSValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestRPS"));
+  private LiveEditableValue<Double> m_TestRPSValue = new LiveEditableValue<Double>(0.,
+      SmartDashboard.getEntry("TestRPS"));
 
-  private LiveEditableValue<Double> m_TestArmValue=new LiveEditableValue<Double>(0., SmartDashboard.getEntry("TestArm"));
+  private LiveEditableValue<Double> m_TestArmValue = new LiveEditableValue<Double>(0.,
+      SmartDashboard.getEntry("TestArm"));
 
   private Command AutoCommand = AutoCommandGenerator.generate(0, 0, 0);
-  int AutoChoice[] = {0, 0, 0};
-  
-
+  int AutoChoice[] = { 0, 0, 0 };
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization code.
    */
   @Override
   public void robotInit() {
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
-    // autonomous chooser on the dashboard.
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our autonomous chooser on the dashboard.
+
+    //AdvantageKit Setting
     m_robotContainer = new RobotContainer();
+    Logger.recordMetadata("ProjectName", "2024-Logger-Test"); // Set a metadata value
+    if (isReal()) {
+      Logger.addDataReceiver(new WPILOGWriter()); // Log to a USB stick ("/U/logs")
+      Logger.addDataReceiver(new NT4Publisher()); // Publish data to NetworkTables
+      // new PowerDistribution(1, ModuleType.kRev); // Enables power distribution logging
+    } else {
+      setUseTiming(false); // Run as fast as possible
+      String logPath = LogFileUtil.findReplayLog(); // Pull the replay log from AdvantageScope (or prompt the user)
+      Logger.setReplaySource(new WPILOGReader(logPath)); // Read replay log
+      Logger.addDataReceiver(new WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim"))); // Save outputs to a new log
+    }
+    // Logger.disableDeterministicTimestamps() // See "Deterministic Timestamps" in
+    // the "Understanding Data Flow" page
+    Logger.start(); // Start logging! No more data receivers, replay sources, or metadata values may be added.
   }
 
   /**
-   * This function is called every 20 ms, no matter the mode. Use this for items like diagnostics
+   * This function is called every 20 ms, no matter the mode. Use this for items
+   * like diagnostics
    * that you want ran during disabled, autonomous, teleoperated and test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-  
+
     SmartDashboard.putNumber("XboxLeftX", RobotContainer.m_driverController.getLeftX());
     SmartDashboard.putNumber("XboxLeftY", RobotContainer.m_driverController.getLeftY());
     SmartDashboard.putNumber("XboxRightX", RobotContainer.m_driverController.getRightX());
@@ -98,36 +133,42 @@ public class Robot extends TimedRobot {
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+  }
 
   @Override
   public void disabledPeriodic() {
-    if(RobotContainer.m_driverController.getXButtonPressed()){
-      AutoChoice[0] = (AutoChoice[0]+1) % 4;
+    if (RobotContainer.m_driverController.getXButtonPressed()) {
+      AutoChoice[0] = (AutoChoice[0] + 1) % 4;
       AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
-    if(RobotContainer.m_driverController.getYButtonPressed()){
-      AutoChoice[1] = (AutoChoice[1]+1) % 4;
+    if (RobotContainer.m_driverController.getYButtonPressed()) {
+      AutoChoice[1] = (AutoChoice[1] + 1) % 4;
       AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
-    if(RobotContainer.m_driverController.getBButtonPressed()){
-      AutoChoice[2] = (AutoChoice[2]+1) % 4;
+    if (RobotContainer.m_driverController.getBButtonPressed()) {
+      AutoChoice[2] = (AutoChoice[2] + 1) % 4;
       AutoCommand = AutoCommandGenerator.generate(AutoChoice[0], AutoChoice[1], AutoChoice[2]);
     }
-    SmartDashboard.putString("AutoType", Integer.toString(AutoChoice[0])+Integer.toString(AutoChoice[1])+Integer.toString(AutoChoice[2]));
+    SmartDashboard.putString("AutoType",
+        Integer.toString(AutoChoice[0]) + Integer.toString(AutoChoice[1]) + Integer.toString(AutoChoice[2]));
   }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
     AutoCommand.withTimeout(15.).schedule();
-    //new CU11X(1,2).schedule();
+    // new CU11X(1,2).schedule();
 
   }
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousPeriodic() {
+  }
 
   @Override
   public void teleopInit() {
@@ -138,8 +179,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    if(DriverStation.getAlliance().get()==Alliance.Red)
-      RobotContainer.m_Swerve.setPose(new Pose2d(15.135,5.579, new Rotation2d()));
+    if (DriverStation.getAlliance().get() == Alliance.Red)
+      RobotContainer.m_Swerve.setPose(new Pose2d(15.135, 5.579, new Rotation2d()));
     else
       RobotContainer.m_Swerve.setPose(new Pose2d(1.4, 5.579, new Rotation2d()));
   }
@@ -147,26 +188,26 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    
-    if(RobotContainer.m_driverController.getRightBumperPressed()){
-      new NewAutoSPKUP(Button.kRightBumper.value).schedule();;
+
+    if (RobotContainer.m_driverController.getRightBumperPressed()) {
+      new NewAutoSPKUP(Button.kRightBumper.value).schedule();
+      ;
       // new ManualSPKUp(Button.kRightBumper.value, -33, 40).schedule();;
     }
-    if(RobotContainer.m_driverController.getLeftBumperPressed())
-    {
-      new NoteIntake(Button.kLeftBumper.value).schedule();;
+    if (RobotContainer.m_driverController.getLeftBumperPressed()) {
+      new NoteIntake(Button.kLeftBumper.value).schedule();
+      ;
     }
-    if(RobotContainer.m_driverController.getAButtonPressed())
-    {
+    if (RobotContainer.m_driverController.getAButtonPressed()) {
       new HybridAMP(Button.kA.value, Button.kRightTrigger.value).schedule();
     }
     // if(RobotContainer.m_driverController.getBButtonPressed()){
-    //   new NoteOut(Button.kB.value).schedule();
+    // new NoteOut(Button.kB.value).schedule();
     // }
-    if(RobotContainer.m_driverController.getXButtonPressed()){
-      new TestSPKUP(-33,40,0).schedule();
+    if (RobotContainer.m_driverController.getXButtonPressed()) {
+      new TestSPKUP(-33, 40, 0).schedule();
     }
-    if(RobotContainer.m_driverController.getYButtonPressed()){
+    if (RobotContainer.m_driverController.getYButtonPressed()) {
       new ManualSPKDown(Button.kY.value, Button.kRightTrigger.value).schedule();
     }
   }
@@ -175,7 +216,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands at the start of test mode.
     CommandScheduler.getInstance().cancelAll();
-    
+
     RobotContainer.m_Swerve.resetModulesToAbsolute();
   }
 
@@ -184,29 +225,31 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     // if(RobotContainer.m_driverController.getAButton())
     // {
-    //   RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
+    // RobotContainer.m_Swerve.setChassisSpeeds(new ChassisSpeeds(1, 0, 0));
     // }
     // else
     // {
-    //    RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
-    
+    // RobotContainer.m_Swerve.drive(new Translation2d(0, 0), 0, false);
+
     // }
     // if(RobotContainer.m_driverController.getPOVUp()){
-    //   RobotContainer.m_Arm.SetPCT(0.05);
+    // RobotContainer.m_Arm.SetPCT(0.05);
     // }
     // else if(RobotContainer.m_driverController.getPOVDown()){
-    //   RobotContainer.m_Arm.SetPCT(-0.05);
+    // RobotContainer.m_Arm.SetPCT(-0.05);
     // }
     // else{
-    //   RobotContainer.m_Arm.SetPCT(0);
+    // RobotContainer.m_Arm.SetPCT(0);
     // }
   }
 
   /** This function is called once when the robot is first started up. */
   @Override
-  public void simulationInit() {}
+  public void simulationInit() {
+  }
 
   /** This function is called periodically whilst in simulation. */
   @Override
-  public void simulationPeriodic() {}
+  public void simulationPeriodic() {
+  }
 }

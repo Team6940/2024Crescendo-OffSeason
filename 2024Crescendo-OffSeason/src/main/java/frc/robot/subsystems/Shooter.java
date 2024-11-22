@@ -13,10 +13,11 @@ import frc.robot.Constants.AutoShootConstants;
 import frc.robot.Constants.ShooterConstants;
 import frc.robot.commands.SPKCommands.AutoPassNote;
 import frc.robot.RobotContainer;
+import org.littletonrobotics.junction.*;;
+
 
 public class Shooter extends SubsystemBase{
     public static Shooter m_Instance;
-
     private static TalonFX m_ShooterLeft = new TalonFX(ShooterConstants.ShooterLeft_ID,"*");
     private static TalonFX m_ShooterRight = new TalonFX(ShooterConstants.ShooterRight_ID,"*");
 
@@ -97,5 +98,8 @@ public class Shooter extends SubsystemBase{
     public void periodic(){
         SmartDashboard.putNumber("LeftRPS", m_ShooterLeft.getVelocity().getValue());
         SmartDashboard.putNumber("RightRPS", m_ShooterRight.getVelocity().getValue());
+        
+        Logger.recordOutput("Shooter/LeftRPS", m_ShooterLeft.getVelocity().getValue());
+        Logger.recordOutput("Shooter/RghtRPS", m_ShooterRight.getVelocity().getValue());
     }
 }
