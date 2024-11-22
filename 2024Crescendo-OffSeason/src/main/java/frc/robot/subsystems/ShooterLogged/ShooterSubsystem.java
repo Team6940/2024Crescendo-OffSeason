@@ -1,6 +1,7 @@
 package frc.robot.subsystems.ShooterLogged;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Robot;
 import frc.robot.Constants.AutoPassNoteConstants;
@@ -104,6 +105,10 @@ public class ShooterSubsystem extends SubsystemBase {
 
     private void processDashboard() {
         // TODO Dashboard
+        SmartDashboard.putNumber("Shooter/LeftRPS", inputs.leftSensorRPS);
+        SmartDashboard.putNumber("Shooter/RghtRPS", inputs.rghtSensorRPS);
+        SmartDashboard.putNumber("Shooter/LeftTargetRPS", m_leftTargetRPS);
+        SmartDashboard.putNumber("Shooter/RghtTargetRPS", m_rghtTargetRPS);
     }
 
     public static ShooterSubsystem getInstance() {
